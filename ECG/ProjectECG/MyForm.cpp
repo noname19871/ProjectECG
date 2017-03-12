@@ -11,5 +11,7 @@ void Main(array<String^>^ args)
 	Application::SetCompatibleTextRenderingDefault(false);
 	
 	ProjectECG::MyForm form;
+	form.Frm();
 	Application::Run(%form);
+	
 }
