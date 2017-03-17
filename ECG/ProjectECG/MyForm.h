@@ -1,23 +1,30 @@
 #pragma once
+
 #include"func.h"
 #include"DataForm.h"
+#include <math.h>
+
 namespace ProjectECG {
 
 	using namespace System;
 	using namespace System::ComponentModel;
-	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Windows::Forms::DataVisualization::Charting;
 
+	
 	/// <summary>
 	/// Summary for MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
-		MyForm(void)
-		{
+
+		MyForm(void) {
+
+		MyForm(void) {
+
 
 			InitializeComponent();
 		}
@@ -26,18 +33,18 @@ namespace ProjectECG {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~MyForm()
-		{
+		~MyForm() {
 			if (components)
 			{
 				delete components;
 			}
 		}
+ 
+	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart1;
+	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  DataButton;
 	private: System::Windows::Forms::Button^  AnalyzeButton;
 
-
-	protected:
 
 
 	private: System::Windows::Forms::TextBox^  ConclusionText;
@@ -45,10 +52,7 @@ namespace ProjectECG {
 	private: System::Windows::Forms::Label^  Conclusion;
 	private: System::Windows::Forms::Label^  label1;
 	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::IContainer^  components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -57,6 +61,42 @@ namespace ProjectECG {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^  legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
+			this->SuspendLayout();
+			// 
+			// chart1
+			// 
+			chartArea1->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea1);
+			legend1->Name = L"Legend1";
+			this->chart1->Legends->Add(legend1);
+			this->chart1->Location = System::Drawing::Point(13, 13);
+			this->chart1->Name = L"chart1";
+			series1->ChartArea = L"ChartArea1";
+			series1->Legend = L"Legend1";
+			series1->Name = L"Series1";
+			this->chart1->Series->Add(series1);
+			this->chart1->Series->Add(series2);
+			this->chart1->Size = System::Drawing::Size(408, 393);
+			this->chart1->TabIndex = 0;
+			this->chart1->Text = L"chart1";
+
+			//button1
+			this->button1->Location = System::Drawing::Point(70, 86);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(139, 23);
+			this->button1->TabIndex = 7;
+			this->button1->Text = L"Ïîñòðîèòü ãðàôèê";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+
 			this->DataButton = (gcnew System::Windows::Forms::Button());
 			this->AnalyzeButton = (gcnew System::Windows::Forms::Button());
 			this->ConclusionText = (gcnew System::Windows::Forms::TextBox());
@@ -73,7 +113,7 @@ namespace ProjectECG {
 			this->DataButton->Name = L"DataButton";
 			this->DataButton->Size = System::Drawing::Size(164, 63);
 			this->DataButton->TabIndex = 21;
-			this->DataButton->Text = L"������ ������";
+			this->DataButton->Text = L"Ââåñòè äàííûå";
 			this->DataButton->UseVisualStyleBackColor = true;
 			this->DataButton->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
@@ -85,7 +125,7 @@ namespace ProjectECG {
 			this->AnalyzeButton->Name = L"AnalyzeButton";
 			this->AnalyzeButton->Size = System::Drawing::Size(164, 63);
 			this->AnalyzeButton->TabIndex = 22;
-			this->AnalyzeButton->Text = L"������";
+			this->AnalyzeButton->Text = L"Àíàëèç";
 			this->AnalyzeButton->UseVisualStyleBackColor = true;
 			this->AnalyzeButton->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
 			// 
@@ -98,7 +138,7 @@ namespace ProjectECG {
 			this->ConclusionText->ReadOnly = true;
 			this->ConclusionText->Size = System::Drawing::Size(100, 26);
 			this->ConclusionText->TabIndex = 23;
-			this->ConclusionText->Text = L"�����";
+			this->ConclusionText->Text = L"Íîðìà";
 			// 
 			// Conclusion
 			// 
@@ -108,7 +148,7 @@ namespace ProjectECG {
 			this->Conclusion->Name = L"Conclusion";
 			this->Conclusion->Size = System::Drawing::Size(68, 20);
 			this->Conclusion->TabIndex = 24;
-			this->Conclusion->Text = L"�����: ";
+			this->Conclusion->Text = L"Âûâîä: ";
 			// 
 			// label1
 			// 
@@ -119,11 +159,17 @@ namespace ProjectECG {
 			this->label1->TabIndex = 25;
 			this->label1->Text = L"V 1.0";
 			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
+
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+
+			this->ClientSize = System::Drawing::Size(433, 418);
+			this->Controls->Add(this->chart1);
+			this->Controls->Add(this->button1);
+
 			this->AutoSize = true;
 			this->ClientSize = System::Drawing::Size(1264, 986);
 			this->Controls->Add(this->label1);
@@ -132,15 +178,58 @@ namespace ProjectECG {
 			this->Controls->Add(this->AnalyzeButton);
 			this->Controls->Add(this->DataButton);
 			this->MaximizeBox = false;
+
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
+
+      (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
+      
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
+			
 		}
 #pragma endregion
+
+	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
+		chart1->Series->Clear();
+		Series^ series1 = gcnew Series(L"sin(i)");
+		Series^ series2 = gcnew Series(L"i*i");
+		// ñèíÿÿ ëèíèÿ
+		series1->Color = Color::Blue;
+		series1->BorderWidth = 2;
+		series1->IsVisibleInLegend = true;
+		series1->IsXValueIndexed = false;
+		// ëèíèÿ, à íå ñòîëáèêè
+		series1->ChartType = SeriesChartType::Line;
+		chart1->Series->Add(series1);
+		series2->Color = Color::Red;
+		series2->BorderWidth = 2;
+		series2->IsVisibleInLegend = true;
+		series2->IsXValueIndexed = false;
+		// ëèíèÿ, à íå ñòîëáèêè
+		series2->ChartType = SeriesChartType::Line;
+		// äîáàâëÿåì ëèíèþ ê êîíòðîëó
+		
+		// äîáàâëÿåì çíà÷åíèÿ
+		for (double i = 0; i < 10; i+=0.1) {
+			series1->Points->AddXY(i, sin(i));
+		}
+		for (double i = 10; i < 12; i += 0.1) {
+			series1->Points->AddXY(i, -0.5);
+		}
+		chart1->Series->Add(series2);
+		for (double i = 12; i < 20; i += 0.1) {
+			series2->Points->AddXY(i, i * i / 200);
+		}
+	}
+	};
+	
+
+
 
 private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 }
@@ -153,11 +242,12 @@ private: System::Void tableLayoutPanel1_Paint(System::Object^  sender, System::W
 
 
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-		//����� = //Draw Diagram; ����� ������� �������� �� ����� �������
-		//�� ��� � ��� ������-�� ������ �����
+		//Âûâîä = //Draw Diagram; Ìîæíî âåðíóòü çíà÷åíèå âî âðåìÿ ðèñîâêè
+		//Íó èëè ÿ åãî îòêóäà-òî äîëæåí âçÿòü
 
 	}
 private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
+
 }
 };
 }

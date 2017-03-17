@@ -50,5 +50,7 @@ void Main(/*array<String^>^ args*/)
 	Application::SetCompatibleTextRenderingDefault(false);
 	
 	ProjectECG::MyForm form;
+	
 	Application::Run(%form);
+	
 }
