@@ -1,2 +1,4 @@
 ﻿  MyForm.cpp
-  ProjectECG.vcxproj -> D:\ProjectECG\ECG\Debug\ProjectECG.exe
+e:\рабочий стол\github\projectecg\ecg\projectecg\myform.cpp(40): warning C4172: возвращение адреса локальной или временной переменной : res
+  ProjectECG.vcxproj -> E:\Рабочий стол\GITHUB\ProjectECG\ECG\Debug\ProjectECG.exe
+  ProjectECG.vcxproj -> E:\Рабочий стол\GITHUB\ProjectECG\ECG\Debug\ProjectECG.pdb (Full PDB)
