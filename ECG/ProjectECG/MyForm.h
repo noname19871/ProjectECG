@@ -1,4 +1,7 @@
 #pragma once
+
+#include"func.h"
+#include"DataForm.h"
 #include <math.h>
 
 namespace ProjectECG {
@@ -17,7 +20,12 @@ namespace ProjectECG {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
+
 		MyForm(void) {
+
+		MyForm(void) {
+
+
 			InitializeComponent();
 		}
 
@@ -31,9 +39,18 @@ namespace ProjectECG {
 				delete components;
 			}
 		}
+ 
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart1;
 	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  DataButton;
+	private: System::Windows::Forms::Button^  AnalyzeButton;
 
+
+
+	private: System::Windows::Forms::TextBox^  ConclusionText;
+
+	private: System::Windows::Forms::Label^  Conclusion;
+	private: System::Windows::Forms::Label^  label1;
 	private:
 		System::ComponentModel::IContainer^  components;
 
@@ -44,6 +61,7 @@ namespace ProjectECG {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+
 			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			System::Windows::Forms::DataVisualization::Charting::Legend^  legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
 			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
@@ -75,47 +93,128 @@ namespace ProjectECG {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(139, 23);
 			this->button1->TabIndex = 7;
-			this->button1->Text = L"Построить график";
+			this->button1->Text = L"ГЏГ®Г±ГІГ°Г®ГЁГІГј ГЈГ°Г ГґГЁГЄ";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+
+			this->DataButton = (gcnew System::Windows::Forms::Button());
+			this->AnalyzeButton = (gcnew System::Windows::Forms::Button());
+			this->ConclusionText = (gcnew System::Windows::Forms::TextBox());
+			this->Conclusion = (gcnew System::Windows::Forms::Label());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->SuspendLayout();
+			// 
+			// DataButton
+			// 
+			this->DataButton->AutoSize = true;
+			this->DataButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->DataButton->Location = System::Drawing::Point(54, 80);
+			this->DataButton->Name = L"DataButton";
+			this->DataButton->Size = System::Drawing::Size(164, 63);
+			this->DataButton->TabIndex = 21;
+			this->DataButton->Text = L"Г‚ГўГҐГ±ГІГЁ Г¤Г Г­Г­Г»ГҐ";
+			this->DataButton->UseVisualStyleBackColor = true;
+			this->DataButton->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+			// 
+			// AnalyzeButton
+			// 
+			this->AnalyzeButton->AutoSize = true;
+			this->AnalyzeButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->AnalyzeButton->Location = System::Drawing::Point(54, 173);
+			this->AnalyzeButton->Name = L"AnalyzeButton";
+			this->AnalyzeButton->Size = System::Drawing::Size(164, 63);
+			this->AnalyzeButton->TabIndex = 22;
+			this->AnalyzeButton->Text = L"ГЂГ­Г Г«ГЁГ§";
+			this->AnalyzeButton->UseVisualStyleBackColor = true;
+			this->AnalyzeButton->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			// 
+			// ConclusionText
+			// 
+			this->ConclusionText->BackColor = System::Drawing::SystemColors::Window;
+			this->ConclusionText->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->ConclusionText->Location = System::Drawing::Point(939, 210);
+			this->ConclusionText->Name = L"ConclusionText";
+			this->ConclusionText->ReadOnly = true;
+			this->ConclusionText->Size = System::Drawing::Size(100, 26);
+			this->ConclusionText->TabIndex = 23;
+			this->ConclusionText->Text = L"ГЌГ®Г°Г¬Г ";
+			// 
+			// Conclusion
+			// 
+			this->Conclusion->AutoSize = true;
+			this->Conclusion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->Conclusion->Location = System::Drawing::Point(802, 213);
+			this->Conclusion->Name = L"Conclusion";
+			this->Conclusion->Size = System::Drawing::Size(68, 20);
+			this->Conclusion->TabIndex = 24;
+			this->Conclusion->Text = L"Г‚Г»ГўГ®Г¤: ";
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(568, 9);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(32, 13);
+			this->label1->TabIndex = 25;
+			this->label1->Text = L"V 1.0";
+			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
+
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+
 			this->ClientSize = System::Drawing::Size(433, 418);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->button1);
+
+			this->AutoSize = true;
+			this->ClientSize = System::Drawing::Size(1264, 986);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->Conclusion);
+			this->Controls->Add(this->ConclusionText);
+			this->Controls->Add(this->AnalyzeButton);
+			this->Controls->Add(this->DataButton);
+			this->MaximizeBox = false;
+
 			this->Name = L"MyForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
+
+      (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
+      
 			this->ResumeLayout(false);
 			this->PerformLayout();
 			
 		}
 #pragma endregion
+
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		chart1->Series->Clear();
 		Series^ series1 = gcnew Series(L"sin(i)");
 		Series^ series2 = gcnew Series(L"i*i");
-		// синяя линия
+		// Г±ГЁГ­ГїГї Г«ГЁГ­ГЁГї
 		series1->Color = Color::Blue;
 		series1->BorderWidth = 2;
 		series1->IsVisibleInLegend = true;
 		series1->IsXValueIndexed = false;
-		// линия, а не столбики
+		// Г«ГЁГ­ГЁГї, Г  Г­ГҐ Г±ГІГ®Г«ГЎГЁГЄГЁ
 		series1->ChartType = SeriesChartType::Line;
 		chart1->Series->Add(series1);
 		series2->Color = Color::Red;
 		series2->BorderWidth = 2;
 		series2->IsVisibleInLegend = true;
 		series2->IsXValueIndexed = false;
-		// линия, а не столбики
+		// Г«ГЁГ­ГЁГї, Г  Г­ГҐ Г±ГІГ®Г«ГЎГЁГЄГЁ
 		series2->ChartType = SeriesChartType::Line;
-		// добавляем линию к контролу
+		// Г¤Г®ГЎГ ГўГ«ГїГҐГ¬ Г«ГЁГ­ГЁГѕ ГЄ ГЄГ®Г­ГІГ°Г®Г«Гі
 		
-		// добавляем значения
+		// Г¤Г®ГЎГ ГўГ«ГїГҐГ¬ Г§Г­Г Г·ГҐГ­ГЁГї
 		for (double i = 0; i < 10; i+=0.1) {
 			series1->Points->AddXY(i, sin(i));
 		}
@@ -130,4 +229,25 @@ namespace ProjectECG {
 	};
 	
 
+
+
+private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	DataForm^ form2 = gcnew DataForm();
+	form2->ShowDialog();
+}
+private: System::Void tableLayoutPanel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+}
+
+
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		//Г‚Г»ГўГ®Г¤ = //Draw Diagram; ГЊГ®Г¦Г­Г® ГўГҐГ°Г­ГіГІГј Г§Г­Г Г·ГҐГ­ГЁГҐ ГўГ® ГўГ°ГҐГ¬Гї Г°ГЁГ±Г®ГўГЄГЁ
+		//ГЌГі ГЁГ«ГЁ Гї ГҐГЈГ® Г®ГІГЄГіГ¤Г -ГІГ® Г¤Г®Г«Г¦ГҐГ­ ГўГ§ГїГІГј
+
+	}
+private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
+
+}
+};
 }
