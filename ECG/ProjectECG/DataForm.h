@@ -88,11 +88,6 @@ namespace ProjectECG {
 		void InitializeComponent(void)
 		{
 			this->DataTable = (gcnew System::Windows::Forms::TableLayoutPanel());
-			this->textBox16 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox13 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox7 = (gcnew System::Windows::Forms::TextBox());
 			this->LengthOf = (gcnew System::Windows::Forms::Label());
 			this->StartOf = (gcnew System::Windows::Forms::Label());
 			this->P = (gcnew System::Windows::Forms::Label());
@@ -109,11 +104,16 @@ namespace ProjectECG {
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox7 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox9 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox10 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox12 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox13 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox14 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox15 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox16 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox17 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox18 = (gcnew System::Windows::Forms::TextBox());
 			this->ReadyButton = (gcnew System::Windows::Forms::Button());
@@ -170,51 +170,6 @@ namespace ProjectECG {
 			this->DataTable->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
 			this->DataTable->Size = System::Drawing::Size(1025, 237);
 			this->DataTable->TabIndex = 32;
-			// 
-			// textBox16
-			// 
-			this->textBox16->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->textBox16->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->textBox16->Location = System::Drawing::Point(600, 195);
-			this->textBox16->Name = L"textBox16";
-			this->textBox16->Size = System::Drawing::Size(100, 26);
-			this->textBox16->TabIndex = 36;
-			// 
-			// textBox13
-			// 
-			this->textBox13->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->textBox13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->textBox13->Location = System::Drawing::Point(150, 195);
-			this->textBox13->Name = L"textBox13";
-			this->textBox13->Size = System::Drawing::Size(100, 26);
-			this->textBox13->TabIndex = 36;
-			// 
-			// textBox11
-			// 
-			this->textBox11->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->textBox11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->textBox11->Location = System::Drawing::Point(750, 142);
-			this->textBox11->Name = L"textBox11";
-			this->textBox11->Size = System::Drawing::Size(100, 26);
-			this->textBox11->TabIndex = 36;
-			// 
-			// textBox8
-			// 
-			this->textBox8->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->textBox8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->textBox8->Location = System::Drawing::Point(300, 142);
-			this->textBox8->Name = L"textBox8";
-			this->textBox8->Size = System::Drawing::Size(100, 26);
-			this->textBox8->TabIndex = 36;
-			// 
-			// textBox7
-			// 
-			this->textBox7->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->textBox7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->textBox7->Location = System::Drawing::Point(150, 142);
-			this->textBox7->Name = L"textBox7";
-			this->textBox7->Size = System::Drawing::Size(100, 26);
-			this->textBox7->TabIndex = 36;
 			// 
 			// LengthOf
 			// 
@@ -380,6 +335,24 @@ namespace ProjectECG {
 			this->textBox6->Size = System::Drawing::Size(100, 26);
 			this->textBox6->TabIndex = 38;
 			// 
+			// textBox7
+			// 
+			this->textBox7->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->textBox7->Location = System::Drawing::Point(150, 142);
+			this->textBox7->Name = L"textBox7";
+			this->textBox7->Size = System::Drawing::Size(100, 26);
+			this->textBox7->TabIndex = 36;
+			// 
+			// textBox8
+			// 
+			this->textBox8->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->textBox8->Location = System::Drawing::Point(300, 142);
+			this->textBox8->Name = L"textBox8";
+			this->textBox8->Size = System::Drawing::Size(100, 26);
+			this->textBox8->TabIndex = 36;
+			// 
 			// textBox9
 			// 
 			this->textBox9->Anchor = System::Windows::Forms::AnchorStyles::None;
@@ -398,6 +371,15 @@ namespace ProjectECG {
 			this->textBox10->Size = System::Drawing::Size(100, 26);
 			this->textBox10->TabIndex = 40;
 			// 
+			// textBox11
+			// 
+			this->textBox11->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->textBox11->Location = System::Drawing::Point(750, 142);
+			this->textBox11->Name = L"textBox11";
+			this->textBox11->Size = System::Drawing::Size(100, 26);
+			this->textBox11->TabIndex = 36;
+			// 
 			// textBox12
 			// 
 			this->textBox12->Anchor = System::Windows::Forms::AnchorStyles::None;
@@ -406,6 +388,15 @@ namespace ProjectECG {
 			this->textBox12->Name = L"textBox12";
 			this->textBox12->Size = System::Drawing::Size(100, 26);
 			this->textBox12->TabIndex = 41;
+			// 
+			// textBox13
+			// 
+			this->textBox13->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->textBox13->Location = System::Drawing::Point(150, 195);
+			this->textBox13->Name = L"textBox13";
+			this->textBox13->Size = System::Drawing::Size(100, 26);
+			this->textBox13->TabIndex = 36;
 			// 
 			// textBox14
 			// 
@@ -424,6 +415,15 @@ namespace ProjectECG {
 			this->textBox15->Name = L"textBox15";
 			this->textBox15->Size = System::Drawing::Size(100, 26);
 			this->textBox15->TabIndex = 43;
+			// 
+			// textBox16
+			// 
+			this->textBox16->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox16->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->textBox16->Location = System::Drawing::Point(600, 195);
+			this->textBox16->Name = L"textBox16";
+			this->textBox16->Size = System::Drawing::Size(100, 26);
+			this->textBox16->TabIndex = 36;
 			// 
 			// textBox17
 			// 
@@ -455,11 +455,14 @@ namespace ProjectECG {
 			this->ReadyButton->Text = L"Готово";
 			this->ReadyButton->UseVisualStyleBackColor = true;
 			this->ReadyButton->Click += gcnew System::EventHandler(this, &DataForm::button1_Click);
+			//this->ReadyButton->DialogResult = ::DialogResult::OK;
+			//Controls->Add(ReadyButton);
 			// 
 			// DataForm
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->AutoSize = true;
+			this->CausesValidation = false;
 			this->ClientSize = System::Drawing::Size(1134, 459);
 			this->Controls->Add(this->ReadyButton);
 			this->Controls->Add(this->DataTable);
@@ -479,7 +482,7 @@ namespace ProjectECG {
 	}
 
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	auto r = ParseDatasIntoDoubleVector(this->DataTable);
+	std::vector<double> r = ParseDatasIntoDoubleVector(this->DataTable);
 }
 private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 }

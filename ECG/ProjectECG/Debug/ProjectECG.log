@@ -1,4 +1,3 @@
 ﻿  MyForm.cpp
-e:\рабочий стол\github\projectecg\ecg\projectecg\myform.cpp(40): warning C4172: возвращение адреса локальной или временной переменной : res
-  ProjectECG.vcxproj -> E:\Рабочий стол\GITHUB\ProjectECG\ECG\Debug\ProjectECG.exe
-  ProjectECG.vcxproj -> E:\Рабочий стол\GITHUB\ProjectECG\ECG\Debug\ProjectECG.pdb (Full PDB)
+f:\desktop\projectecg\ecg\projectecg\AnalysisFuncs.h(23): warning C4018: <: несоответствие типов со знаком и без знака
+  ProjectECG.vcxproj -> F:\Desktop\ProjectECG\ECG\Debug\ProjectECG.exe
