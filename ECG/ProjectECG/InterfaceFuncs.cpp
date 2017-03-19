@@ -1,6 +1,7 @@
 #include <iostream>
-#include <locale>
-
+#include <string>
+#include <fstream>
+#include <sstream>
 
 #include "InterfaceFuncs.h"
 #include "AnalysisFuncs.h"
@@ -56,4 +57,35 @@ void SaveWavesToFile(vector<double> v)
 		f << v[i] << " ";
 
 	f.close();
+}
+
+//Создает вектор из значений файла filename
+vector<double> InitWavesFromFile(string filename)
+{
+	ifstream fin(filename);
+
+	string lengths = "";
+	string heights = "";
+	string poses = "";
+
+	getline(fin, lengths);
+	getline(fin, heights);
+	getline(fin, poses);
+	
+	std::vector<double> res;
+	
+	istringstream is1(lengths);
+	double tmp = 0.0;
+	while (is1 >> tmp)
+		res.push_back(tmp);
+
+	istringstream is2(heights);
+	while (is2 >> tmp)
+		res.push_back(tmp);
+
+	istringstream is3(poses);
+	while (is3 >> tmp)
+		res.push_back(tmp);
+
+	return res;
 }
