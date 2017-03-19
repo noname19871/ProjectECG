@@ -451,7 +451,7 @@ namespace ProjectECG {
 			this->ReadyButton->TabIndex = 33;
 			this->ReadyButton->Text = L"Готово";
 			this->ReadyButton->UseVisualStyleBackColor = true;
-			this->ReadyButton->Click += gcnew System::EventHandler(this, &DataForm::button1_Click);
+			this->ReadyButton->Click += gcnew System::EventHandler(this, &DataForm::ReadyButton_Click);
 			// 
 			// DataForm
 			// 
@@ -476,7 +476,7 @@ namespace ProjectECG {
 
 	}
 
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void ReadyButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		SaveWavesToFile(ParseDatasIntoDoubleVector(this->DataTable));
 		this->DialogResult = ::DialogResult::OK;
 	}
