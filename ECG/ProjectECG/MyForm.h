@@ -117,7 +117,7 @@ namespace ProjectECG {
 			this->DataButton->TabIndex = 21;
 			this->DataButton->Text = L"Ввести данные";
 			this->DataButton->UseVisualStyleBackColor = true;
-			this->DataButton->Click += gcnew System::EventHandler(this, &MyForm::DataButton_Click);
+			this->DataButton->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
 			// AnalyzeButton
 			// 
@@ -130,7 +130,7 @@ namespace ProjectECG {
 			this->AnalyzeButton->TabIndex = 22;
 			this->AnalyzeButton->Text = L"Анализировать";
 			this->AnalyzeButton->UseVisualStyleBackColor = true;
-			this->AnalyzeButton->Click += gcnew System::EventHandler(this, &MyForm::AnalyzeButton_Click);
+			this->AnalyzeButton->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
 			// 
 			// ConclusionText
 			// 
@@ -144,7 +144,7 @@ namespace ProjectECG {
 			this->ConclusionText->ReadOnly = true;
 			this->ConclusionText->Size = System::Drawing::Size(263, 75);
 			this->ConclusionText->TabIndex = 23;
-			this->ConclusionText->Text = L"";
+			this->ConclusionText->Text = L"Норма";
 			// 
 			// Conclusion
 			// 
@@ -157,6 +157,7 @@ namespace ProjectECG {
 			this->Conclusion->Size = System::Drawing::Size(223, 31);
 			this->Conclusion->TabIndex = 24;
 			this->Conclusion->Text = L"Результат анализа:";
+			this->Conclusion->Click += gcnew System::EventHandler(this, &MyForm::Conclusion_Click);
 			// 
 			// label1
 			// 
@@ -167,6 +168,7 @@ namespace ProjectECG {
 			this->label1->Size = System::Drawing::Size(32, 13);
 			this->label1->TabIndex = 25;
 			this->label1->Text = L"V 1.0";
+			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
 			// 
 			// MyForm
 			// 
@@ -218,9 +220,15 @@ namespace ProjectECG {
 		for (double i = 0; i < 124; i++) {
 			series1->Points->AddXY(i, 10);
 		}
+
+		//Инициализация класса информации о зубцах значениями из DataForm
+		WavesData w(InitWavesFromFile("WavesData.txt"));
 	}
 
-	private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void Conclusion_Click(System::Object^  sender, System::EventArgs^  e) {
+	}
+
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 				 DataForm^ form2 = gcnew DataForm();
 				 form2->ShowDialog();
 				 
@@ -231,22 +239,12 @@ namespace ProjectECG {
 	private: System::Void tableLayoutPanel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 	}
 
-	private: System::Void AnalyzeButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		//Инициализация класса информации о зубцах значениями из DataForm
-		WavesData w("WavesData.txt");
-
-		if (w.Check_arrhythmia())
-		{
-			this->ConclusionText->Clear();
-			this->ConclusionText->Text = "У вас аритмия. Рекомендуем обратиться к врачу.";
-		}
-		else
-		{
-			this->ConclusionText->Clear();
-			this->ConclusionText->Text = "Норма";
-		}
-
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
+
+	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
+	}
+
 };
 };
 	
