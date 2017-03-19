@@ -1,25 +1,17 @@
 #include <iostream>
-#include <cstring>
+#include <string>
+#include <fstream>
+#include <sstream>
 
 #include "InterfaceFuncs.h"
+#include "AnalysisFuncs.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
+using namespace std;
 
-//Своя функция, конкретно тут сложение все элементов компонентов в групповом окне
-//В данном примере из текстовых окон группового окна парсится текст в целочисленные значения и вовзращает их целочисленную сумму
-int myFunc(Panel^ gb)
-{
-	int sum = 0;
-	for (int i = 0; i < gb->Controls->Count; i++)
-	{
-		if (gb->Controls[i]->Text != "")
-			sum += System::Convert::ToInt32(gb->Controls[i]->Text);
-	}
-	return sum;
-}
 //Проход по всем TextBox в TableLayoutPanel и их парс в вектор дабл
-std::vector<double>& ParseDatasIntoDoubleVector(TableLayoutPanel^ pan)
+std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ pan)
 {
 
 	std::vector<double> res(18, 0.0);
@@ -28,7 +20,7 @@ std::vector<double>& ParseDatasIntoDoubleVector(TableLayoutPanel^ pan)
 	String^ st1 = "textBox";
 	auto st = gcnew String("textBox");
 
-	for (int i = 0; i<pan->Controls->Count; i++)
+	for (int i = 0; i < pan->Controls->Count; i++)
 	{
 		auto ST = pan->Controls[i]->Name;
 		auto flag = ST->Contains(st1);
@@ -36,13 +28,64 @@ std::vector<double>& ParseDatasIntoDoubleVector(TableLayoutPanel^ pan)
 		if (flag)
 			if (pan->Controls[i]->Text != "")
 			{
-				res[j] = System::Convert::ToDouble(pan->Controls[i]->Text);
+				String^ tmp = pan->Controls[i]->Text;
+				if (pan->Controls[i]->Text->Contains("."))
+					tmp = pan->Controls[i]->Text->Replace(".", ",");
+				res[j] = System::Convert::ToDouble(tmp);
 				j++;
 			}
 			else ++j;
 	}
+	return res;
+}
+
+//Сохранение значений полей в файл
+void SaveWavesToFile(vector<double> v)
+{
+	ofstream f;
+	f.open("WavesData.txt");
+
+	for (int i = 0; i < 6; i ++)
+		f << v[i] << " ";
+	f << endl;
+
+	for (int i = 6; i < 12; i ++)
+		f << v[i] << " ";
+	f << endl;
+
+	for (int i = 12; i < 18; i ++)
+		f << v[i] << " ";
+
+	f.close();
+}
+
+//Создает вектор из значений файла filename
+vector<double> InitWavesFromFile(string filename)
+{
+	ifstream fin(filename);
+
+	string lengths = "";
+	string heights = "";
+	string poses = "";
+
+	getline(fin, lengths);
+	getline(fin, heights);
+	getline(fin, poses);
+	
+	std::vector<double> res;
+	
+	istringstream is1(lengths);
+	double tmp = 0.0;
+	while (is1 >> tmp)
+		res.push_back(tmp);
+
+	istringstream is2(heights);
+	while (is2 >> tmp)
+		res.push_back(tmp);
+
+	istringstream is3(poses);
+	while (is3 >> tmp)
+		res.push_back(tmp);
 
 	return res;
-
-
 }

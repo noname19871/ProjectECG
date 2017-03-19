@@ -35,9 +35,6 @@ namespace ProjectECG {
 			}
 		}
 	private: System::Windows::Forms::TableLayoutPanel^  DataTable;
-	protected:
-
-	protected:
 	private: System::Windows::Forms::TextBox^  textBox16;
 	private: System::Windows::Forms::TextBox^  textBox13;
 	private: System::Windows::Forms::TextBox^  textBox11;
@@ -455,8 +452,6 @@ namespace ProjectECG {
 			this->ReadyButton->Text = L"Готово";
 			this->ReadyButton->UseVisualStyleBackColor = true;
 			this->ReadyButton->Click += gcnew System::EventHandler(this, &DataForm::button1_Click);
-			//this->ReadyButton->DialogResult = ::DialogResult::OK;
-			//Controls->Add(ReadyButton);
 			// 
 			// DataForm
 			// 
@@ -474,17 +469,23 @@ namespace ProjectECG {
 			this->DataTable->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
+			
 		}
 #pragma endregion
 	private: System::Void DataForm_Load(System::Object^  sender, System::EventArgs^  e) {
 
 	}
 
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	std::vector<double> r = ParseDatasIntoDoubleVector(this->DataTable);
-}
-private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
-}
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		SaveWavesToFile(ParseDatasIntoDoubleVector(this->DataTable));
+		this->DialogResult = ::DialogResult::OK;
+	}
+
+	private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+	}
+
+
 };
 }
+
+

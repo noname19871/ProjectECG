@@ -6,11 +6,12 @@
 
 using namespace System::Windows::Forms;
 
-//Своя функция, конкретно тут сложение все элементов компонентов в групповом окне
-//В данном примере из текстовых окон группового окна парсится текст в целочисленные значения и вовзращает их целочисленную сумму
-int myFunc(Panel^ gb);
-
 //Проход по всем TextBox в TableLayoutPanel и их парс в вектор дабл
-std::vector<double>& ParseDatasIntoDoubleVector(TableLayoutPanel^ pan);
+std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ pan);
+
+//Сохранение значений полей в файл
+void SaveWavesToFile(std::vector<double> v);
+
+std::vector<double> InitWavesFromFile(std::string filename);
 
 #endif  FUNC_H

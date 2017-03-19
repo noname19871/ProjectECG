@@ -23,3 +23,5 @@ Class ProjectECG.DataForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
 Class ProjectECG.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    print_vector(vector<double\,std::allocator<double> >*): PrivateScope, Public, HideBySig
