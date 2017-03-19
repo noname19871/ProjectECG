@@ -1,0 +1,5 @@
+﻿  InterfaceFuncs.cpp
+  MyForm.cpp
+f:\desktop\projectecg\ecg\projectecg\MyForm.h(32): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода...
+LINK : fatal error LNK1561: точка входа должна быть определена
