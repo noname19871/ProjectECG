@@ -18,6 +18,7 @@ class WavesData {
 
 public:
 
+	WavesData(WavesData & other) :Waves(other.Waves) {};
 	WavesData(std::vector<double> v)
 	{		
 		for (int i = 0; i < v.size(); i += 3)
@@ -26,6 +27,7 @@ public:
 		}
 	}
 
+	bool Check_arrhythmia();
 };
 
 
