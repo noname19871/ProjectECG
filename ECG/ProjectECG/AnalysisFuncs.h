@@ -8,40 +8,40 @@
 #include <fstream>
 #include <sstream>
 
-//Класс для хранения общей информации об ЭКГ и о втором стандартном отведении в частности
+//This class is for holding information about ECG and about second standart diversion concretly
 class WavesData {
 	
-	//Вектор для хранения высот зубцов
+	//Storage for heights of waves
 	std::vector<double> heights;
 
-	//Вектор для хранения длин зубцов
+	//Storage for lengths of waves
 	std::vector<double> lengths;
 
-	//Вектор для хранения позиций зубцов
+	//Storage for starting positions of waves
 	std::vector<double> poses;
 
-	//Вектор для хранения длины интервалов
+	//Storage for lengths of intervals
 	std::vector<double> intervals;
 
-	//Поле для скорости ленты
+	//ECG tape`s speed
 	double speed;
 
 
 public:
 
-	//Конструктор копии для класса WavesData
+	//Copy constructor
 	WavesData(WavesData & other) :heights(other.heights), lengths(other.lengths), poses(other.poses) {};
 
-	//Конструкток класса WavesData - инициализирует поля класса тремя векторами, содержащими высоты, длины и позиции зубцов
+	//It initializes class`s fields by values from vectors h,l and p, which hold values of lengths, heights and poses of waves respectively
 	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p) :heights(h), lengths(l), poses(p) {}
 
-	//Конструктор класса WavesData - инициализирует поля класса значениями из файла с именем filename
+	//It initializes class`s fields by values from file 
 	WavesData(std::string filename)
 	{
 		std::ifstream fin(filename);
 
-		std::string l = "";
 		std::string h = "";
+		std::string l = "";
 		std::string p = "";
 
 		getline(fin, h);
@@ -65,8 +65,17 @@ public:
 
 	}
 
-	//Функция проверки наличия аритмии у пациента
+	//It checks patient`s heart for arrhythmia
 	bool Check_arrhythmia();
+
+	//return patient`s hearth rate
+	double count_heart_rate();
+
+	//It checks patient`s hearth rate for Bradycardia
+	bool Check_Bradycardia();
+
+	//It checks patient`s hearth rate for Tachycardia
+	bool Check_Tachycardia();
 };
 
 
