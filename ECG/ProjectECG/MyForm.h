@@ -113,7 +113,7 @@ namespace ProjectECG {
 			this->DataButton->Location = System::Drawing::Point(11, 301);
 			this->DataButton->Margin = System::Windows::Forms::Padding(2);
 			this->DataButton->Name = L"DataButton";
-			this->DataButton->Size = System::Drawing::Size(199, 41);
+			this->DataButton->Size = System::Drawing::Size(203, 41);
 			this->DataButton->TabIndex = 21;
 			this->DataButton->Text = L"Ввести данные";
 			this->DataButton->UseVisualStyleBackColor = true;
@@ -245,7 +245,7 @@ namespace ProjectECG {
 			this->ConclusionText->Text = "Норма.";
 		}
 
-		this->ConclusionText->Text += " Ваша ЧСС = " + w.count_heart_rate(8, 50) + ".";
+		this->ConclusionText->Text += " Ваша ЧСС = " + w.count_heart_rate() + ".";
 	}
 };
 };
