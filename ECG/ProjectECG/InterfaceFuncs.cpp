@@ -38,7 +38,7 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ pan)
 	return res;
 }
 
-//Сохранение значений полей в файл
+//It saves values from vector to text file 
 void SaveWavesToFile(vector<double> v)
 {
 	ofstream f;

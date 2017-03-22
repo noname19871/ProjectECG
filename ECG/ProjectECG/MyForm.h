@@ -90,8 +90,8 @@ namespace ProjectECG {
 			this->chart1->ChartAreas->Add(chartArea1);
 			legend1->Name = L"Legend1";
 			this->chart1->Legends->Add(legend1);
-			this->chart1->Location = System::Drawing::Point(8, 335);
-			this->chart1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->chart1->Location = System::Drawing::Point(11, 391);
+			this->chart1->Margin = System::Windows::Forms::Padding(2);
 			this->chart1->Name = L"chart1";
 			series1->ChartArea = L"ChartArea1";
 			series1->Legend = L"Legend1";
@@ -101,7 +101,7 @@ namespace ProjectECG {
 			series2->Name = L"Series2";
 			this->chart1->Series->Add(series1);
 			this->chart1->Series->Add(series2);
-			this->chart1->Size = System::Drawing::Size(827, 255);
+			this->chart1->Size = System::Drawing::Size(1708, 499);
 			this->chart1->TabIndex = 0;
 			this->chart1->Text = L"chart1";
 			// 
@@ -110,10 +110,10 @@ namespace ProjectECG {
 			this->DataButton->AutoSize = true;
 			this->DataButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->DataButton->Location = System::Drawing::Point(8, 246);
-			this->DataButton->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->DataButton->Location = System::Drawing::Point(11, 301);
+			this->DataButton->Margin = System::Windows::Forms::Padding(2);
 			this->DataButton->Name = L"DataButton";
-			this->DataButton->Size = System::Drawing::Size(136, 41);
+			this->DataButton->Size = System::Drawing::Size(199, 41);
 			this->DataButton->TabIndex = 21;
 			this->DataButton->Text = L"Ввести данные";
 			this->DataButton->UseVisualStyleBackColor = true;
@@ -123,10 +123,10 @@ namespace ProjectECG {
 			// 
 			this->AnalyzeButton->AutoSize = true;
 			this->AnalyzeButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->AnalyzeButton->Location = System::Drawing::Point(8, 291);
-			this->AnalyzeButton->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->AnalyzeButton->Location = System::Drawing::Point(11, 346);
+			this->AnalyzeButton->Margin = System::Windows::Forms::Padding(2);
 			this->AnalyzeButton->Name = L"AnalyzeButton";
-			this->AnalyzeButton->Size = System::Drawing::Size(138, 41);
+			this->AnalyzeButton->Size = System::Drawing::Size(203, 41);
 			this->AnalyzeButton->TabIndex = 22;
 			this->AnalyzeButton->Text = L"Анализировать";
 			this->AnalyzeButton->UseVisualStyleBackColor = true;
@@ -137,24 +137,23 @@ namespace ProjectECG {
 			this->ConclusionText->BackColor = System::Drawing::SystemColors::Window;
 			this->ConclusionText->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->ConclusionText->Location = System::Drawing::Point(573, 246);
-			this->ConclusionText->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->ConclusionText->Location = System::Drawing::Point(1389, 306);
+			this->ConclusionText->Margin = System::Windows::Forms::Padding(2);
 			this->ConclusionText->Multiline = true;
 			this->ConclusionText->Name = L"ConclusionText";
 			this->ConclusionText->ReadOnly = true;
-			this->ConclusionText->Size = System::Drawing::Size(263, 75);
+			this->ConclusionText->Size = System::Drawing::Size(330, 75);
 			this->ConclusionText->TabIndex = 23;
-			this->ConclusionText->Text = L"";
 			// 
 			// Conclusion
 			// 
 			this->Conclusion->AutoSize = true;
 			this->Conclusion->Font = (gcnew System::Drawing::Font(L"Times New Roman", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->Conclusion->Location = System::Drawing::Point(569, 209);
+			this->Conclusion->Location = System::Drawing::Point(1381, 248);
 			this->Conclusion->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->Conclusion->Name = L"Conclusion";
-			this->Conclusion->Size = System::Drawing::Size(223, 31);
+			this->Conclusion->Size = System::Drawing::Size(338, 47);
 			this->Conclusion->TabIndex = 24;
 			this->Conclusion->Text = L"Результат анализа:";
 			// 
@@ -173,14 +172,14 @@ namespace ProjectECG {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
-			this->ClientSize = System::Drawing::Size(843, 599);
+			this->ClientSize = System::Drawing::Size(1730, 901);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->Conclusion);
 			this->Controls->Add(this->ConclusionText);
 			this->Controls->Add(this->AnalyzeButton);
 			this->Controls->Add(this->DataButton);
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->MaximizeBox = false;
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
@@ -243,9 +242,10 @@ namespace ProjectECG {
 		else
 		{
 			this->ConclusionText->Clear();
-			this->ConclusionText->Text = "Норма";
+			this->ConclusionText->Text = "Норма.";
 		}
 
+		this->ConclusionText->Text += " Ваша ЧСС = " + w.count_heart_rate(8, 50) + ".";
 	}
 };
 };
