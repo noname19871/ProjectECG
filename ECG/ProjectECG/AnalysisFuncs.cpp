@@ -7,14 +7,14 @@ using namespace std;
 //It checks patient`s heart for arrhythmia
 bool WavesData::Check_arrhythmia()
 {
-	return (heights[0] == 0.0) /*&& (intervals[1] != intervals[2])*/;
+	return (heights[0] == 0.0) && (intervals[0] != intervals[1]);
 }
 
 //TODO
 //return patient`s hearth rate
 double WavesData::count_heart_rate()
 {
-	return speed == 50 ? 600 / intervals[0] : 300 / intervals[0];
+	return speed == 50 ? trunc(600 / intervals[0]) : trunc(300 / intervals[1]);
 }
 
 //It checks patient`s hearth rate for Bradycardia
@@ -43,7 +43,7 @@ System::String^ Define_hearth_axis(const WavesData & w1, const WavesData & w2, c
 }
 
 //It checks patient for back myocardial
-bool Check_back_myocardial(const WavesData & w3, const WavesData & aVF)
+bool WavesData::Check_back_myocardial(const WavesData & w3, const WavesData & aVF)
 {
-
+	return 1;
 }

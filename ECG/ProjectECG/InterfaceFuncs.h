@@ -7,7 +7,7 @@
 using namespace System::Windows::Forms;
 
 //Проход по всем TextBox в TableLayoutPanel и их парс в вектор дабл
-std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ pan);
+std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size);
 
 //Сохранение значений полей в файл
 void SaveWavesToFile(std::vector<double> v);

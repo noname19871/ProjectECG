@@ -43,12 +43,12 @@ public:
 		std::string h = "";
 		std::string l = "";
 		std::string p = "";
+		std::string i = "";
 
 		getline(fin, h);
 		getline(fin, l);
 		getline(fin, p);
-
-		std::vector<double> res;
+		getline(fin, i);
 
 		std::istringstream is1(h);
 		double tmp = 0.0;
@@ -63,6 +63,13 @@ public:
 		while (is3 >> tmp)
 			poses.push_back(tmp);
 
+		std::istringstream is4(i);
+		for (int i = 0; i < 2; i++)
+		{
+			is4 >> tmp;
+			intervals.push_back(tmp);
+		}
+		is4 >> speed;
 	}
 
 	//It checks patient`s heart for arrhythmia
