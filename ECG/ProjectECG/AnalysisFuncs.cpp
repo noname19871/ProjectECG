@@ -28,3 +28,22 @@ bool WavesData::Check_Tachycardia()
 {
 	return count_heart_rate() > 100;
 }
+
+//Return hearth axis`s position
+System::String^ Define_hearth_axis(const WavesData & w1, const WavesData & w2, const WavesData & w3)
+{
+
+	if (w1.heights[2] > w1.heights[3] && w3.heights[3] > w3.heights[2])
+		return "Электрическая ось отклонена влево";
+
+	if(w1.heights[2] < w1.heights[3] && w3.heights[3] < w3.heights[2])
+		return "Электрическая ось отклонена вправо";
+
+	return "Электрическая ось сердца не отклонена";
+}
+
+//It checks patient for back myocardial
+bool Check_back_myocardial(const WavesData & w3, const WavesData & aVF)
+{
+
+}

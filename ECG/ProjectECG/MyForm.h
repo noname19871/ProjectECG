@@ -113,7 +113,7 @@ namespace ProjectECG {
 			this->DataButton->Location = System::Drawing::Point(11, 301);
 			this->DataButton->Margin = System::Windows::Forms::Padding(2);
 			this->DataButton->Name = L"DataButton";
-			this->DataButton->Size = System::Drawing::Size(199, 41);
+			this->DataButton->Size = System::Drawing::Size(203, 41);
 			this->DataButton->TabIndex = 21;
 			this->DataButton->Text = L"Ввести данные";
 			this->DataButton->UseVisualStyleBackColor = true;
@@ -153,7 +153,7 @@ namespace ProjectECG {
 			this->Conclusion->Location = System::Drawing::Point(1381, 248);
 			this->Conclusion->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->Conclusion->Name = L"Conclusion";
-			this->Conclusion->Size = System::Drawing::Size(338, 47);
+			this->Conclusion->Size = System::Drawing::Size(223, 31);
 			this->Conclusion->TabIndex = 24;
 			this->Conclusion->Text = L"Результат анализа:";
 			// 

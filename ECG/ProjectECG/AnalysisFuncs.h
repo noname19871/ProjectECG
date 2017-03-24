@@ -76,6 +76,12 @@ public:
 
 	//It checks patient`s hearth rate for Tachycardia
 	bool Check_Tachycardia();
+
+	//Return hearth axis`s position
+	friend System::String^ Define_hearth_axis(const WavesData & w1, const WavesData & w2, const WavesData & w3);
+
+	//It checks patient for back myocardial
+	bool Check_back_myocardial(const WavesData & w3, const WavesData & aVF);
 };
 
 

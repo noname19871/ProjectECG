@@ -445,7 +445,7 @@ namespace ProjectECG {
 			this->ReadyButton->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->ReadyButton->AutoSize = true;
 			this->ReadyButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->ReadyButton->Location = System::Drawing::Point(912, 314);
+			this->ReadyButton->Location = System::Drawing::Point(912, 297);
 			this->ReadyButton->Name = L"ReadyButton";
 			this->ReadyButton->Size = System::Drawing::Size(100, 47);
 			this->ReadyButton->TabIndex = 33;
@@ -469,7 +469,7 @@ namespace ProjectECG {
 			this->DataTable->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
-			
+
 		}
 #pragma endregion
 	private: System::Void DataForm_Load(System::Object^  sender, System::EventArgs^  e) {
