@@ -1,5 +1,8 @@
 ﻿  AnalysisFuncs.cpp
+  InterfaceFuncs.cpp
   MyForm.cpp
-f:\desktop\projectecg\ecg\projectecg\MyForm.h(32): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\bro\documents\github\projectecg\ecg\projectecg\MyForm.h(32): warning C4018: <: несоответствие типов со знаком и без знака
   Создание кода...
-  ProjectECG.vcxproj -> F:\Desktop\ProjectECG\ECG\Debug\ProjectECG.exe
+  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
+  ProjectECG.vcxproj -> C:\Users\Bro\Documents\GitHub\ProjectECG\ECG\Debug\ProjectECG.exe
+  ProjectECG.vcxproj -> C:\Users\Bro\Documents\GitHub\ProjectECG\ECG\Debug\ProjectECG.pdb (Full PDB)
