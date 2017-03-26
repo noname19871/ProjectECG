@@ -7,14 +7,14 @@ using namespace std;
 //It checks patient`s heart for arrhythmia
 bool WavesData::Check_arrhythmia()
 {
-	return (heights[0] == 0.0) && (intervals[0] != intervals[1]);
+	return (heights()[0] == 0.0) && (intervals()[0] != intervals()[1]);
 }
 
 //TODO
 //return patient`s hearth rate
 double WavesData::count_heart_rate()
 {
-	return speed == 50 ? trunc(600 / intervals[0]) : trunc(300 / intervals[1]);
+	return speed() == 50 ? trunc(600 / intervals()[0]) : trunc(300 / intervals()[1]);
 }
 
 //It checks patient`s hearth rate for Bradycardia
@@ -33,10 +33,10 @@ bool WavesData::Check_Tachycardia()
 System::String^ Define_hearth_axis(const WavesData & w1, const WavesData & w2, const WavesData & w3)
 {
 
-	if (w1.heights[2] > w1.heights[3] && w3.heights[3] > w3.heights[2])
+	if (w1.heights()[2] > w1.heights()[3] && w3.heights()[3] > w3.heights()[2])
 		return "Электрическая ось отклонена влево";
 
-	if(w1.heights[2] < w1.heights[3] && w3.heights[3] < w3.heights[2])
+	if(w1.heights()[2] < w1.heights()[3] && w3.heights()[3] < w3.heights()[2])
 		return "Электрическая ось отклонена вправо";
 
 	return "Электрическая ось сердца не отклонена";

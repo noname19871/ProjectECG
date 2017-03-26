@@ -12,28 +12,28 @@
 class WavesData {
 	
 	//Storage for heights of waves
-	std::vector<double> heights;
+	std::vector<double> _heights;
 
 	//Storage for lengths of waves
-	std::vector<double> lengths;
+	std::vector<double> _lengths;
 
 	//Storage for starting positions of waves
-	std::vector<double> poses;
+	std::vector<double> _poses;
 
 	//Storage for lengths of intervals
-	std::vector<double> intervals;
+	std::vector<double> _intervals;
 
 	//ECG tape`s speed
-	double speed;
+	double _speed;
 
 
 public:
 
 	//Copy constructor
-	WavesData(WavesData & other) :heights(other.heights), lengths(other.lengths), poses(other.poses) {};
+	WavesData(WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _intervals(other._intervals), _speed(other._speed) {};
 
 	//It initializes class`s fields by values from vectors h,l and p, which hold values of lengths, heights and poses of waves respectively
-	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p) :heights(h), lengths(l), poses(p) {}
+	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p, std::vector<double> i, double s) :_heights(h), _lengths(l), _poses(p), _intervals(i), _speed(s) {}
 
 	//It initializes class`s fields by values from file 
 	WavesData(std::string filename)
@@ -53,23 +53,43 @@ public:
 		std::istringstream is1(h);
 		double tmp = 0.0;
 		while (is1 >> tmp)
-			heights.push_back(tmp);
+			_heights.push_back(tmp);
 
 		std::istringstream is2(l);
 		while (is2 >> tmp)
-			lengths.push_back(tmp);
+			_lengths.push_back(tmp);
 
 		std::istringstream is3(p);
 		while (is3 >> tmp)
-			poses.push_back(tmp);
+			_poses.push_back(tmp);
 
 		std::istringstream is4(i);
 		for (int i = 0; i < 2; i++)
 		{
 			is4 >> tmp;
-			intervals.push_back(tmp);
+			_intervals.push_back(tmp);
 		}
-		is4 >> speed;
+		is4 >> _speed;
+	}
+
+	std::vector<double> heights() const {
+		return _heights;
+	}
+
+	std::vector<double> lengths() const {
+		return _lengths;
+	}
+
+	std::vector<double> poses() const {
+		return _poses;
+	}
+
+	std::vector<double> intervals() const {
+		return _intervals;
+	}
+
+	double speed() const {
+		return _speed;
 	}
 
 	//It checks patient`s heart for arrhythmia
