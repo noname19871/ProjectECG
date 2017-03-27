@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <vector>
 
@@ -12,9 +13,11 @@ namespace ProjectECG {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace std;
+
 
 	/// <summary>
-	/// Сводка для DataForm
+	/// Г‘ГўГ®Г¤ГЄГ  Г¤Г«Гї DataForm
 	/// </summary>
 	public ref class DataForm : public System::Windows::Forms::Form
 	{
@@ -24,13 +27,13 @@ namespace ProjectECG {
 			InitializeComponent();
 			comboBox1->SelectedItem = "50";
 			//
-			//TODO: добавьте код конструктора
+			//TODO: Г¤Г®ГЎГ ГўГјГІГҐ ГЄГ®Г¤ ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г°Г 
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// ГЋГ±ГўГ®ГЎГ®Г¤ГЁГІГј ГўГ±ГҐ ГЁГ±ГЇГ®Г«ГјГ§ГіГҐГ¬Г»ГҐ Г°ГҐГ±ГіГ°Г±Г».
 		/// </summary>
 		~DataForm()
 		{
@@ -39,10 +42,10 @@ namespace ProjectECG {
 				delete components;
 			}
 		}
+
+	private: System::Windows::Forms::Label^  LengthOf;
+
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel;
-	protected:
-
-
 	private: System::Windows::Forms::Label^  StartOf;
 	private: System::Windows::Forms::Label^  P;
 	private: System::Windows::Forms::Label^  R;
@@ -60,18 +63,8 @@ namespace ProjectECG {
 	private: System::Windows::Forms::TextBox^  textBox5;
 	private: System::Windows::Forms::TextBox^  textBox6;
 
-
-
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::Button^  ReadyButton;
+	private: System::Windows::Forms::Button^  NextFormButton;
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::ComboBox^  comboBox1;
 	private: System::Windows::Forms::TextBox^  textBox20;
@@ -99,34 +92,22 @@ namespace ProjectECG {
 	private: System::Windows::Forms::TextBox^  textBox18;
 	private: System::Windows::Forms::Label^  label3;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	protected:
-
 	private:
 		/// <summary>
-		/// Обязательная переменная конструктора.
+		/// ГЋГЎГїГ§Г ГІГҐГ«ГјГ­Г Гї ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г Гї ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г°Г .
 		/// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// Г’Г°ГҐГЎГіГҐГ¬Г»Г© Г¬ГҐГІГ®Г¤ Г¤Г«Гї ГЇГ®Г¤Г¤ГҐГ°Г¦ГЄГЁ ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г°Г  вЂ” Г­ГҐ ГЁГ§Г¬ГҐГ­ГїГ©ГІГҐ 
+		/// Г±Г®Г¤ГҐГ°Г¦ГЁГ¬Г®ГҐ ГЅГІГ®ГЈГ® Г¬ГҐГІГ®Г¤Г  Г± ГЇГ®Г¬Г®Г№ГјГѕ Г°ГҐГ¤Г ГЄГІГ®Г°Г  ГЄГ®Г¤Г .
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->DataTable = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->LengthOf = (gcnew System::Windows::Forms::Label());
+			this->StartOf = (gcnew System::Windows::Forms::Label());
 			this->tableLayoutPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->P = (gcnew System::Windows::Forms::Label());
 			this->R = (gcnew System::Windows::Forms::Label());
@@ -142,6 +123,7 @@ namespace ProjectECG {
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+
 			this->StartOf = (gcnew System::Windows::Forms::Label());
 			this->ReadyButton = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -165,6 +147,34 @@ namespace ProjectECG {
 			this->textBox16 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox17 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox18 = (gcnew System::Windows::Forms::TextBox());
+
+			this->ReadyButton = (gcnew System::Windows::Forms::Button());
+			this->NextFormButton = (gcnew System::Windows::Forms::Button());
+			this->DataTable->SuspendLayout();
+			this->SuspendLayout();
+			// 
+			// LengthOf
+			// 
+			this->LengthOf->Anchor = System::Windows::Forms::AnchorStyles::Left;
+			this->LengthOf->AutoSize = true;
+			this->LengthOf->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->LengthOf->Location = System::Drawing::Point(3, 142);
+			this->LengthOf->Name = L"LengthOf";
+			this->LengthOf->Size = System::Drawing::Size(73, 25);
+			this->LengthOf->TabIndex = 23;
+			this->LengthOf->Text = L"Г„Г«ГЁГ­Г ";
+			// 
+			// StartOf
+			// 
+			this->StartOf->Anchor = System::Windows::Forms::AnchorStyles::Left;
+			this->StartOf->AutoSize = true;
+			this->StartOf->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->StartOf->Location = System::Drawing::Point(3, 196);
+			this->StartOf->Name = L"StartOf";
+			this->StartOf->Size = System::Drawing::Size(79, 25);
+			this->StartOf->TabIndex = 32;
+			this->StartOf->Text = L"ГЌГ Г·Г Г«Г®";
+
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->tableLayoutPanel->SuspendLayout();
 			this->IntervalsPanel->SuspendLayout();
@@ -206,6 +216,7 @@ namespace ProjectECG {
 			this->tableLayoutPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
 			this->tableLayoutPanel->Size = System::Drawing::Size(1042, 80);
 			this->tableLayoutPanel->TabIndex = 32;
+
 			// 
 			// P
 			// 
@@ -271,7 +282,7 @@ namespace ProjectECG {
 			this->HeightOf->Name = L"HeightOf";
 			this->HeightOf->Size = System::Drawing::Size(66, 20);
 			this->HeightOf->TabIndex = 22;
-			this->HeightOf->Text = L"Высота";
+			this->HeightOf->Text = L"Г‚Г»Г±Г®ГІГ ";
 			// 
 			// Q
 			// 
@@ -293,7 +304,7 @@ namespace ProjectECG {
 			this->Title->Name = L"Title";
 			this->Title->Size = System::Drawing::Size(106, 20);
 			this->Title->TabIndex = 32;
-			this->Title->Text = L"II отведение";
+			this->Title->Text = L"II Г®ГІГўГҐГ¤ГҐГ­ГЁГҐ";
 			// 
 			// textBox1
 			// 
@@ -358,7 +369,7 @@ namespace ProjectECG {
 			this->StartOf->Name = L"StartOf";
 			this->StartOf->Size = System::Drawing::Size(58, 20);
 			this->StartOf->TabIndex = 32;
-			this->StartOf->Text = L"Длина";
+			this->StartOf->Text = L"Г„Г«ГЁГ­Г ";
 			// 
 			// ReadyButton
 			// 
@@ -369,7 +380,7 @@ namespace ProjectECG {
 			this->ReadyButton->Name = L"ReadyButton";
 			this->ReadyButton->Size = System::Drawing::Size(100, 47);
 			this->ReadyButton->TabIndex = 33;
-			this->ReadyButton->Text = L"Готово";
+			this->ReadyButton->Text = L"ГѓГ®ГІГ®ГўГ®";
 			this->ReadyButton->UseVisualStyleBackColor = true;
 			this->ReadyButton->Click += gcnew System::EventHandler(this, &DataForm::ReadyButton_Click);
 			// 
@@ -382,7 +393,7 @@ namespace ProjectECG {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(135, 20);
 			this->label1->TabIndex = 32;
-			this->label1->Text = L"Интервал R1-R2";
+			this->label1->Text = L"Г€Г­ГІГҐГ°ГўГ Г« R1-R2";
 			// 
 			// comboBox1
 			// 
@@ -424,7 +435,7 @@ namespace ProjectECG {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(135, 20);
 			this->label2->TabIndex = 46;
-			this->label2->Text = L"Интервал R2-R3";
+			this->label2->Text = L"Г€Г­ГІГҐГ°ГўГ Г« R2-R3";
 			// 
 			// IntervalsPanel
 			// 
@@ -497,6 +508,7 @@ namespace ProjectECG {
 			this->LengthsPanel->Size = System::Drawing::Size(899, 82);
 			this->LengthsPanel->TabIndex = 50;
 			// 
+
 			// textBox7
 			// 
 			this->textBox7->Anchor = System::Windows::Forms::AnchorStyles::None;
@@ -622,10 +634,36 @@ namespace ProjectECG {
 			// 
 			this->textBox18->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->textBox18->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->textBox18->Location = System::Drawing::Point(774, 28);
+			this->textBox18->Location = System::Drawing::Point(900, 193);
 			this->textBox18->Name = L"textBox18";
-			this->textBox18->Size = System::Drawing::Size(100, 26);
-			this->textBox18->TabIndex = 38;
+			this->textBox18->Size = System::Drawing::Size(100, 30);
+			this->textBox18->TabIndex = 45;
+			// 
+			// ReadyButton
+			// 
+			this->ReadyButton->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->ReadyButton->AutoSize = true;
+			this->ReadyButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->ReadyButton->Location = System::Drawing::Point(912, 314);
+			this->ReadyButton->Name = L"ReadyButton";
+			this->ReadyButton->Size = System::Drawing::Size(100, 47);
+			this->ReadyButton->TabIndex = 33;
+			this->ReadyButton->Text = L"ГѓГ®ГІГ®ГўГ®";
+			this->ReadyButton->UseVisualStyleBackColor = true;
+			this->ReadyButton->Click += gcnew System::EventHandler(this, &DataForm::ReadyButton_Click);
+			// 
+			// NextFormButton
+			// 
+			this->NextFormButton->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->NextFormButton->AutoSize = true;
+			this->NextFormButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->NextFormButton->Location = System::Drawing::Point(724, 385);
+			this->NextFormButton->Name = L"NextFormButton";
+			this->NextFormButton->Size = System::Drawing::Size(288, 47);
+			this->NextFormButton->TabIndex = 34;
+			this->NextFormButton->Text = L"Г‚Г»Г§ГўГ ГІГј Г±Г«ГҐГ¤ГіГѕГ№ГіГѕ ГґГ®Г°Г¬Гі";
+			this->NextFormButton->UseVisualStyleBackColor = true;
+			this->NextFormButton->Click += gcnew System::EventHandler(this, &DataForm::NextFormButton_Click);
 			// 
 			// label3
 			// 
@@ -636,13 +674,15 @@ namespace ProjectECG {
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(67, 20);
 			this->label3->TabIndex = 52;
-			this->label3->Text = L"Начало";
+			this->label3->Text = L"ГЌГ Г·Г Г«Г®";
+
 			// 
 			// DataForm
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->AutoSize = true;
 			this->CausesValidation = false;
+			this->Controls->Add(this->NextFormButton);
 			this->ClientSize = System::Drawing::Size(1489, 704);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->PosesPanel);
@@ -688,16 +728,30 @@ namespace ProjectECG {
 		intervals.push_back(System::Convert::ToDouble(comboBox1->SelectedItem));
 		SaveWavesToFile(intervals);
 		this->DialogResult = ::DialogResult::OK;
-
 	}
 
 	private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 	}
 
 
-private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
-}
+	System::Void NextFormButton_Click(System::Object^  sender, System::EventArgs^  e)
+	{
+		SaveWavesToFile(ParseDatasIntoDoubleVector(this->DataTable));
+		this->DialogResult = ::DialogResult::Yes;
+		//3 Г®ГІГўГҐГ¤ГҐГ­ГЁГҐ
+		/*DataForm^ form3 = gcnew DataForm();
+		form3->change_title("lll Г®ГІГўГҐГ¤ГҐГ­ГЁГҐ");
+		char * s = "lll leading";
+		//	write_s(s);
+		form3->ShowDialog();
+
+		if (form3->DialogResult == ::DialogResult::OK)
+			form3->Close();*/
+	}
+
 };
+
+	
 }
 
 

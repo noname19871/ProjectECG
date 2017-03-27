@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 
+
 //This class is for holding information about ECG and about second standart diversion concretly
 class WavesData {
 	
@@ -28,6 +29,7 @@ class WavesData {
 
 
 public:
+
 
 	//Copy constructor
 	WavesData(WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _intervals(other._intervals), _speed(other._speed) {};
@@ -53,6 +55,7 @@ public:
 		std::istringstream is1(h);
 		double tmp = 0.0;
 		while (is1 >> tmp)
+
 			_heights.push_back(tmp);
 
 		std::istringstream is2(l);

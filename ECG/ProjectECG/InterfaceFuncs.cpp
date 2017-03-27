@@ -1,14 +1,19 @@
 #include <iostream>
 #include <locale>
-#include <algorithm>
-
+#include <string>
+#include <fstream>
 
 #include "InterfaceFuncs.h"
 #include "AnalysisFuncs.h"
 
+
+
 using namespace System;
 using namespace System::Windows::Forms;
 using namespace std;
+
+
+ofstream f("mydata.csv");//ôàéë ñ äàííûìè çóáöîâ
 
 // textboxes MUST BE in TableLayoutPanel^ and their names MUST CONTAIN "textBox"
 std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
@@ -38,17 +43,61 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 
 }
 
-//It saves values from vector to text file 
+//It saves values from vector to csv file 
 void SaveWavesToFile(vector<double> v)
 {
-	ofstream f;
-	f.open("WavesData.txt", ios::app);
+	f << ";";
+	f << "P tooth";
+	f << ";";
+	f << "Q tooth";
+	f << ";";
+	f << "R tooth";
+	f << ";";
+	f << "S tooth";
+	f << ";";
+	f << "T tooth";
+	f << ";";
+	f << "U tooth";
+	f << '\n';
 
-	for (int i = 0; i < v.size(); i++)
-		f << v[i] << " ";
-	f << endl;
+	f << "Height";
+	f << ";";
+	for (int i = 0; i < 6; i++)
+		f << v[i] << ";";
+	f << '\n';
+
+	f << "Lenght";
+	f << ";";
+	for (int i = 6; i < 12; i++)
+		f << v[i] << ";";
+	f << '\n';
+
+	f << "Start";
+	f << ";";
+	for (int i = 12; i < 18; i++)
+		f << v[i] << ";";
+	f << '\n';
+	f << '\n';
+}
+
+//Çàêðûâàåò ôàéë ñ äàííûìè çóáöîâ
+void close_file()
+{
 	f.close();
 }
+
+//Î÷èùàåò ôàéë ñ äàííûìè çóáöîâ ïåðåä äàëüíåéøèì èñïîëüçîâàíèåì
+void clear_file()
+{
+	f.clear();
+}
+
+//Çàïèñûâàåò ñòðîêó s â ôàéë ñ äàííûìè çóáöîâ
+void write_s(char *s)
+{
+	f << s;
+	f << '\n';
+
 
 //It draws grid for ECG graphic
 void DrawGrid(System::Drawing::Graphics^ g, int width, int height)
@@ -63,7 +112,7 @@ void DrawGrid(System::Drawing::Graphics^ g, int width, int height)
 	delete myPen;
 }
 
-//It draws �ontrol volt (first Rectangle) for ECG graphic
+//It draws ñontrol volt (first Rectangle) for ECG graphic
 void DrawControlVolt(System::Drawing::Graphics^ g, int height, double p_pose)
 {
 	System::Drawing::Pen^ myPen =
