@@ -62,22 +62,22 @@ void SaveWavesToFile(vector<double> v)
 
 	f << "Height";
 	f << ";";
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < v.size(); i++)
 		f << v[i] << ";";
 	f << '\n';
 
-	f << "Lenght";
-	f << ";";
-	for (int i = 6; i < 12; i++)
-		f << v[i] << ";";
-	f << '\n';
+	//f << "Lenght";
+	//f << ";";
+	//for (int i = 6; i < 12; i++)
+	//	f << v[i] << ";";
+	//f << '\n';
 
-	f << "Start";
-	f << ";";
-	for (int i = 12; i < 18; i++)
-		f << v[i] << ";";
-	f << '\n';
-	f << '\n';
+	//f << "Start";
+	//f << ";";
+	//for (int i = 12; i < 18; i++)
+	//	f << v[i] << ";";
+	//if(v.size() == 3)
+		f << '\n';;
 }
 
 //Çàêðûâàåò ôàéë ñ äàííûìè çóáöîâ
@@ -97,6 +97,7 @@ void write_s(char *s)
 {
 	f << s;
 	f << '\n';
+}
 
 
 //It draws grid for ECG graphic
