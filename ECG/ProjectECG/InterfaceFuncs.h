@@ -5,23 +5,31 @@
 #include <vector>
 #include <fstream>
 
+#include "AnalysisFuncs.h"
+
 using namespace System::Windows::Forms;
 using namespace std;
 
 
-//Проход по всем TextBox в TableLayoutPanel и их парс в вектор дабл
-std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ pan);
+//ГЏГ°Г®ГµГ®Г¤ ГЇГ® ГўГ±ГҐГ¬ TextBox Гў TableLayoutPanel ГЁ ГЁГµ ГЇГ Г°Г± Гў ГўГҐГЄГІГ®Г° Г¤Г ГЎГ«
+std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size);
 
-//Сохранение значений полей в файл
+//Г‘Г®ГµГ°Г Г­ГҐГ­ГЁГҐ Г§Г­Г Г·ГҐГ­ГЁГ© ГЇГ®Г«ГҐГ© Гў ГґГ Г©Г«
 void SaveWavesToFile(std::vector<double> v);
 
-//Закрывает файл с данными зубцов
+//Г‡Г ГЄГ°Г»ГўГ ГҐГІ ГґГ Г©Г« Г± Г¤Г Г­Г­Г»Г¬ГЁ Г§ГіГЎГ¶Г®Гў
 void close_file();
 
-//Очищает файл с данными зубцов перед дальнейшим использованием
+//ГЋГ·ГЁГ№Г ГҐГІ ГґГ Г©Г« Г± Г¤Г Г­Г­Г»Г¬ГЁ Г§ГіГЎГ¶Г®Гў ГЇГҐГ°ГҐГ¤ Г¤Г Г«ГјГ­ГҐГ©ГёГЁГ¬ ГЁГ±ГЇГ®Г«ГјГ§Г®ГўГ Г­ГЁГҐГ¬
 void clear_file();
 
-//Записывает строку s в файл с данными зубцов
+//Г‡Г ГЇГЁГ±Г»ГўГ ГҐГІ Г±ГІГ°Г®ГЄГі s Гў ГґГ Г©Г« Г± Г¤Г Г­Г­Г»Г¬ГЁ Г§ГіГЎГ¶Г®Гў
 void write_s(char *s);
+
+//It draws grid for ECG graphic
+void DrawGrid(System::Drawing::Graphics^ g, int width, int height);
+
+//It draws ECG graphic on PictureBox
+void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const WavesData & w);
 
 #endif  FUNC_H
