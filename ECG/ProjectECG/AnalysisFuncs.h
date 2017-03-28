@@ -42,11 +42,13 @@ public:
 	{
 		std::ifstream fin(filename);
 
+		std::string firstline = "";
 		std::string h = "";
 		std::string l = "";
 		std::string p = "";
 		std::string i = "";
 
+		getline(fin, firstline);
 		getline(fin, h);
 		getline(fin, l);
 		getline(fin, p);
@@ -54,19 +56,23 @@ public:
 
 		std::istringstream is1(h);
 		double tmp = 0.0;
+		is1 >> tmp;
 		while (is1 >> tmp)
 
 			_heights.push_back(tmp);
 
 		std::istringstream is2(l);
+		is2 >> tmp;
 		while (is2 >> tmp)
 			_lengths.push_back(tmp);
 
 		std::istringstream is3(p);
+		is3 >> tmp;
 		while (is3 >> tmp)
 			_poses.push_back(tmp);
 
 		std::istringstream is4(i);
+		is4 >> tmp;
 		for (int i = 0; i < 2; i++)
 		{
 			is4 >> tmp;
