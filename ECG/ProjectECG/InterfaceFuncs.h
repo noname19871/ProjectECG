@@ -7,24 +7,13 @@
 
 #include "AnalysisFuncs.h"
 
-using namespace System::Windows::Forms;
-using namespace std;
-
-
 //Ïðîõîä ïî âñåì TextBox â TableLayoutPanel è èõ ïàðñ â âåêòîð äàáë
-std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size);
+std::vector<double> ParseDatasIntoDoubleVector(System::Windows::Forms::TableLayoutPanel^ p, int size);
 
-//Ñîõðàíåíèå çíà÷åíèé ïîëåé â ôàéë
-void SaveWavesToFile(std::vector<double> v);
+void PrepareAssignation(std::string filename);
 
-//Çàêðûâàåò ôàéë ñ äàííûìè çóáöîâ
-void close_file();
-
-//Î÷èùàåò ôàéë ñ äàííûìè çóáöîâ ïåðåä äàëüíåéøèì èñïîëüçîâàíèåì
-void clear_file();
-
-//Çàïèñûâàåò ñòðîêó s â ôàéë ñ äàííûìè çóáöîâ
-void write_s(char *s);
+//It saves values from vector to csv file 
+void SaveWavesToFile(std::vector<double> v, std::string filename, std::string vector_name);
 
 //It draws grid for ECG graphic
 void DrawGrid(System::Drawing::Graphics^ g, int width, int height);

@@ -193,10 +193,14 @@ namespace ProjectECG {
 	}
 
 	private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
-				 DataForm^ form2 = gcnew DataForm();
+				ofstream f("data.csv", ios::out);
+				f << "2 St." << ";";
+				f.close();
+		
+				DataForm^ form2 = gcnew DataForm();
 				 form2->ShowDialog();
-				 
-				 if (form2->DialogResult == ::DialogResult::OK)
+
+				 if (form2->DialogResult == System::Windows::Forms::DialogResult::OK)
 					 form2->Close();	
 			 }
 
@@ -205,7 +209,7 @@ namespace ProjectECG {
 
 	private: System::Void AnalyzeButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		//Инициализация класса информации о зубцах значениями из DataForm
-		WavesData w("WavesData.txt");
+		WavesData w("data.csv");
 
 		if (w.Check_arrhythmia())
 		{
@@ -225,7 +229,7 @@ namespace ProjectECG {
 private: System::Void DrawButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
 	Graphics^ g = Graphics::FromImage(pictureBox1->Image);
-	WavesData w("WavesData.txt");
+	WavesData w("data.csv");
 
 	DrawGrid(g, pictureBox1->Width, pictureBox1->Height);
 	DrawGraphic(g, pictureBox1->Width, pictureBox1->Height, w);

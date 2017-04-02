@@ -12,17 +12,12 @@ using namespace System;
 using namespace System::Windows::Forms;
 using namespace std;
 
-
-ofstream f("mydata.csv");//ôàéë ñ äàííûìè çóáöîâ
-
-// textboxes MUST BE in TableLayoutPanel^ and their names MUST CONTAIN "textBox"
+// Parse TextBoxes in TLP and add them to vector<double>
+// size - count of TextBoxes
 std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 {
 
 	std::vector<double> res(size);
-	String^ st1 = "textBox";
-	String^ st2 = "comboBox";
-
 	if (p->Controls->Count == 6)
 	{
 		for (int i = 0; i < 6; i++)
@@ -40,13 +35,12 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 	}
 
 	return res;
-
 }
 
-//It saves values from vector to csv file 
-void SaveWavesToFile(vector<double> v)
+
+void PrepareAssignation(string filename)
 {
-	f << ";";
+	ofstream f(filename, ios::app);
 	f << "P tooth";
 	f << ";";
 	f << "Q tooth";
@@ -59,45 +53,20 @@ void SaveWavesToFile(vector<double> v)
 	f << ";";
 	f << "U tooth";
 	f << '\n';
-
-	f << "Height";
-	f << ";";
-	for (int i = 0; i < 6; i++)
-		f << v[i] << ";";
-	f << '\n';
-
-	f << "Lenght";
-	f << ";";
-	for (int i = 6; i < 12; i++)
-		f << v[i] << ";";
-	f << '\n';
-
-	f << "Start";
-	f << ";";
-	for (int i = 12; i < 18; i++)
-		f << v[i] << ";";
-	f << '\n';
-	f << '\n';
-}
-
-//Çàêðûâàåò ôàéë ñ äàííûìè çóáöîâ
-void close_file()
-{
 	f.close();
 }
 
-//Î÷èùàåò ôàéë ñ äàííûìè çóáöîâ ïåðåä äàëüíåéøèì èñïîëüçîâàíèåì
-void clear_file()
+//It saves values from vector to csv file 
+void SaveWavesToFile(vector<double> v, string filename, string vector_name)
 {
-	f.clear();
-}
-
-//Çàïèñûâàåò ñòðîêó s â ôàéë ñ äàííûìè çóáöîâ
-void write_s(char *s)
-{
-	f << s;
+	ofstream f(filename, ios::app);
+	f << vector_name;
+	f << ";";
+	for (int i = 0; i < v.size(); i++)
+		f << v[i] << ";";
 	f << '\n';
-
+	f.close();
+}
 
 //It draws grid for ECG graphic
 void DrawGrid(System::Drawing::Graphics^ g, int width, int height)
@@ -112,7 +81,7 @@ void DrawGrid(System::Drawing::Graphics^ g, int width, int height)
 	delete myPen;
 }
 
-//It draws ñontrol volt (first Rectangle) for ECG graphic
+//It draws control volt (first Rectangle) for ECG graphic
 void DrawControlVolt(System::Drawing::Graphics^ g, int height, double p_pose)
 {
 	System::Drawing::Pen^ myPen =
@@ -162,7 +131,7 @@ void DrawQRS(System::Drawing::Graphics^ g, double height,
 	delete myPen;
 }
 
-//It draws P wave (second arc) for ECG graphic
+//It draws T wave (second arc) for ECG graphic
 void DrawT(System::Drawing::Graphics^ g, int height, double t_length, double t_height, double t_pose)
 {
 	System::Drawing::Pen^ myPen =
