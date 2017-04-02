@@ -37,7 +37,7 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 	return res;
 }
 
-
+//It prepares data file for 
 void PrepareAssignation(string filename)
 {
 	ofstream f(filename, ios::app);
@@ -158,4 +158,13 @@ void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const Wave
 			   w.poses()[4]);
 	DrawT(g, height, w.lengths()[4],w.heights()[4],w.poses()[4]);
 	DrawControlVolt(g, height, w.poses()[0]);
+}
+
+//Parse string from data file to get 6 double digits from it
+void parse_string(string & s)
+{
+	int del_pos = s.find_first_of(";") + 1;
+	s.erase(s.begin(), s.begin() + del_pos);
+	while (s.find(";") != string::npos)
+		s.replace(s.find(";"), 1, "");
 }

@@ -46,3 +46,13 @@ bool WavesData::Check_back_myocardial(const WavesData & w3, const WavesData & aV
 {
 	return 1;
 }
+
+//Parse string from data file to get 6 double digits from it
+void WavesData::parse_string(string & s)
+{
+	int del_pos = s.find_first_of(";") + 1;
+	s.erase(s.begin(), s.begin() + del_pos);
+	s.erase(s.begin() + s.find_last_of(";"), s.end());
+	while (s.find(";") != string::npos)
+		s.replace(s.find(";"), 1, " ");
+}

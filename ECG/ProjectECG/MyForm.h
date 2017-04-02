@@ -84,12 +84,12 @@ namespace ProjectECG {
 			this->DataButton->AutoSize = true;
 			this->DataButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->DataButton->Location = System::Drawing::Point(12, 303);
+			this->DataButton->Location = System::Drawing::Point(12, 208);
 			this->DataButton->Margin = System::Windows::Forms::Padding(2);
 			this->DataButton->Name = L"DataButton";
-			this->DataButton->Size = System::Drawing::Size(203, 41);
+			this->DataButton->Size = System::Drawing::Size(288, 43);
 			this->DataButton->TabIndex = 21;
-			this->DataButton->Text = L"Ввести данные";
+			this->DataButton->Text = L"Enter data";
 			this->DataButton->UseVisualStyleBackColor = true;
 			this->DataButton->Click += gcnew System::EventHandler(this, &MyForm::DataButton_Click);
 			// 
@@ -98,12 +98,12 @@ namespace ProjectECG {
 			this->AnalyzeButton->AutoSize = true;
 			this->AnalyzeButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->AnalyzeButton->Location = System::Drawing::Point(219, 303);
+			this->AnalyzeButton->Location = System::Drawing::Point(12, 255);
 			this->AnalyzeButton->Margin = System::Windows::Forms::Padding(2);
 			this->AnalyzeButton->Name = L"AnalyzeButton";
-			this->AnalyzeButton->Size = System::Drawing::Size(203, 41);
+			this->AnalyzeButton->Size = System::Drawing::Size(288, 43);
 			this->AnalyzeButton->TabIndex = 22;
-			this->AnalyzeButton->Text = L"Анализировать";
+			this->AnalyzeButton->Text = L"Analyse";
 			this->AnalyzeButton->UseVisualStyleBackColor = true;
 			this->AnalyzeButton->Click += gcnew System::EventHandler(this, &MyForm::AnalyzeButton_Click);
 			// 
@@ -128,9 +128,9 @@ namespace ProjectECG {
 			this->Conclusion->Location = System::Drawing::Point(1106, 89);
 			this->Conclusion->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->Conclusion->Name = L"Conclusion";
-			this->Conclusion->Size = System::Drawing::Size(304, 42);
+			this->Conclusion->Size = System::Drawing::Size(375, 64);
 			this->Conclusion->TabIndex = 24;
-			this->Conclusion->Text = L"Результат анализа:";
+			this->Conclusion->Text = L"Analysis result:";
 			// 
 			// label1
 			// 
@@ -140,7 +140,7 @@ namespace ProjectECG {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(32, 13);
 			this->label1->TabIndex = 25;
-			this->label1->Text = L"V 1.0";
+			this->label1->Text = L"V 2.0";
 			// 
 			// pictureBox1
 			// 
@@ -155,11 +155,11 @@ namespace ProjectECG {
 			// 
 			this->DrawButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->DrawButton->Location = System::Drawing::Point(427, 304);
+			this->DrawButton->Location = System::Drawing::Point(12, 303);
 			this->DrawButton->Name = L"DrawButton";
-			this->DrawButton->Size = System::Drawing::Size(203, 40);
+			this->DrawButton->Size = System::Drawing::Size(288, 40);
 			this->DrawButton->TabIndex = 27;
-			this->DrawButton->Text = L"Построить график";
+			this->DrawButton->Text = L"Create ECG graphic";
 			this->DrawButton->UseVisualStyleBackColor = true;
 			this->DrawButton->Click += gcnew System::EventHandler(this, &MyForm::DrawButton_Click);
 			// 
@@ -209,7 +209,7 @@ namespace ProjectECG {
 
 	private: System::Void AnalyzeButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		//Инициализация класса информации о зубцах значениями из DataForm
-		WavesData w("data.csv");
+		WavesData w("data.csv", 1);
 
 		if (w.Check_arrhythmia())
 		{
@@ -229,7 +229,10 @@ namespace ProjectECG {
 private: System::Void DrawButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
 	Graphics^ g = Graphics::FromImage(pictureBox1->Image);
-	WavesData w("data.csv");
+	WavesData w("data.csv", 1);
+	
+	if (w.heights()[0] == 1)
+		this->label1->Text = "все норм";
 
 	DrawGrid(g, pictureBox1->Width, pictureBox1->Height);
 	DrawGraphic(g, pictureBox1->Width, pictureBox1->Height, w);

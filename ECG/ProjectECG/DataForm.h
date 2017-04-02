@@ -85,51 +85,47 @@ namespace ProjectECG {
 #pragma region Windows Form Designer generated code
 		void InitializeComponent(void)
 		{
-			this->LengthOf	=	(gcnew System::Windows::Forms::Label());
-			this->StartOf	=	(gcnew System::Windows::Forms::Label());
-			this->HeightOf  =	(gcnew System::Windows::Forms::Label());
-			this->P			=	(gcnew System::Windows::Forms::Label());
-			this->R			=	(gcnew System::Windows::Forms::Label());
-			this->U			=	(gcnew System::Windows::Forms::Label());
-			this->T			=	(gcnew System::Windows::Forms::Label());
-			this->S			=	(gcnew System::Windows::Forms::Label());
-			this->Q			=	(gcnew System::Windows::Forms::Label());
-			this->Title		=	(gcnew System::Windows::Forms::Label());
-			this->label1	=	(gcnew System::Windows::Forms::Label());
-			this->label2	=	(gcnew System::Windows::Forms::Label());
-			this->label3	=	(gcnew System::Windows::Forms::Label());
-
-			this->ReadyButton	 =	(gcnew System::Windows::Forms::Button());
-			this->NextFormButton =	(gcnew System::Windows::Forms::Button());
-
-			this->tableLayoutPanel	= (gcnew System::Windows::Forms::TableLayoutPanel());
-			this->IntervalsPanel	= (gcnew System::Windows::Forms::TableLayoutPanel());
-			this->HeightsPanel		= (gcnew System::Windows::Forms::TableLayoutPanel());
-			this->LengthsPanel		= (gcnew System::Windows::Forms::TableLayoutPanel());
-			this->PosesPanel		= (gcnew System::Windows::Forms::TableLayoutPanel());
-
-			this->textBox1  = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2  = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3  = (gcnew System::Windows::Forms::TextBox());
-			this->textBox4  = (gcnew System::Windows::Forms::TextBox());
-			this->textBox5  = (gcnew System::Windows::Forms::TextBox());
-			this->textBox6  = (gcnew System::Windows::Forms::TextBox());
-			this->textBox7  = (gcnew System::Windows::Forms::TextBox());
-			this->textBox8  = (gcnew System::Windows::Forms::TextBox());
-			this->textBox9  = (gcnew System::Windows::Forms::TextBox());
+			this->LengthOf = (gcnew System::Windows::Forms::Label());
+			this->StartOf = (gcnew System::Windows::Forms::Label());
+			this->HeightOf = (gcnew System::Windows::Forms::Label());
+			this->P = (gcnew System::Windows::Forms::Label());
+			this->R = (gcnew System::Windows::Forms::Label());
+			this->U = (gcnew System::Windows::Forms::Label());
+			this->T = (gcnew System::Windows::Forms::Label());
+			this->S = (gcnew System::Windows::Forms::Label());
+			this->Q = (gcnew System::Windows::Forms::Label());
+			this->Title = (gcnew System::Windows::Forms::Label());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->ReadyButton = (gcnew System::Windows::Forms::Button());
+			this->NextFormButton = (gcnew System::Windows::Forms::Button());
+			this->tableLayoutPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->IntervalsPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->textBox19 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox20 = (gcnew System::Windows::Forms::TextBox());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->HeightsPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+			this->LengthsPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->textBox7 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox9 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox10 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox12 = (gcnew System::Windows::Forms::TextBox());
+			this->PosesPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->textBox13 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox14 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox15 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox16 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox17 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox18 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox19 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox20 = (gcnew System::Windows::Forms::TextBox());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
-
 			this->tableLayoutPanel->SuspendLayout();
 			this->IntervalsPanel->SuspendLayout();
 			this->HeightsPanel->SuspendLayout();
@@ -139,36 +135,37 @@ namespace ProjectECG {
 			// 
 			// LengthOf
 			// 
-			this->LengthOf->Anchor		= System::Windows::Forms::AnchorStyles::Left;
-			this->LengthOf->AutoSize	= true;
-			this->LengthOf->Font		= (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->LengthOf->Location	= System::Drawing::Point(3, 142);
-			this->LengthOf->Name		= L"LengthOf";
-			this->LengthOf->Size		= System::Drawing::Size(73, 25);
-			this->LengthOf->TabIndex	= 23;
-			this->LengthOf->Text		= L"Длина";
+			this->LengthOf->Anchor = System::Windows::Forms::AnchorStyles::Left;
+			this->LengthOf->AutoSize = true;
+			this->LengthOf->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->LengthOf->Location = System::Drawing::Point(3, 142);
+			this->LengthOf->Name = L"LengthOf";
+			this->LengthOf->Size = System::Drawing::Size(73, 25);
+			this->LengthOf->TabIndex = 23;
+			this->LengthOf->Text = L"Length";
 			// 
 			// StartOf
 			// 
-			this->StartOf->Anchor		= System::Windows::Forms::AnchorStyles::Left;
-			this->StartOf->AutoSize		= true;
-			this->StartOf->Font			= (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->StartOf->Location		= System::Drawing::Point(84, 214);
-			this->StartOf->Name			= L"StartOf";
-			this->StartOf->Size			= System::Drawing::Size(87, 29);
-			this->StartOf->TabIndex		= 32;
-			this->StartOf->Text			= L"Начало";
+			this->StartOf->Anchor = System::Windows::Forms::AnchorStyles::Left;
+			this->StartOf->AutoSize = true;
+			this->StartOf->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->StartOf->Location = System::Drawing::Point(84, 214);
+			this->StartOf->Name = L"StartOf";
+			this->StartOf->Size = System::Drawing::Size(86, 29);
+			this->StartOf->TabIndex = 32;
+			this->StartOf->Text = L"Length";
 			// 
 			// HeightOf
 			// 
-			this->HeightOf->Anchor		= System::Windows::Forms::AnchorStyles::Left;
-			this->HeightOf->AutoSize	= true;
-			this->HeightOf->Font		= (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->HeightOf->Location	= System::Drawing::Point(85, 126);
-			this->HeightOf->Name		= L"HeightOf";
-			this->HeightOf->Size		= System::Drawing::Size(97, 29);
-			this->HeightOf->TabIndex	= 22;
-			this->HeightOf->Text		= L"Высота";
+			this->HeightOf->Anchor = System::Windows::Forms::AnchorStyles::Left;
+			this->HeightOf->AutoSize = true;
+			this->HeightOf->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->HeightOf->Location = System::Drawing::Point(85, 126);
+			this->HeightOf->Name = L"HeightOf";
+			this->HeightOf->Size = System::Drawing::Size(83, 29);
+			this->HeightOf->TabIndex = 22;
+			this->HeightOf->Text = L"Height";
 			// 
 			// P
 			// 
@@ -243,9 +240,9 @@ namespace ProjectECG {
 			this->Title->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->Title->Location = System::Drawing::Point(3, 0);
 			this->Title->Name = L"Title";
-			this->Title->Size = System::Drawing::Size(124, 30);
+			this->Title->Size = System::Drawing::Size(122, 30);
 			this->Title->TabIndex = 32;
-			this->Title->Text = L"II отведение";
+			this->Title->Text = L"II standart diversion";
 			// 
 			// label1
 			// 
@@ -254,9 +251,9 @@ namespace ProjectECG {
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->label1->Location = System::Drawing::Point(3, 7);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(133, 58);
+			this->label1->Size = System::Drawing::Size(90, 58);
 			this->label1->TabIndex = 32;
-			this->label1->Text = L"Интервал R1-R2";
+			this->label1->Text = L"R1-R2 interval";
 			// 
 			// label2
 			// 
@@ -265,9 +262,20 @@ namespace ProjectECG {
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->label2->Location = System::Drawing::Point(445, 7);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(133, 58);
+			this->label2->Size = System::Drawing::Size(90, 58);
 			this->label2->TabIndex = 46;
-			this->label2->Text = L"Интервал R2-R3";
+			this->label2->Text = L"R2-R3 interval";
+			// 
+			// label3
+			// 
+			this->label3->Anchor = System::Windows::Forms::AnchorStyles::Left;
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label3->Location = System::Drawing::Point(85, 302);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(62, 29);
+			this->label3->TabIndex = 52;
+			this->label3->Text = L"Start";
 			// 
 			// ReadyButton
 			// 
@@ -278,7 +286,7 @@ namespace ProjectECG {
 			this->ReadyButton->Name = L"ReadyButton";
 			this->ReadyButton->Size = System::Drawing::Size(104, 47);
 			this->ReadyButton->TabIndex = 33;
-			this->ReadyButton->Text = L"Готово";
+			this->ReadyButton->Text = L"OK";
 			this->ReadyButton->UseVisualStyleBackColor = true;
 			this->ReadyButton->Click += gcnew System::EventHandler(this, &DataForm::ReadyButton_Click);
 			// 
@@ -291,7 +299,7 @@ namespace ProjectECG {
 			this->NextFormButton->Name = L"NextFormButton";
 			this->NextFormButton->Size = System::Drawing::Size(374, 47);
 			this->NextFormButton->TabIndex = 34;
-			this->NextFormButton->Text = L"Ввести следующее отведение";
+			this->NextFormButton->Text = L"Enter next diversion";
 			this->NextFormButton->UseVisualStyleBackColor = true;
 			this->NextFormButton->Click += gcnew System::EventHandler(this, &DataForm::NextFormButton_Click);
 			// 
@@ -334,18 +342,21 @@ namespace ProjectECG {
 			this->IntervalsPanel->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->IntervalsPanel->AutoSize = true;
 			this->IntervalsPanel->ColumnCount = 5;
-			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 142)));
-			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 300)));
-			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 150)));
-			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 300)));
-			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 12)));
-
+			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				142)));
+			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				300)));
+			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				150)));
+			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				300)));
+			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				12)));
 			this->IntervalsPanel->Controls->Add(this->label1, 0, 0);
 			this->IntervalsPanel->Controls->Add(this->textBox19, 1, 0);
 			this->IntervalsPanel->Controls->Add(this->label2, 2, 0);
 			this->IntervalsPanel->Controls->Add(this->textBox20, 3, 0);
 			this->IntervalsPanel->Controls->Add(this->comboBox1, 4, 0);
-
 			this->IntervalsPanel->Location = System::Drawing::Point(59, 362);
 			this->IntervalsPanel->Name = L"IntervalsPanel";
 			this->IntervalsPanel->RowCount = 1;
@@ -610,17 +621,6 @@ namespace ProjectECG {
 			this->textBox18->Name = L"textBox18";
 			this->textBox18->Size = System::Drawing::Size(100, 35);
 			this->textBox18->TabIndex = 45;
-			// 
-			// label3
-			// 
-			this->label3->Anchor = System::Windows::Forms::AnchorStyles::Left;
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label3->Location = System::Drawing::Point(85, 302);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(99, 29);
-			this->label3->TabIndex = 52;
-			this->label3->Text = L"Начало";
 			// 
 			// DataForm
 			// 
