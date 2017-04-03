@@ -100,7 +100,6 @@ void DrawP(System::Drawing::Graphics^ g, int height, double p_length, double p_h
 {
 	System::Drawing::Pen^ myPen =
 		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
-
 	if (p_height != 0)
 	{
 		g->DrawArc(myPen, System::Drawing::Rectangle(40 + 20 * p_pose, height / 2 - 20 * p_height, 20 * p_length, 40 * p_height), 180, 180);
@@ -123,8 +122,13 @@ void DrawQRS(System::Drawing::Graphics^ g, double height,
 		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
 
 	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * q_pose,                                    height / 2),                 System::Drawing::Point(40 + 20 * (q_pose + q_length),                       height / 2 - 20 * q_height));
-	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length),                       height / 2 - 20 * q_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2),        height / 2 - 20 * r_height));
-	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2),        height / 2 - 20 * r_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length),            height / 2 - 20 * s_heigth));
+
+	if (r_height != 0)
+	{
+		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length), height / 2 - 20 * q_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2), height / 2 - 20 * r_height));
+		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2), height / 2 - 20 * r_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length), height / 2 - 20 * s_heigth));
+	}
+
 	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length),            height / 2 - 20 * s_heigth), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2));
 	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2),                 System::Drawing::Point(40 + 20 * t_pose,                                    height / 2));
 
@@ -132,7 +136,7 @@ void DrawQRS(System::Drawing::Graphics^ g, double height,
 }
 
 //It draws T wave (second arc) for ECG graphic
-void DrawT(System::Drawing::Graphics^ g, int height, double t_length, double t_height, double t_pose)
+void DrawT(System::Drawing::Graphics^ g, int height, double t_length, double t_height, double t_pose, double p_pose)
 {
 	System::Drawing::Pen^ myPen =
 		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
@@ -140,23 +144,31 @@ void DrawT(System::Drawing::Graphics^ g, int height, double t_length, double t_h
 	if (t_height != 0)
 	{
 		g->DrawArc(myPen, System::Drawing::Rectangle(40 + 20 * t_pose, height / 2 - 20 * t_height, 20 * t_length, 40 * t_height), 180, 180);
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (t_pose + t_length), height / 2), System::Drawing::Point(420, height / 2));
+		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (t_pose + t_length), height / 2), System::Drawing::Point(40 + 20 * p_pose, height / 2));
 	}
 	else
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * t_pose , height / 2), System::Drawing::Point(420, height / 2));
+		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * t_pose , height / 2), System::Drawing::Point(40 + 20 * p_pose, height / 2));
 	delete myPen;
 }
 
 //It draws ECG graphic on PictureBox
 void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const WavesData & w)
 {
-	DrawP(g, height, w.lengths()[0], w.heights()[0], w.poses()[0], w.poses()[1]);
-	DrawQRS(g, height,
-			   w.lengths()[1], w.heights()[1], w.poses()[1],
-		       w.lengths()[2], w.heights()[2], w.poses()[2], 
-		       w.lengths()[3], w.heights()[3], w.poses()[3],
-			   w.poses()[4]);
-	DrawT(g, height, w.lengths()[4],w.heights()[4],w.poses()[4]);
+	for (int i = 0; i < 14; i++)
+	{
+		int interval = (i % 2 == 0) ? w.intervals()[0] : w.intervals()[1];
+		DrawP(g, height, w.lengths()[0], w.heights()[0], i * interval + w.poses()[0], i * interval + w.poses()[1]);
+		DrawQRS(g, height,
+			 w.lengths()[1], w.heights()[1], i * interval + w.poses()[1],
+			 w.lengths()[2], w.heights()[2], i * interval + w.poses()[2],
+			 w.lengths()[3], w.heights()[3], i * interval + w.poses()[3],
+			 i * interval + w.poses()[4]);
+		if(interval != 0)
+			DrawT(g, height, w.lengths()[4],  w.heights()[4], i * interval + w.poses()[4], (i + 1) * interval + w.poses()[0]);
+		else
+			DrawT(g, height, w.lengths()[4], w.heights()[4], i * interval + w.poses()[4], w.poses()[4] + w.lengths()[4] + w.poses()[0]);
+	}
+
 	DrawControlVolt(g, height, w.poses()[0]);
 }
 

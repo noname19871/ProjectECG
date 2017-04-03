@@ -31,6 +31,9 @@ protected:
 	//Parse string from data file to get 6 double digits from it
 	void parse_string(std::string & s);
 
+	//Return number of diversion in data file
+	int define_diversion(System::String^ s);
+
 public:
 
 
@@ -41,7 +44,7 @@ public:
 	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p, std::vector<double> i, double s) :_heights(h), _lengths(l), _poses(p), _intervals(i), _speed(s) {}
 
 	//It initializes class`s fields by values from file 
-	WavesData(std::string filename, int diversion_number)
+	WavesData(std::string filename, System::String^ s)
 	{
 		std::ifstream fin(filename, std::ios::in);
 
@@ -51,7 +54,7 @@ public:
 		std::string p = "";
 		std::string i = "";
 
-		for (int i = 0; i < 5 * (diversion_number - 1); i++)
+		for (int i = 0; i < 6 * define_diversion(s); i++)
 			getline(fin, firstline);
 
 		getline(fin, firstline);
@@ -87,22 +90,27 @@ public:
 		is4 >> _speed;
 	}
 
+	//Getter for heights vector
 	std::vector<double> heights() const {
 		return _heights;
 	}
 
+	//Getter for lengths vector
 	std::vector<double> lengths() const {
 		return _lengths;
 	}
 
+	//Getter for poses vector
 	std::vector<double> poses() const {
 		return _poses;
 	}
 
+	//Getter for intervals vector
 	std::vector<double> intervals() const {
 		return _intervals;
 	}
 
+	//Getter for speed
 	double speed() const {
 		return _speed;
 	}

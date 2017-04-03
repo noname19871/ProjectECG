@@ -33,12 +33,12 @@ System::String^ Define_hearth_axis(const WavesData & w1, const WavesData & w2, c
 {
 
 	if (w1.heights()[2] > w1.heights()[3] && w3.heights()[3] > w3.heights()[2])
-		return "Ýëåêòðè÷åñêàÿ îñü îòêëîíåíà âëåâî";
+		return "Электрическая ось отклонена влево";
 
 	if(w1.heights()[2] < w1.heights()[3] && w3.heights()[3] < w3.heights()[2])
-		return "Ýëåêòðè÷åñêàÿ îñü îòêëîíåíà âïðàâî";
+		return "Электрическая ось отклонена вправо";
 
-	return "Ýëåêòðè÷åñêàÿ îñü ñåðäöà íå îòêëîíåíà";
+	return "Электрическая ось в нормальном положении";
 }
 
 //It checks patient for back myocardial
@@ -55,4 +55,36 @@ void WavesData::parse_string(string & s)
 	s.erase(s.begin() + s.find_last_of(";"), s.end());
 	while (s.find(";") != string::npos)
 		s.replace(s.find(";"), 1, " ");
+}
+
+//Return number of diversion in data file
+int WavesData::define_diversion(System::String^ s)
+{
+	switch(s[0])
+	{
+	case '1': { return 0; }
+	case '2': { return 1; }
+	case '3': { return 2; }
+	case 'a': 
+	{
+		switch (s[2])
+		{
+		case 'L': { return 3; }
+		case 'F': { return 4; }
+		case 'R': { return 5; }
+		};
+	}
+	case 'V': 
+	{
+		switch (s[1])
+		{
+		case '1': { return 6; }
+		case '2': { return 7; }
+		case '3': { return 8; }
+		case '4': { return 9; }
+		case '5': { return 10; }
+		case '6': { return 11; }
+		}
+	}
+	};
 }
