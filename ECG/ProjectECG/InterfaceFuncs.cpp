@@ -30,13 +30,29 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 	}
 	else
 	{
-		res[0] = System::Convert::ToDouble(p->Controls[1]->Text == "" ? "0" : p->Controls[1]->Text);
-		res[1] = System::Convert::ToDouble(p->Controls[3]->Text == "" ? "0" : p->Controls[3]->Text);
+		String^ tmp = p->Controls[1]->Text;
+
+		if (p->Controls[1]->Text->Contains("."))
+			tmp = p->Controls[1]->Text->Replace(".", ",");
+		res[0] = System::Convert::ToDouble(p->Controls[1]->Text == "" ? "0" : tmp);
+
+		tmp = p->Controls[3]->Text;
+		if (p->Controls[3]->Text->Contains("."))
+			tmp = p->Controls[3]->Text->Replace(".", ",");
+		res[1] = System::Convert::ToDouble(p->Controls[3]->Text == "" ? "0" : tmp);
 	}
 
 	return res;
 }
 
+//It resets textboxes in TableLayoutPanel^ p to "";
+void ResetTextboxesInDataTable(System::Windows::Forms::TableLayoutPanel^ p)
+{
+	for (int i = 0; i < 6; i++)
+	{
+		if (p->Controls[i]->Text != "") p->Controls[i]->Text = "";
+	}
+}
 
 void PrepareAssignation(string filename)
 {

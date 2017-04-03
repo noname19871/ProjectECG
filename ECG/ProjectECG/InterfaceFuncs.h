@@ -21,4 +21,9 @@ void DrawGrid(System::Drawing::Graphics^ g, int width, int height);
 //It draws ECG graphic on PictureBox
 void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const WavesData & w);
 
+//It resets textboxes in TableLayoutPanel^ p to value "";
+void ResetTextboxesInDataTable(System::Windows::Forms::TableLayoutPanel^ p);
+
+
+
 #endif  FUNC_H

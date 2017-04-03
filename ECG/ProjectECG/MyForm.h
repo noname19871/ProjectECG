@@ -14,7 +14,7 @@ namespace ProjectECG {
 	using namespace System::Drawing;
 	using namespace System::Windows::Forms::DataVisualization::Charting;
 
-	
+
 	/// <summary>
 	/// Summary for MyForm
 	/// </summary>
@@ -45,7 +45,7 @@ namespace ProjectECG {
 				delete components;
 			}
 		}
- 
+
 
 
 	private: System::Windows::Forms::Button^  DataButton;
@@ -176,6 +176,7 @@ namespace ProjectECG {
 			this->Controls->Add(this->ConclusionText);
 			this->Controls->Add(this->AnalyzeButton);
 			this->Controls->Add(this->DataButton);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
 			this->Margin = System::Windows::Forms::Padding(2);
 			this->MaximizeBox = false;
 			this->Name = L"MyForm";
@@ -193,16 +194,16 @@ namespace ProjectECG {
 	}
 
 	private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
-				ofstream f("data.csv", ios::out);
-				f << "2 St." << ";";
-				f.close();
-		
-				DataForm^ form2 = gcnew DataForm();
-				 form2->ShowDialog();
+		ofstream f("data.csv", ios::out);
+		f << "2 St." << ";";
+		f.close();
 
-				 if (form2->DialogResult == System::Windows::Forms::DialogResult::OK)
-					 form2->Close();	
-			 }
+		DataForm^ form2 = gcnew DataForm();
+		form2->ShowDialog();
+
+		/*if (form2->DialogResult == System::Windows::Forms::DialogResult::OK)
+			form2->Close();*/
+	}
 
 	private: System::Void tableLayoutPanel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 	}
@@ -226,21 +227,21 @@ namespace ProjectECG {
 	}
 
 
-private: System::Void DrawButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
-	Graphics^ g = Graphics::FromImage(pictureBox1->Image);
-	WavesData w("data.csv");
+	private: System::Void DrawButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
+		Graphics^ g = Graphics::FromImage(pictureBox1->Image);
+		WavesData w("data.csv");
 
-	DrawGrid(g, pictureBox1->Width, pictureBox1->Height);
-	DrawGraphic(g, pictureBox1->Width, pictureBox1->Height, w);
+		DrawGrid(g, pictureBox1->Width, pictureBox1->Height);
+		DrawGraphic(g, pictureBox1->Width, pictureBox1->Height, w);
+	}
+
+
+
+
+
+
+	};
+
 }
-
-
-
-
-
-
-};
-};
-	
 
