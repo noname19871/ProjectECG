@@ -77,7 +77,9 @@ namespace ProjectECG {
 	private: System::Windows::Forms::TextBox^  textBox18;
 	private: System::Windows::Forms::TextBox^  textBox19;
 	private: System::Windows::Forms::TextBox^  textBox20;
+
 	private: System::Windows::Forms::ComboBox^  comboBox1;
+	private: System::Windows::Forms::ComboBox^  comboBox2;
 
 
 	private:
@@ -127,6 +129,7 @@ namespace ProjectECG {
 			this->textBox19 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox20 = (gcnew System::Windows::Forms::TextBox());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
 			this->tableLayoutPanel->SuspendLayout();
 			this->HeightsPanel->SuspendLayout();
 			this->LengthsPanel->SuspendLayout();
@@ -621,6 +624,22 @@ namespace ProjectECG {
 			this->comboBox1->Size = System::Drawing::Size(100, 37);
 			this->comboBox1->TabIndex = 49;
 			// 
+			// comboBox2
+			// 
+			this->comboBox2->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->comboBox2->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->comboBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->comboBox2->FormattingEnabled = true;
+			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(12) {
+				L"1 St.", L"2 St.", L"3 St.", L"aVL", L"aVR", L"aVF",
+					L"V1", L"V2", L"V3", L"V4", L"V5", L"V6"
+					
+			});
+			this->comboBox2->Location = System::Drawing::Point(569, 529);
+			this->comboBox2->Name = L"comboBox2";
+			this->comboBox2->Size = System::Drawing::Size(100, 28);
+			this->comboBox2->TabIndex = 53;
+			// 
 			// DataForm
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -638,6 +657,7 @@ namespace ProjectECG {
 			this->Controls->Add(this->ReadyButton);
 			this->Controls->Add(this->HeightOf);
 			this->Controls->Add(this->tableLayoutPanel);
+			this->Controls->Add(this->comboBox2);
 			this->Name = L"DataForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"DataForm";
@@ -658,18 +678,38 @@ namespace ProjectECG {
 		}
 #pragma endregion
 	private: System::Void DataForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		comboBox1->SelectedItem = "50";
+		this->comboBox1->SelectedItem = L"50";
+		this->comboBox2->SelectedItem = L"2 St."; //Should be here, because it bugs and disappers after first compile
+		PrepareFile("data.csv");
 	}
+	
 
 	private: System::Void ReadyButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		SaveWavesToFile(ParseDatasIntoDoubleVector(this->HeightsPanel, 6), "data.csv", "Height");
-		SaveWavesToFile(ParseDatasIntoDoubleVector(this->LengthsPanel, 6), "data.csv", "Length");
-		SaveWavesToFile(ParseDatasIntoDoubleVector(this->PosesPanel, 6),   "data.csv", "Poses");
-		
-	    std::vector<double> intervals = ParseDatasIntoDoubleVector(this->IntervalsPanel, 2);
-		intervals.push_back(System::Convert::ToDouble(comboBox1->SelectedItem));
-		SaveWavesToFile(intervals, "data.csv", "Intervals");
-		this->DialogResult = System::Windows::Forms::DialogResult::OK;
+		std::string diversName;
+		if (this->Title->Text->Contains("1 St.")) diversName = "1 St.";
+		else if (this->Title->Text->Contains("2 St.")) diversName = "2 St.";
+		else if (this->Title->Text->Contains("3 St.")) diversName = "3 St.";
+		else if (this->Title->Text->Contains("aVF")) diversName = "aVF";
+		else if (this->Title->Text->Contains("aVL")) diversName = "aVL";
+		else if (this->Title->Text->Contains("aVR")) diversName = "aVR";
+		else if (this->Title->Text->Contains("V1")) diversName = "V1";
+		else if (this->Title->Text->Contains("V2")) diversName = "V2";
+		else if (this->Title->Text->Contains("V3")) diversName = "V3";
+		else if (this->Title->Text->Contains("V4")) diversName = "V4";
+		else if (this->Title->Text->Contains("V5")) diversName = "V5";
+		else  diversName = "V6";
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Height");
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Length");
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 5), "Poses");
+				//ofstream f("data.csv");
+					//auto vv = ParseDatasIntoDoubleVector(this->PosesPanel, 3);
+			
+			
+					//f << "Intervals" << ";" <<vv[0] << ";" << vv[1] << ";" << "Speed" << ";" << vv[2] << ";" << endl;
+					//f.close();
+			
+			
+			this->Close();
 	}
 
 	private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
@@ -678,10 +718,35 @@ namespace ProjectECG {
 
 	System::Void NextFormButton_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-		SaveWavesToFile(ParseDatasIntoDoubleVector(this->HeightsPanel, 6), "data.csv", "Height");
-		SaveWavesToFile(ParseDatasIntoDoubleVector(this->LengthsPanel, 6), "data.csv", "Length");
-		SaveWavesToFile(ParseDatasIntoDoubleVector(this->PosesPanel, 6),   "data.csv", "Poses");
-		this->DialogResult = System::Windows::Forms::DialogResult::Yes;
+		std::string diversName;
+		if (this->Title->Text->Contains("1 St.")) diversName = "1 St.";
+		else if (this->Title->Text->Contains("2 St.")) diversName = "2 St.";
+		else if (this->Title->Text->Contains("3 St.")) diversName = "3 St.";
+		else if (this->Title->Text->Contains("aVF")) diversName = "aVF";
+		else if (this->Title->Text->Contains("aVL")) diversName = "aVL";
+		else if (this->Title->Text->Contains("aVR")) diversName = "aVR";
+		else if (this->Title->Text->Contains("V1")) diversName = "V1";
+		else if (this->Title->Text->Contains("V2")) diversName = "V2";
+		else if (this->Title->Text->Contains("V3")) diversName = "V3";
+		else if (this->Title->Text->Contains("V4")) diversName = "V4";
+		else if (this->Title->Text->Contains("V5")) diversName = "V5";
+		else  diversName = "V6";
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Height");
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Length");
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 5), "Poses");
+		
+		this->IntervalsPanel->Visible = false;
+		this->Title->Text = this->comboBox2->Text;
+		if (this->comboBox2->Text->Contains("2 St."))
+			 {
+			this->IntervalsPanel->Visible = true;
+			this->IntervalsPanel->Controls[1]->Text = "";
+			this->IntervalsPanel->Controls[3]->Text = "";
+			}
+		ResetTextboxesInDataTable(this->HeightsPanel);
+		ResetTextboxesInDataTable(this->LengthsPanel);
+		ResetTextboxesInDataTable(this->PosesPanel);
+		this->Refresh();
 	}
 
 	private: System::Void HelpButton_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -689,6 +754,21 @@ namespace ProjectECG {
 		form->Information->Text = System::IO::File::ReadAllText("helpdataform.txt", System::Text::Encoding::Default);
 		form->ShowDialog();
 	}
+
+	private: System::Void textBox14_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		this->textBox15->Text = this->textBox14->Text;
+		this->textBox16->Text = this->textBox14->Text;
+		}
+
+	private: System::Void textBox15_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		this->textBox14->Text = this->textBox15->Text;
+		this->textBox16->Text = this->textBox15->Text;
+		}
+
+	private: System::Void textBox16_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		this->textBox15->Text = this->textBox16->Text;
+		this->textBox14->Text = this->textBox16->Text;
+		}
 
 };
 
