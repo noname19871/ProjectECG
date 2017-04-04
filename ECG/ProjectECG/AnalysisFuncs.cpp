@@ -13,6 +13,8 @@ bool WavesData::Check_arrhythmia()
 //return patient`s hearth rate
 double WavesData::count_heart_rate()
 {
+	if (intervals()[0] == 0)
+		return 0;
 	return speed() == 50 ? trunc(600 / intervals()[0]) : trunc(300 / intervals()[1]);
 }
 
@@ -52,7 +54,7 @@ void WavesData::parse_string(string & s)
 {
 	int del_pos = s.find_first_of(";") + 1;
 	s.erase(s.begin(), s.begin() + del_pos);
-	s.erase(s.begin() + s.find_last_of(";"), s.end());
+	//s.erase(s.begin() + s.find_last_of(";") + 1, s.end());
 	while (s.find(";") != string::npos)
 		s.replace(s.find(";"), 1, " ");
 }

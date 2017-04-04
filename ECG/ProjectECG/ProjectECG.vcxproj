@@ -138,11 +138,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnalysisFuncs.cpp" />
+    <ClCompile Include="HelpForm.cpp" />
     <ClCompile Include="InterfaceFuncs.cpp" />
     <ClCompile Include="MyForm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnalysisFuncs.h" />
+    <ClInclude Include="HelpForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="InterfaceFuncs.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
@@ -154,6 +158,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DataForm.resx">
       <DependentUpon>DataForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelpForm.resx">
+      <DependentUpon>HelpForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyForm.resx">
       <DependentUpon>MyForm.h</DependentUpon>

@@ -54,6 +54,7 @@ public:
 		std::string p = "";
 		std::string i = "";
 
+		getline(fin, i);
 		for (int i = 0; i < 6 * define_diversion(s); i++)
 			getline(fin, firstline);
 
@@ -61,7 +62,7 @@ public:
 		getline(fin, h);
 		getline(fin, l);
 		getline(fin, p);
-		getline(fin, i);
+
 		
 		parse_string(h);
 		parse_string(l);
@@ -87,6 +88,7 @@ public:
 			is4 >> tmp;
 			_intervals.push_back(tmp);
 		}
+		is4 >> firstline;
 		is4 >> _speed;
 	}
 

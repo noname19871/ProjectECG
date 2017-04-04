@@ -42,6 +42,7 @@ namespace ProjectECG {
 
 	private: System::Windows::Forms::Button^  DataButton;
 	private: System::Windows::Forms::Button^  AnalyzeButton;
+	private: System::Windows::Forms::Button^ HelpButton;
 
 
 
@@ -66,6 +67,7 @@ namespace ProjectECG {
 		{
 			this->DataButton = (gcnew System::Windows::Forms::Button());
 			this->AnalyzeButton = (gcnew System::Windows::Forms::Button());
+			this->HelpButton = (gcnew System::Windows::Forms::Button());
 			this->ConclusionText = (gcnew System::Windows::Forms::TextBox());
 			this->Conclusion = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -102,6 +104,20 @@ namespace ProjectECG {
 			this->AnalyzeButton->Text = L"Analyse";
 			this->AnalyzeButton->UseVisualStyleBackColor = true;
 			this->AnalyzeButton->Click += gcnew System::EventHandler(this, &MyForm::AnalyzeButton_Click);
+			// 
+			// HelpButton
+			// 
+			this->HelpButton->AutoSize = true;
+			this->HelpButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->HelpButton->Location = System::Drawing::Point(456, 522);
+			this->HelpButton->Margin = System::Windows::Forms::Padding(2);
+			this->HelpButton->Name = L"HelpButton";
+			this->HelpButton->Size = System::Drawing::Size(432, 62);
+			this->HelpButton->TabIndex = 22;
+			this->HelpButton->Text = L"Справка";
+			this->HelpButton->UseVisualStyleBackColor = true;
+			this->HelpButton->Click += gcnew System::EventHandler(this, &MyForm::HelpButton_Click);
 			// 
 			// ConclusionText
 			// 
@@ -220,6 +236,7 @@ namespace ProjectECG {
 			this->Controls->Add(this->ConclusionText);
 			this->Controls->Add(this->AnalyzeButton);
 			this->Controls->Add(this->DataButton);
+			this->Controls->Add(this->HelpButton);
 			this->MaximizeBox = false;
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
@@ -237,7 +254,7 @@ namespace ProjectECG {
 		this->comboBox2->SelectedItem = L"2 St.";
 		this->comboBox3->SelectedItem = L"3 St.";
 
-		PrepareFile("data1.csv");
+		PrepareFile("data.csv");
 	}
 
 	private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -289,9 +306,11 @@ private: System::Void DrawButton_Click(System::Object^  sender, System::EventArg
 	DrawGraphic(g, pictureBox1->Width, 2 *  pictureBox1->Height - 120, w3);
 }
 
-
-
-
+private: System::Void HelpButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	HelpForm^ form = gcnew HelpForm();
+	form->Information->Text = System::IO::File::ReadAllText(L"helpmyform.txt", System::Text::Encoding::Default);
+	form->ShowDialog();
+}
 
 
 };

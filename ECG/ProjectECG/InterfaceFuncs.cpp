@@ -2,6 +2,7 @@
 #include <locale>
 #include <string>
 #include <fstream>
+#include <vector>
 
 #include "InterfaceFuncs.h"
 #include "AnalysisFuncs.h"
@@ -41,7 +42,17 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 void PrepareFile(string filename)
 {
 	ofstream f(filename); 
-	f << "Intervals" << ";" << 1.50 << ";" << 1.50 << ";" << "Speed" << ";" << 50.00 << "; ";
+	vector<string> diversions{ "1 St.", "2 St.", "3 St.", "aVL", "aVF", "aVR", "V1", "V2", "V3", "V4", "V5", "V6" };
+	f << "Intervals" << ";" << 1.50 << ";" << 1.50 << ";" << "Speed" << ";" << 50.00 << ";" << endl;
+	for (int i = 0; i < 12; i++)
+	{
+		f << diversions[i] << ";" << "P" << ";" << "Q" << ";" << "R" << ";" << "S" << ";" << "T" << ";" << endl;
+		f << "Heights" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
+		f << "Lengths" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
+		f << "Poses" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
+		f << endl;
+		f << endl;
+	}
 	f.close();
 }
 
@@ -177,13 +188,4 @@ void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const Wave
 			return;
 		}
 	}
-}
-
-//Parse string from data file to get 6 double digits from it
-void parse_string(string & s)
-{
-	int del_pos = s.find_first_of(";") + 1;
-	s.erase(s.begin(), s.begin() + del_pos);
-	while (s.find(";") != string::npos)
-		s.replace(s.find(";"), 1, "");
 }
