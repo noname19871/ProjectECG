@@ -1,3 +1,19 @@
-﻿  MyForm.cpp
-  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
-  ProjectECG.vcxproj -> F:\Desktop\ProjectECG\ECG\Debug\ProjectECG.exe
+﻿  AnalysisFuncs.cpp
+  InterfaceFuncs.cpp
+InterfaceFuncs.cpp(81): warning C4018: <: несоответствие типов со знаком и без знака
+InterfaceFuncs.cpp(110): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(122): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(123): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(126): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(141): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(142): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(143): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(144): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(145): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(158): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(159): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(162): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+  MyForm.cpp
+c:\users\anastasia\source\repos\projectecg\ecg\projectecg\MyForm.h(32): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода...
+  ProjectECG.vcxproj -> C:\Users\Anastasia\Source\Repos\ProjectECG\ECG\Debug\ProjectECG.exe

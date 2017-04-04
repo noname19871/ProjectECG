@@ -8,65 +8,116 @@
 #include <fstream>
 #include <sstream>
 
-//Класс для хранения общей информации об ЭКГ и о втором стандартном отведении в частности
+
+//This class is for holding information about ECG and about second standart diversion concretly
 class WavesData {
 	
-	//Вектор для хранения высот зубцов
-	std::vector<double> heights;
+	//Storage for heights of waves
+	std::vector<double> _heights;
 
-	//Вектор для хранения длин зубцов
-	std::vector<double> lengths;
+	//Storage for lengths of waves
+	std::vector<double> _lengths;
 
-	//Вектор для хранения позиций зубцов
-	std::vector<double> poses;
+	//Storage for starting positions of waves
+	std::vector<double> _poses;
 
-	//Вектор для хранения длины интервалов
-	std::vector<double> intervals;
+	//Storage for lengths of intervals
+	std::vector<double> _intervals;
 
-	//Поле для скорости ленты
-	double speed;
+	//ECG tape`s speed
+	double _speed;
 
 
 public:
 
-	//Конструктор копии для класса WavesData
-	WavesData(WavesData & other) :heights(other.heights), lengths(other.lengths), poses(other.poses) {};
 
-	//Конструкток класса WavesData - инициализирует поля класса тремя векторами, содержащими высоты, длины и позиции зубцов
-	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p) :heights(h), lengths(l), poses(p) {}
+	//Copy constructor
+	WavesData(WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _intervals(other._intervals), _speed(other._speed) {};
 
-	//Конструктор класса WavesData - инициализирует поля класса значениями из файла с именем filename
+	//It initializes class`s fields by values from vectors h,l and p, which hold values of lengths, heights and poses of waves respectively
+	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p, std::vector<double> i, double s) :_heights(h), _lengths(l), _poses(p), _intervals(i), _speed(s) {}
+
+	//It initializes class`s fields by values from file 
 	WavesData(std::string filename)
 	{
 		std::ifstream fin(filename);
 
-		std::string l = "";
+		std::string firstline = "";
 		std::string h = "";
+		std::string l = "";
 		std::string p = "";
+		std::string i = "";
 
+		getline(fin, firstline);
 		getline(fin, h);
 		getline(fin, l);
 		getline(fin, p);
-
-		std::vector<double> res;
+		getline(fin, i);
 
 		std::istringstream is1(h);
 		double tmp = 0.0;
+		is1 >> tmp;
 		while (is1 >> tmp)
-			heights.push_back(tmp);
+
+			_heights.push_back(tmp);
 
 		std::istringstream is2(l);
+		is2 >> tmp;
 		while (is2 >> tmp)
-			lengths.push_back(tmp);
+			_lengths.push_back(tmp);
 
 		std::istringstream is3(p);
+		is3 >> tmp;
 		while (is3 >> tmp)
-			poses.push_back(tmp);
+			_poses.push_back(tmp);
 
+		std::istringstream is4(i);
+		is4 >> tmp;
+		for (int i = 0; i < 2; i++)
+		{
+			is4 >> tmp;
+			_intervals.push_back(tmp);
+		}
+		is4 >> _speed;
 	}
 
-	//Функция проверки наличия аритмии у пациента
+	std::vector<double> heights() const {
+		return _heights;
+	}
+
+	std::vector<double> lengths() const {
+		return _lengths;
+	}
+
+	std::vector<double> poses() const {
+		return _poses;
+	}
+
+	std::vector<double> intervals() const {
+		return _intervals;
+	}
+
+	double speed() const {
+		return _speed;
+	}
+
+	//It checks patient`s heart for arrhythmia
 	bool Check_arrhythmia();
+
+	//return patient`s hearth rate
+	double count_heart_rate();
+
+	//It checks patient`s hearth rate for Bradycardia
+	bool Check_Bradycardia();
+
+	//It checks patient`s hearth rate for Tachycardia
+	bool Check_Tachycardia();
+
+	//Return hearth axis`s position
+	friend System::String^ Define_hearth_axis(const WavesData & w1, const WavesData & w2, const WavesData & w3);
+
+	//It checks patient for back myocardial
+	bool Check_back_myocardial(const WavesData & w3, const WavesData & aVF);
 };
 
 
