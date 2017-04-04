@@ -50,7 +50,7 @@ void PrepareFile(string filename)
 		f << "Heights" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
 		f << "Lengths" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
 		f << "Poses" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
-		f << endl;
+		f << "ST height" << ";" << 0.0 << ";" << endl;
 		f << endl;
 	}
 	f.close();
@@ -111,12 +111,20 @@ void DrawP(System::Drawing::Graphics^ g, int height, double p_length, double p_h
 	delete myPen;
 }
 
+void DrawST(System::Drawing::Graphics^ g, int height, double s_end, double s_height, double t_pose, double st_height)
+{
+	System::Drawing::Pen^ myPen =
+		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
+	g->DrawArc(myPen, System::Drawing::Rectangle(40 + 20 * s_end,height / 2 - 20 * (s_height + 1), 20 * (t_pose - s_end), 40 * st_height), 180, 180);
+	//g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (p_pose + p_length), height / 2), System::Drawing::Point(40 + 20 * q_pose, height / 2));
+}
+
 //It draws QRS complex (3 waves between P and T) for ECG graphic
 void DrawQRS(System::Drawing::Graphics^ g, double height,
 	double q_length, double q_height, double q_pose,
 	double r_length, double r_height, double r_pose,
-	double s_length, double s_heigth, double s_pose,
-	double t_pose)
+	double s_length, double s_height, double s_pose,
+	double st_height, double t_pose)
 {
 	System::Drawing::Pen^ myPen =
 		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
@@ -126,28 +134,34 @@ void DrawQRS(System::Drawing::Graphics^ g, double height,
 	if (r_height != 0)
 	{
 		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length), height / 2 - 20 * q_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2), height / 2 - 20 * r_height));
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2), height / 2 - 20 * r_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length), height / 2 - 20 * s_heigth));
 	}
 
-	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length),            height / 2 - 20 * s_heigth), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2));
-	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2),                 System::Drawing::Point(40 + 20 * t_pose,                                    height / 2));
+	if (st_height == 0)
+	{
+		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2), height / 2 - 20 * r_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length), height / 2 - 20 * s_height));
+		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length), height / 2 - 20 * s_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2));
+		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2), System::Drawing::Point(40 + 20 * t_pose, height / 2));
+	}
+	else
+	{
+		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2), height / 2 - 20 * r_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2 - 20 * s_height));
+		DrawST(g, height, s_pose + s_length, s_height, t_pose, st_height);
+	}
 
 	delete myPen;
 }
 
+
+
 //It draws T wave (second arc) for ECG graphic
 void DrawT(System::Drawing::Graphics^ g, int height, double t_length, double t_height, double t_pose, double p_pose)
 {
+	if (t_height == 0)
+		return;
 	System::Drawing::Pen^ myPen =
 		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
-
-	if (t_height != 0)
-	{
-		g->DrawArc(myPen, System::Drawing::Rectangle(40 + 20 * t_pose, height / 2 - 20 * t_height, 20 * t_length, 40 * t_height), 180, 180);
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (t_pose + t_length), height / 2), System::Drawing::Point(40 + 20 * p_pose, height / 2));
-	}
-	else
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * t_pose , height / 2), System::Drawing::Point(40 + 20 * p_pose, height / 2));
+	g->DrawArc(myPen, System::Drawing::Rectangle(40 + 20 * t_pose, height / 2 - 20 * t_height, 20 * t_length, 40 * t_height), 180, 180);
+	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (t_pose + t_length), height / 2), System::Drawing::Point(40 + 20 * p_pose, height / 2));
 	delete myPen;
 }
 
@@ -167,13 +181,13 @@ void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const Wave
 
 	for (int i = 0; i < 14; i++)
 	{
-		int interval = (i % 2 == 0) ? w.intervals()[0] : w.intervals()[1];
+		int interval = (i % 2 == 0) ? w.RR_intervals()[0] : w.RR_intervals()[1];
 		DrawP(g, height, w.lengths()[0], w.heights()[0], i * interval + w.poses()[0], i * interval + w.poses()[1]);
 		DrawQRS(g, height,
 			 w.lengths()[1], w.heights()[1], i * interval + w.poses()[1],
 			 w.lengths()[2], w.heights()[2], i * interval + w.poses()[2],
 			 w.lengths()[3], w.heights()[3], i * interval + w.poses()[3],
-			 i * interval + w.poses()[4]);
+			 w.ST_interval(), i * interval + w.poses()[4]);
 		if(interval != 0)
 			DrawT(g, height, w.lengths()[4],  w.heights()[4], i * interval + w.poses()[4], (i + 1) * interval + w.poses()[0]);
 		else

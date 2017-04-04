@@ -84,7 +84,7 @@ namespace ProjectECG {
 			this->DataButton->AutoSize = true;
 			this->DataButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->DataButton->Location = System::Drawing::Point(18, 376);
+			this->DataButton->Location = System::Drawing::Point(12, 54);
 			this->DataButton->Name = L"DataButton";
 			this->DataButton->Size = System::Drawing::Size(432, 66);
 			this->DataButton->TabIndex = 21;
@@ -97,7 +97,7 @@ namespace ProjectECG {
 			this->AnalyzeButton->AutoSize = true;
 			this->AnalyzeButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->AnalyzeButton->Location = System::Drawing::Point(18, 448);
+			this->AnalyzeButton->Location = System::Drawing::Point(12, 135);
 			this->AnalyzeButton->Name = L"AnalyzeButton";
 			this->AnalyzeButton->Size = System::Drawing::Size(432, 66);
 			this->AnalyzeButton->TabIndex = 22;
@@ -110,7 +110,7 @@ namespace ProjectECG {
 			this->HelpButton->AutoSize = true;
 			this->HelpButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->HelpButton->Location = System::Drawing::Point(456, 522);
+			this->HelpButton->Location = System::Drawing::Point(466, 199);
 			this->HelpButton->Margin = System::Windows::Forms::Padding(2);
 			this->HelpButton->Name = L"HelpButton";
 			this->HelpButton->Size = System::Drawing::Size(432, 62);
@@ -124,11 +124,11 @@ namespace ProjectECG {
 			this->ConclusionText->BackColor = System::Drawing::SystemColors::Window;
 			this->ConclusionText->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->ConclusionText->Location = System::Drawing::Point(1520, 280);
+			this->ConclusionText->Location = System::Drawing::Point(1323, 174);
 			this->ConclusionText->Multiline = true;
 			this->ConclusionText->Name = L"ConclusionText";
 			this->ConclusionText->ReadOnly = true;
-			this->ConclusionText->Size = System::Drawing::Size(598, 306);
+			this->ConclusionText->Size = System::Drawing::Size(444, 239);
 			this->ConclusionText->TabIndex = 23;
 			// 
 			// Conclusion
@@ -136,9 +136,9 @@ namespace ProjectECG {
 			this->Conclusion->AutoSize = true;
 			this->Conclusion->Font = (gcnew System::Drawing::Font(L"Times New Roman", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->Conclusion->Location = System::Drawing::Point(1509, 187);
+			this->Conclusion->Location = System::Drawing::Point(1316, 78);
 			this->Conclusion->Name = L"Conclusion";
-			this->Conclusion->Size = System::Drawing::Size(375, 64);
+			this->Conclusion->Size = System::Drawing::Size(239, 42);
 			this->Conclusion->TabIndex = 24;
 			this->Conclusion->Text = L"Analysis result:";
 			// 
@@ -154,10 +154,10 @@ namespace ProjectECG {
 			// pictureBox1
 			// 
 			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->pictureBox1->Location = System::Drawing::Point(18, 594);
+			this->pictureBox1->Location = System::Drawing::Point(12, 421);
 			this->pictureBox1->Margin = System::Windows::Forms::Padding(4, 5, 4, 5);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(2100, 551);
+			this->pictureBox1->Size = System::Drawing::Size(1755, 522);
 			this->pictureBox1->TabIndex = 26;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -165,7 +165,7 @@ namespace ProjectECG {
 			// 
 			this->DrawButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->DrawButton->Location = System::Drawing::Point(18, 522);
+			this->DrawButton->Location = System::Drawing::Point(28, 232);
 			this->DrawButton->Margin = System::Windows::Forms::Padding(4, 5, 4, 5);
 			this->DrawButton->Name = L"DrawButton";
 			this->DrawButton->Size = System::Drawing::Size(432, 62);
@@ -185,9 +185,9 @@ namespace ProjectECG {
 				L"1 St.", L"2 St.", L"3 St.", L"aVL", L"aVF", L"aVR",
 					L"V1", L"V2", L"V3", L"V4", L"V5", L"V6"
 			});
-			this->comboBox1->Location = System::Drawing::Point(1333, 451);
+			this->comboBox1->Location = System::Drawing::Point(1115, 232);
 			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(181, 41);
+			this->comboBox1->Size = System::Drawing::Size(181, 29);
 			this->comboBox1->TabIndex = 28;
 			// 
 			// comboBox2
@@ -200,9 +200,9 @@ namespace ProjectECG {
 				L"1 St.", L"2 St.", L"3 St.", L"aVL", L"aVF", L"aVR",
 					L"V1", L"V2", L"V3", L"V4", L"V5", L"V6"
 			});
-			this->comboBox2->Location = System::Drawing::Point(1333, 498);
+			this->comboBox2->Location = System::Drawing::Point(1145, 280);
 			this->comboBox2->Name = L"comboBox2";
-			this->comboBox2->Size = System::Drawing::Size(181, 41);
+			this->comboBox2->Size = System::Drawing::Size(181, 29);
 			this->comboBox2->TabIndex = 29;
 			// 
 			// comboBox3
@@ -215,17 +215,16 @@ namespace ProjectECG {
 				L"1 St.", L"2 St.", L"3 St.", L"aVL", L"aVF", L"aVR",
 					L"V1", L"V2", L"V3", L"V4", L"V5", L"V6"
 			});
-			this->comboBox3->Location = System::Drawing::Point(1333, 545);
+			this->comboBox3->Location = System::Drawing::Point(1136, 329);
 			this->comboBox3->Name = L"comboBox3";
-			this->comboBox3->Size = System::Drawing::Size(181, 41);
+			this->comboBox3->Size = System::Drawing::Size(181, 29);
 			this->comboBox3->TabIndex = 30;
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->AutoSize = true;
-			this->ClientSize = System::Drawing::Size(2128, 1156);
+			this->ClientSize = System::Drawing::Size(1780, 957);
 			this->Controls->Add(this->comboBox3);
 			this->Controls->Add(this->comboBox2);
 			this->Controls->Add(this->comboBox1);
@@ -237,6 +236,7 @@ namespace ProjectECG {
 			this->Controls->Add(this->AnalyzeButton);
 			this->Controls->Add(this->DataButton);
 			this->Controls->Add(this->HelpButton);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
 			this->MaximizeBox = false;
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
