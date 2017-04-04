@@ -42,7 +42,10 @@ public:
 	{
 		std::ifstream fin(filename);
 
+<<<<<<< HEAD
 		std::string firstline = "";
+=======
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 		std::string h = "";
 		std::string l = "";
 		std::string p = "";
@@ -72,7 +75,10 @@ public:
 			_poses.push_back(tmp);
 
 		std::istringstream is4(i);
+<<<<<<< HEAD
 		is4 >> tmp;
+=======
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 		for (int i = 0; i < 2; i++)
 		{
 			is4 >> tmp;

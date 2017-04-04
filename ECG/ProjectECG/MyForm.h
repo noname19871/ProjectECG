@@ -45,6 +45,7 @@ namespace ProjectECG {
 				delete components;
 			}
 		}
+<<<<<<< HEAD
 
 
 
@@ -55,6 +56,18 @@ namespace ProjectECG {
 
 	private: System::Windows::Forms::TextBox^  ConclusionText;
 
+=======
+ 
+
+
+	private: System::Windows::Forms::Button^  DataButton;
+	private: System::Windows::Forms::Button^  AnalyzeButton;
+
+
+
+	private: System::Windows::Forms::TextBox^  ConclusionText;
+
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 	private: System::Windows::Forms::Label^  Conclusion;
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
@@ -71,7 +84,10 @@ namespace ProjectECG {
 		{
 			this->DataButton = (gcnew System::Windows::Forms::Button());
 			this->AnalyzeButton = (gcnew System::Windows::Forms::Button());
+<<<<<<< HEAD
 			this->HelpButton = (gcnew System::Windows::Forms::Button());
+=======
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 			this->ConclusionText = (gcnew System::Windows::Forms::TextBox());
 			this->Conclusion = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -108,6 +124,7 @@ namespace ProjectECG {
 			this->AnalyzeButton->UseVisualStyleBackColor = true;
 			this->AnalyzeButton->Click += gcnew System::EventHandler(this, &MyForm::AnalyzeButton_Click);
 			// 
+<<<<<<< HEAD
 			// HelpButton
 			// 
 			this->HelpButton->AutoSize = true;
@@ -122,6 +139,8 @@ namespace ProjectECG {
 			this->HelpButton->UseVisualStyleBackColor = true;
 			this->HelpButton->Click += gcnew System::EventHandler(this, &MyForm::HelpButton_Click);
 			// 
+=======
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 			// ConclusionText
 			// 
 			this->ConclusionText->BackColor = System::Drawing::SystemColors::Window;
@@ -191,8 +210,11 @@ namespace ProjectECG {
 			this->Controls->Add(this->ConclusionText);
 			this->Controls->Add(this->AnalyzeButton);
 			this->Controls->Add(this->DataButton);
+<<<<<<< HEAD
 			this->Controls->Add(this->HelpButton);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
+=======
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 			this->Margin = System::Windows::Forms::Padding(2);
 			this->MaximizeBox = false;
 			this->Name = L"MyForm";
@@ -210,6 +232,7 @@ namespace ProjectECG {
 	}
 
 	private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
+<<<<<<< HEAD
 		ofstream f("data.csv", ios::out);
 		f << "2 St." << ";";
 		f.close();
@@ -220,13 +243,25 @@ namespace ProjectECG {
 		/*if (form2->DialogResult == System::Windows::Forms::DialogResult::OK)
 			form2->Close();*/
 	}
+=======
+				 DataForm^ form2 = gcnew DataForm();
+				 form2->ShowDialog();
+				 
+				 if (form2->DialogResult == ::DialogResult::OK)
+					 form2->Close();	
+			 }
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 
 	private: System::Void tableLayoutPanel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 	}
 
 	private: System::Void AnalyzeButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		//Инициализация класса информации о зубцах значениями из DataForm
+<<<<<<< HEAD
 		WavesData w("data.csv");
+=======
+		WavesData w("WavesData.txt");
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 
 		if (w.Check_arrhythmia())
 		{
@@ -241,6 +276,7 @@ namespace ProjectECG {
 
 		this->ConclusionText->Text += " Ваша ЧСС = " + w.count_heart_rate() + ".";
 	}
+<<<<<<< HEAD
 
 
 	private: System::Void DrawButton_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -260,6 +296,28 @@ namespace ProjectECG {
 	}
 
 	};
+=======
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 
+
+private: System::Void DrawButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
+	Graphics^ g = Graphics::FromImage(pictureBox1->Image);
+	WavesData w("WavesData.txt");
+
+	DrawGrid(g, pictureBox1->Width, pictureBox1->Height);
+	DrawGraphic(g, pictureBox1->Width, pictureBox1->Height, w);
 }
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+};
+};
+	
+
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4

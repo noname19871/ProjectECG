@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  AnalysisFuncs.cpp
   InterfaceFuncs.cpp
 InterfaceFuncs.cpp(81): warning C4018: <: несоответствие типов со знаком и без знака
@@ -17,3 +18,20 @@ InterfaceFuncs.cpp(162): warning C4244: аргумент: преобразова
 c:\users\anastasia\source\repos\projectecg\ecg\projectecg\MyForm.h(32): warning C4018: <: несоответствие типов со знаком и без знака
   Создание кода...
   ProjectECG.vcxproj -> C:\Users\Anastasia\Source\Repos\ProjectECG\ECG\Debug\ProjectECG.exe
+=======
+﻿  InterfaceFuncs.cpp
+InterfaceFuncs.cpp(47): warning C4018: <: несоответствие типов со знаком и без знака
+InterfaceFuncs.cpp(76): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(88): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(89): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(92): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(107): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(108): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(109): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(110): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(111): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(124): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(125): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(128): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+  ProjectECG.vcxproj -> F:\Desktop\ProjectECG\ECG\Debug\ProjectECG.exe
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4

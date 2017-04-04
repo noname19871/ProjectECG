@@ -38,9 +38,12 @@
     <ClInclude Include="AnalysisFuncs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="HelpForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+=======
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">

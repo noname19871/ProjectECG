@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 e:\рабочий стол\zachem\projectecg\ecg\projectecg\debug\vc140.pdb
 e:\рабочий стол\zachem\projectecg\ecg\projectecg\debug\myform.obj
 e:\рабочий стол\zachem\projectecg\ecg\projectecg\debug\interfacefuncs.obj
@@ -21,3 +22,27 @@ e:\рабочий стол\zachem\projectecg\ecg\projectecg\debug\projectecg.tlo
 e:\рабочий стол\zachem\projectecg\ecg\projectecg\debug\projectecg.tlog\projectecg.write.1u.tlog
 e:\рабочий стол\zachem\projectecg\ecg\projectecg\debug\projectecg.tlog\rsaenh.dll.bi
 e:\рабочий стол\zachem\projectecg\ecg\projectecg\debug\projectecg.tlog\tzres.dll.bi
+=======
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\vc140.pdb
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\myform.obj
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\interfacefuncs.obj
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\analysisfuncs.obj
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\.netframework,version=v4.5.2.assemblyattributes.obj
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\.netframework,version=v4.5.2.assemblyattributes.asm
+c:\users\bro\documents\github\projectecg\ecg\debug\projectecg.exe
+c:\users\bro\documents\github\projectecg\ecg\debug\projectecg.pdb
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.dataform.resources
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.myform.resources
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.vcxproj.generateresource.cache
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\cl.command.1.tlog
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\cl.read.1.tlog
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\cl.write.1.tlog
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\link.command.1.tlog
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\link.read.1.tlog
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\link.write.1.tlog
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\metagen.read.1.tlog
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\metagen.write.1.tlog
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\projectecg.write.1u.tlog
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\rsaenh.dll.bi
+c:\users\bro\documents\github\projectecg\ecg\projectecg\debug\projectecg.tlog\tzres.dll.bi
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4

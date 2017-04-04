@@ -143,7 +143,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnalysisFuncs.h" />
+<<<<<<< HEAD
     <ClInclude Include="HelpForm.h" />
+=======
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
     <ClInclude Include="InterfaceFuncs.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
