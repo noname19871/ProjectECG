@@ -19,9 +19,10 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 {
 
 	std::vector<double> res(size);
-	if (p->Controls->Count == 6)
+	auto ss = p->Name;
+	if (!(p->Name->Contains("IntervalsPanel")))
 	{
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			String^ tmp = p->Controls[i]->Text == "" ? "0" : p->Controls[i]->Text;
 			if (p->Controls[i]->Text->Contains("."))
@@ -31,8 +32,15 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 	}
 	else
 	{
-		res[0] = System::Convert::ToDouble(p->Controls[1]->Text == "" ? "0" : p->Controls[1]->Text);
-		res[1] = System::Convert::ToDouble(p->Controls[3]->Text == "" ? "0" : p->Controls[3]->Text);
+		String^ tmp = p->Controls[1]->Text;
+		if (p->Controls[1]->Text->Contains("."))
+			tmp = p->Controls[1]->Text->Replace(".", ",");
+		res[0] = System::Convert::ToDouble(p->Controls[1]->Text == "" ? "0" : tmp);
+		tmp = p->Controls[3]->Text;
+		if (p->Controls[3]->Text->Contains("."))
+		tmp = p->Controls[3]->Text->Replace(".", ",");
+		res[1] = System::Convert::ToDouble(p->Controls[3]->Text == "" ? "0" : tmp);
+	//	res[2] = System::Convert::ToDouble(p->Controls[4]->Text);
 	}
 
 	return res;
@@ -56,17 +64,65 @@ void PrepareFile(string filename)
 	f.close();
 }
 
-//It saves values from vector to csv file 
-void SaveWavesToFile(vector<double> v, string filename, string vector_name)
+//It resets textboxes in TableLayoutPanel^ p to "";
+void ResetTextboxesInDataTable(System::Windows::Forms::TableLayoutPanel^ p)
 {
-	ofstream f(filename, ios::app);
+	for (int i = 0; i < 5; i++)
+	{
+		if (p->Controls[i]->Text != "") p->Controls[i]->Text = "";
+	}
+}
+//It saves values from vector to csv file 
+void SaveWavesToFile(vector<double> v, string filename, string vector_name, int pos )
+{
+	fstream f(filename);
+	f.seekp(pos);
 	f << vector_name;
 	f << ";";
-	for (int i = 0; i < v.size(); i++)
+	for (int i = 0; i < 5; i++)
 		f << v[i] << ";";
-	f << '\n';
+	f << endl;
+	f.seekp(0);
 	f.close();
 }
+
+
+
+//
+void SaveInFile(string filename, string diversion_name, vector<double> v, string vector_name)
+{
+	int pos;
+	string tmp;
+	fstream f("data.csv");
+	while (!f.eof())
+	{
+		getline(f, tmp);
+		pos = f.tellp();
+		if (tmp.find(diversion_name) != string::npos)
+		{
+			if (vector_name == "Length")
+			{
+				getline(f, tmp);
+				pos = f.tellp();
+			}
+			else if (vector_name == "Poses")
+			{
+				getline(f, tmp);
+				getline(f, tmp);
+				pos = f.tellp();
+			}
+			f.close();
+			SaveWavesToFile(v, filename, vector_name, pos);
+			return;
+		}
+
+	}
+	f.close();
+}
+
+
+
+
 
 //It draws grid for ECG graphic
 void DrawGrid(System::Drawing::Graphics^ g, int width, int height)

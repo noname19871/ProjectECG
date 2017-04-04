@@ -237,6 +237,7 @@ namespace ProjectECG {
 			this->Controls->Add(this->AnalyzeButton);
 			this->Controls->Add(this->DataButton);
 			this->Controls->Add(this->HelpButton);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
 			this->MaximizeBox = false;
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
@@ -254,19 +255,11 @@ namespace ProjectECG {
 		this->comboBox2->SelectedItem = L"2 St.";
 		this->comboBox3->SelectedItem = L"3 St.";
 
-		PrepareFile("data.csv");
 	}
 
 	private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
-				ofstream f("data.csv", ios::out);
-				f << "2 St." << ";";
-				f.close();
-		
 				DataForm^ form2 = gcnew DataForm();
 				 form2->ShowDialog();
-
-				 if (form2->DialogResult == System::Windows::Forms::DialogResult::OK)
-					 form2->Close();	
 			 }
 
 	private: System::Void tableLayoutPanel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {

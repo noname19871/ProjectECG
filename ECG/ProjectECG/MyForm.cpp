@@ -19,4 +19,5 @@ void Main(/*array<String^>^ args*/)
 	ProjectECG::MyForm form;
 	
 	Application::Run(%form);
+	
 }
