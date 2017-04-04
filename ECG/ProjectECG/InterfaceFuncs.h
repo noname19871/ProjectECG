@@ -3,16 +3,51 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 #include "AnalysisFuncs.h"
+<<<<<<< HEAD
+=======
 
 using namespace System::Windows::Forms;
+using namespace std;
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 
-//������ �� ���� TextBox � TableLayoutPanel � �� ���� � ������ ����
+//Ïðîõîä ïî âñåì TextBox â TableLayoutPanel è èõ ïàðñ â âåêòîð äàáë
+std::vector<double> ParseDatasIntoDoubleVector(System::Windows::Forms::TableLayoutPanel^ p, int size);
+
+<<<<<<< HEAD
+void PrepareAssignation(std::string filename);
+
+//It saves values from vector to csv file 
+void SaveWavesToFile(std::vector<double> v, std::string filename, std::string vector_name);
+
+//It draws grid for ECG graphic
+void DrawGrid(System::Drawing::Graphics^ g, int width, int height);
+
+//It draws ECG graphic on PictureBox
+void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const WavesData & w);
+
+//It resets textboxes in TableLayoutPanel^ p to value "";
+void ResetTextboxesInDataTable(System::Windows::Forms::TableLayoutPanel^ p);
+
+
+=======
+//Ïðîõîä ïî âñåì TextBox â TableLayoutPanel è èõ ïàðñ â âåêòîð äàáë
 std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size);
 
-//���������� �������� ����� � ����
+//Ñîõðàíåíèå çíà÷åíèé ïîëåé â ôàéë
 void SaveWavesToFile(std::vector<double> v);
+
+//Çàêðûâàåò ôàéë ñ äàííûìè çóáöîâ
+void close_file();
+
+//Î÷èùàåò ôàéë ñ äàííûìè çóáöîâ ïåðåä äàëüíåéøèì èñïîëüçîâàíèåì
+void clear_file();
+
+//Çàïèñûâàåò ñòðîêó s â ôàéë ñ äàííûìè çóáöîâ
+void write_s(char *s);
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
 
 //It draws grid for ECG graphic
 void DrawGrid(System::Drawing::Graphics^ g, int width, int height);

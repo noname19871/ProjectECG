@@ -4,13 +4,12 @@
 
 using namespace std;
 
-//It checks patient`s heart for arrhythmia
+
 bool WavesData::Check_arrhythmia()
 {
 	return (heights()[0] == 0.0) && (intervals()[0] != intervals()[1]);
 }
 
-//TODO
 //return patient`s hearth rate
 double WavesData::count_heart_rate()
 {
@@ -34,12 +33,12 @@ System::String^ Define_hearth_axis(const WavesData & w1, const WavesData & w2, c
 {
 
 	if (w1.heights()[2] > w1.heights()[3] && w3.heights()[3] > w3.heights()[2])
-		return "Электрическая ось отклонена влево";
+		return "ГќГ«ГҐГЄГІГ°ГЁГ·ГҐГ±ГЄГ Гї Г®Г±Гј Г®ГІГЄГ«Г®Г­ГҐГ­Г  ГўГ«ГҐГўГ®";
 
 	if(w1.heights()[2] < w1.heights()[3] && w3.heights()[3] < w3.heights()[2])
-		return "Электрическая ось отклонена вправо";
+		return "ГќГ«ГҐГЄГІГ°ГЁГ·ГҐГ±ГЄГ Гї Г®Г±Гј Г®ГІГЄГ«Г®Г­ГҐГ­Г  ГўГЇГ°Г ГўГ®";
 
-	return "Электрическая ось сердца не отклонена";
+	return "ГќГ«ГҐГЄГІГ°ГЁГ·ГҐГ±ГЄГ Гї Г®Г±Гј Г±ГҐГ°Г¤Г¶Г  Г­ГҐ Г®ГІГЄГ«Г®Г­ГҐГ­Г ";
 }
 
 //It checks patient for back myocardial

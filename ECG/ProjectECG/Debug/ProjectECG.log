@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+﻿  AnalysisFuncs.cpp
+  InterfaceFuncs.cpp
+InterfaceFuncs.cpp(81): warning C4018: <: несоответствие типов со знаком и без знака
+InterfaceFuncs.cpp(110): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(122): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(123): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(126): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(141): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(142): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(143): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(144): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(145): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(158): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(159): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+InterfaceFuncs.cpp(162): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+  MyForm.cpp
+c:\users\anastasia\source\repos\projectecg\ecg\projectecg\MyForm.h(32): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода...
+  ProjectECG.vcxproj -> C:\Users\Anastasia\Source\Repos\ProjectECG\ECG\Debug\ProjectECG.exe
+=======
 ﻿  InterfaceFuncs.cpp
 InterfaceFuncs.cpp(47): warning C4018: <: несоответствие типов со знаком и без знака
 InterfaceFuncs.cpp(76): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
@@ -13,3 +34,4 @@ InterfaceFuncs.cpp(124): warning C4244: аргумент: преобразова
 InterfaceFuncs.cpp(125): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
 InterfaceFuncs.cpp(128): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
   ProjectECG.vcxproj -> F:\Desktop\ProjectECG\ECG\Debug\ProjectECG.exe
+>>>>>>> c8222302d702e3b59f81550bbf496a0f81d24ab4
