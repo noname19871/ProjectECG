@@ -5,23 +5,25 @@
 #include <vector>
 #include <fstream>
 
-using namespace System::Windows::Forms;
-using namespace std;
+#include "AnalysisFuncs.h"
+
+//ГЏГ°Г®ГµГ®Г¤ ГЇГ® ГўГ±ГҐГ¬ TextBox Гў TableLayoutPanel ГЁ ГЁГµ ГЇГ Г°Г± Гў ГўГҐГЄГІГ®Г° Г¤Г ГЎГ«
+std::vector<double> ParseDatasIntoDoubleVector(System::Windows::Forms::TableLayoutPanel^ p, int size);
+
+void PrepareAssignation(std::string filename);
+
+//It saves values from vector to csv file 
+void SaveWavesToFile(std::vector<double> v, std::string filename, std::string vector_name);
+
+//It draws grid for ECG graphic
+void DrawGrid(System::Drawing::Graphics^ g, int width, int height);
+
+//It draws ECG graphic on PictureBox
+void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const WavesData & w);
+
+//It resets textboxes in TableLayoutPanel^ p to value "";
+void ResetTextboxesInDataTable(System::Windows::Forms::TableLayoutPanel^ p);
 
 
-//Проход по всем TextBox в TableLayoutPanel и их парс в вектор дабл
-std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ pan);
-
-//Сохранение значений полей в файл
-void SaveWavesToFile(std::vector<double> v);
-
-//Закрывает файл с данными зубцов
-void close_file();
-
-//Очищает файл с данными зубцов перед дальнейшим использованием
-void clear_file();
-
-//Записывает строку s в файл с данными зубцов
-void write_s(char *s);
 
 #endif  FUNC_H
