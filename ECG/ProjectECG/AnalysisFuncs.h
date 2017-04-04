@@ -115,6 +115,26 @@ public:
 		return _speed;
 	}
 
+	//Return true if all vectors contain only 0
+	bool empty() const
+	{
+
+		for (int i = 0; i < heights().size(); i++)
+		{
+			if ((heights()[i] != 0.0) || (lengths()[i] != 0.0) || (poses()[i] != 0.0))
+				return 0;
+		}
+
+		for (int i = 0; i < intervals().size(); i++)
+		{
+			if (intervals()[i] != 0.0)
+				return 0;
+		}
+		
+		return 1;
+	}
+
+
 	//It checks patient`s heart for arrhythmia
 	bool Check_arrhythmia();
 

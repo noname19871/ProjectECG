@@ -38,21 +38,10 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 }
 
 //It prepares data file for 
-void PrepareAssignation(string filename)
+void PrepareFile(string filename)
 {
-	ofstream f(filename, ios::app);
-	f << "P tooth";
-	f << ";";
-	f << "Q tooth";
-	f << ";";
-	f << "R tooth";
-	f << ";";
-	f << "S tooth";
-	f << ";";
-	f << "T tooth";
-	f << ";";
-	f << "U tooth";
-	f << '\n';
+	ofstream f(filename); 
+	f << "Intervals" << ";" << 1.50 << ";" << 1.50 << ";" << "Speed" << ";" << 50.00 << "; ";
 	f.close();
 }
 
@@ -154,6 +143,17 @@ void DrawT(System::Drawing::Graphics^ g, int height, double t_length, double t_h
 //It draws ECG graphic on PictureBox
 void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const WavesData & w)
 {
+	DrawControlVolt(g, height, w.poses()[0]);
+
+	if (w.empty())
+	{
+		System::Drawing::Pen^ myPen =
+			gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
+		g->DrawLine(myPen, System::Drawing::Point(40, height / 2), System::Drawing::Point(width, height / 2));
+		delete myPen;
+		return;
+	}
+
 	for (int i = 0; i < 14; i++)
 	{
 		int interval = (i % 2 == 0) ? w.intervals()[0] : w.intervals()[1];
@@ -167,9 +167,16 @@ void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const Wave
 			DrawT(g, height, w.lengths()[4],  w.heights()[4], i * interval + w.poses()[4], (i + 1) * interval + w.poses()[0]);
 		else
 			DrawT(g, height, w.lengths()[4], w.heights()[4], i * interval + w.poses()[4], w.poses()[4] + w.lengths()[4] + w.poses()[0]);
-	}
 
-	DrawControlVolt(g, height, w.poses()[0]);
+		if (interval == 0)
+		{
+			System::Drawing::Pen^ myPen =
+				gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
+			g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (w.poses()[4] + w.lengths()[4]), height / 2), System::Drawing::Point(width, height / 2));
+			delete myPen;
+			return;
+		}
+	}
 }
 
 //Parse string from data file to get 6 double digits from it

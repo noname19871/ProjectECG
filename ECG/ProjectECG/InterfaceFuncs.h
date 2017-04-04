@@ -7,10 +7,11 @@
 
 #include "AnalysisFuncs.h"
 
-//Ïðîõîä ïî âñåì TextBox â TableLayoutPanel è èõ ïàðñ â âåêòîð äàáë
+// Parse TextBoxes in TLP and add them to vector<double>
+// size - count of TextBoxes
 std::vector<double> ParseDatasIntoDoubleVector(System::Windows::Forms::TableLayoutPanel^ p, int size);
 
-void PrepareAssignation(std::string filename);
+void PrepareFile(std::string filename);
 
 //It saves values from vector to csv file 
 void SaveWavesToFile(std::vector<double> v, std::string filename, std::string vector_name);

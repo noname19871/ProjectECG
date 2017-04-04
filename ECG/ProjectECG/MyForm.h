@@ -236,6 +236,8 @@ namespace ProjectECG {
 		this->comboBox1->SelectedItem = L"1 St.";
 		this->comboBox2->SelectedItem = L"2 St.";
 		this->comboBox3->SelectedItem = L"3 St.";
+
+		PrepareFile("data1.csv");
 	}
 
 	private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
