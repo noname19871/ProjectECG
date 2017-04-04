@@ -10,8 +10,6 @@
 //Ïðîõîä ïî âñåì TextBox â TableLayoutPanel è èõ ïàðñ â âåêòîð äàáë
 std::vector<double> ParseDatasIntoDoubleVector(System::Windows::Forms::TableLayoutPanel^ p, int size);
 
-void PrepareAssignation(std::string filename);
-
 //It saves values from vector to csv file 
 void SaveWavesToFile(std::vector<double> v, std::string filename, std::string vector_name);
 

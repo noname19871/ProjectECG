@@ -18,9 +18,9 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 {
 
 	std::vector<double> res(size);
-	if (p->Controls->Count == 6)
+	if (p->Controls->Count == 5)
 	{
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			String^ tmp = p->Controls[i]->Text == "" ? "0" : p->Controls[i]->Text;
 			if (p->Controls[i]->Text->Contains("."))
@@ -48,28 +48,10 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 //It resets textboxes in TableLayoutPanel^ p to "";
 void ResetTextboxesInDataTable(System::Windows::Forms::TableLayoutPanel^ p)
 {
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		if (p->Controls[i]->Text != "") p->Controls[i]->Text = "";
 	}
-}
-
-void PrepareAssignation(string filename)
-{
-	ofstream f(filename, ios::app);
-	f << "P tooth";
-	f << ";";
-	f << "Q tooth";
-	f << ";";
-	f << "R tooth";
-	f << ";";
-	f << "S tooth";
-	f << ";";
-	f << "T tooth";
-	f << ";";
-	f << "U tooth";
-	f << '\n';
-	f.close();
 }
 
 //It saves values from vector to csv file 
