@@ -55,9 +55,9 @@ void PrepareFile(string filename)
 	for (int i = 0; i < 12; i++)
 	{
 		f << diversions[i] << ";" << "P" << ";" << "Q" << ";" << "R" << ";" << "S" << ";" << "T" << ";" << endl;
-		f << "Heights" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
-		f << "Lengths" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
-		f << "Poses" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
+		f << "Heights                                                  " << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << '*' << endl;
+		f << "Lengths                                                  " << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << '*' << endl;
+		f << "Poses                                                  " << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << '*' << endl;
 		f << endl;
 		f << endl;
 	}
@@ -73,7 +73,7 @@ void ResetTextboxesInDataTable(System::Windows::Forms::TableLayoutPanel^ p)
 	}
 }
 //It saves values from vector to csv file 
-void SaveWavesToFile(vector<double> v, string filename, string vector_name, int pos )
+void SaveWavesToFile(vector<double> v, string filename, string vector_name, int &pos )
 {
 	fstream f(filename);
 	f.seekp(pos);
@@ -81,14 +81,14 @@ void SaveWavesToFile(vector<double> v, string filename, string vector_name, int 
 	f << ";";
 	for (int i = 0; i < 5; i++)
 		f << v[i] << ";";
-	f << endl;
+	f << ";" << ";" << ";" << ";" << ";" << ";" << ";" << ";" << ";" << '*';
+	pos = f.tellp();
 	f.seekp(0);
 	f.close();
 }
 
 
 
-//
 void SaveInFile(string filename, string diversion_name, vector<double> v, string vector_name)
 {
 	int pos;
@@ -100,7 +100,7 @@ void SaveInFile(string filename, string diversion_name, vector<double> v, string
 		pos = f.tellp();
 		if (tmp.find(diversion_name) != string::npos)
 		{
-			if (vector_name == "Length")
+			if (vector_name == "Lengths")
 			{
 				getline(f, tmp);
 				pos = f.tellp();
@@ -113,6 +113,7 @@ void SaveInFile(string filename, string diversion_name, vector<double> v, string
 			}
 			f.close();
 			SaveWavesToFile(v, filename, vector_name, pos);
+			FalseDataDelete(filename, pos);
 			return;
 		}
 
@@ -120,7 +121,31 @@ void SaveInFile(string filename, string diversion_name, vector<double> v, string
 	f.close();
 }
 
-
+//Deletes false datas created because of shifting
+void FalseDataDelete(std::string filename, int pos)
+{
+	fstream f(filename);
+	f.seekp(pos);
+	char b;
+	while (true)
+	{
+		f >> b;
+		if (b == '*') {
+			int r = f.tellp();
+			f.seekp(r - 1);
+			f << " ";
+			f.seekp(r + 1);
+			return;
+		}
+		else if (b != ';') {
+			int r = f.tellp();
+			f.seekp(r - 1);
+			f << " ";
+			f.seekp(r + 1);
+		}
+	}
+	f.close();
+}
 
 
 

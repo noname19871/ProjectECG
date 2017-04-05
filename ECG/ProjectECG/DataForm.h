@@ -694,8 +694,8 @@ namespace ProjectECG {
 		else if (this->Title->Text->Contains("V4")) diversName = "V4";
 		else if (this->Title->Text->Contains("V5")) diversName = "V5";
 		else  diversName = "V6" ;
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Height");
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Length");
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Heights");
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Lengths");
 		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 5), "Poses");
 		//ofstream f("data.csv");
 		//auto vv = ParseDatasIntoDoubleVector(this->PosesPanel, 3);
@@ -727,8 +727,8 @@ namespace ProjectECG {
 		else if (this->Title->Text->Contains("V4")) diversName = "V4";
 		else if (this->Title->Text->Contains("V5")) diversName = "V5";
 		else  diversName = "V6";
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Height");
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Length");
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Heights");
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Lengths");
 		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 5), "Poses");
 
 		this->IntervalsPanel->Visible = false;
