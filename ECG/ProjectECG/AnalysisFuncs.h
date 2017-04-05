@@ -20,8 +20,11 @@ class WavesData {
 	//Storage for starting positions of waves
 	std::vector<double> _poses;
 
-	//Storage for lengths of intervals
-	std::vector<double> _intervals;
+	//Storage for lengths of R-R intervals
+	std::vector<double> _RR_intervals;
+
+	//height of ST_interval
+	double _ST_interval;
 
 	//ECG tape`s speed
 	double _speed;
@@ -38,58 +41,62 @@ public:
 
 
 	//Copy constructor
-	WavesData(WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _intervals(other._intervals), _speed(other._speed) {};
+	WavesData(WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _RR_intervals(other._RR_intervals), _speed(other._speed) {};
 
 	//It initializes class`s fields by values from vectors h,l and p, which hold values of lengths, heights and poses of waves respectively
-	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p, std::vector<double> i, double s) :_heights(h), _lengths(l), _poses(p), _intervals(i), _speed(s) {}
+	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p, std::vector<double> i, double s) :_heights(h), _lengths(l), _poses(p), _RR_intervals(i), _speed(s) {}
 
 	//It initializes class`s fields by values from file 
 	WavesData(std::string filename, System::String^ s)
 	{
 		std::ifstream fin(filename, std::ios::in);
-
-		std::string firstline = "";
-		std::string h = "";
-		std::string l = "";
-		std::string p = "";
-		std::string i = "";
-
-		getline(fin, i);
-		for (int i = 0; i < 6 * define_diversion(s); i++)
-			getline(fin, firstline);
-
-		getline(fin, firstline);
-		getline(fin, h);
-		getline(fin, l);
-		getline(fin, p);
-
-		
-		parse_string(h);
-		parse_string(l);
-		parse_string(p);
-		parse_string(i);
-
-		std::istringstream is1(h);
+		std::string s1 = "";
+		std::string s2 = "";
+		std::string s3 = "";
+		getline(fin, s1);
 		double tmp = 0.0;
-		while (is1 >> tmp)
-			_heights.push_back(tmp);
-
-		std::istringstream is2(l);
-		while (is2 >> tmp)
-			_lengths.push_back(tmp);
-
-		std::istringstream is3(p);
-		while (is3 >> tmp)
-			_poses.push_back(tmp);
-
-		std::istringstream is4(i);
+		std::istringstream is4(s1);
 		for (int i = 0; i < 2; i++)
 		{
 			is4 >> tmp;
-			_intervals.push_back(tmp);
+			_RR_intervals.push_back(tmp);
 		}
-		is4 >> firstline;
+		is4 >> s2;
 		is4 >> _speed;
+
+		for (int i = 0; i < 6 * define_diversion(s); i++)
+			getline(fin, s1);
+
+		getline(fin, s1);
+		getline(fin, s1);
+		getline(fin, s2);
+		getline(fin, s3);
+
+	
+
+		parse_string(s1);
+		parse_string(s2);
+		parse_string(s3);
+
+
+		std::istringstream is1(s1);
+		std::istringstream is2(s2);
+		std::istringstream is3(s3);
+
+		double tmp2, tmp3;
+		while (is1 >> tmp && is2 >> tmp2 && is3 >> tmp3)
+		{
+			_heights.push_back(tmp);
+			_lengths.push_back(tmp2);
+			_poses.push_back(tmp3);
+		}
+		getline(fin, s1);
+		parse_string(s1);
+		std::istringstream is5(s1);
+		is5 >> _ST_interval;
+		
+		fin.close();
+
 	}
 
 	//Getter for heights vector
@@ -108,13 +115,17 @@ public:
 	}
 
 	//Getter for intervals vector
-	std::vector<double> intervals() const {
-		return _intervals;
+	std::vector<double> RR_intervals() const {
+		return _RR_intervals;
 	}
 
 	//Getter for speed
 	double speed() const {
 		return _speed;
+	}
+
+	double ST_interval() const {
+		return _ST_interval;
 	}
 
 	//Return true if all vectors contain only 0
@@ -127,9 +138,9 @@ public:
 				return 0;
 		}
 
-		for (int i = 0; i < intervals().size(); i++)
+		for (int i = 0; i < RR_intervals().size(); i++)
 		{
-			if (intervals()[i] != 0.0)
+			if (RR_intervals()[i] != 0.0)
 				return 0;
 		}
 		
@@ -154,6 +165,12 @@ public:
 
 	//It checks patient for back myocardial
 	bool Check_back_myocardial(const WavesData & w3, const WavesData & aVF);
+
+	System::String^ Right_blockade(const WavesData & w1, const WavesData & w2, const WavesData & w3, const WavesData & v1);
+	
+	System::String^ Left_blockade(const WavesData & w1, const WavesData & w2, const WavesData & w3, const WavesData & aVR, const std::vector<WavesData> v);
+	
+	bool Hypertrophia(const WavesData & w1, const WavesData & w2, const WavesData & w3, const std::vector<WavesData> v);
 };
 
 

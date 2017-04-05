@@ -22,8 +22,6 @@ namespace ProjectECG {
 		DataForm(void)
 		{
 			InitializeComponent();
-			this->comboBox1->SelectedItem = L"50";
-			this->comboBox2->SelectedItem = L"2 St."; //Should be here, because it bugs and disappers after first compile
 		}
 
 	protected:
@@ -677,6 +675,8 @@ namespace ProjectECG {
 		}
 #pragma endregion
 	private: System::Void DataForm_Load(System::Object^  sender, System::EventArgs^  e) {
+		this->comboBox1->SelectedItem = L"50";
+		this->comboBox2->SelectedItem = L"2 St."; //Should be here, because it bugs and disappers after first compile
 		PrepareFile("data.csv");
 	}
 
