@@ -82,7 +82,7 @@ void SaveWavesToFile(vector<double> v, string filename, string vector_name, int 
 	f << ";";
 	for (int i = 0; i < 5; i++)
 		f << v[i] << ";";
-	f << ";" << ";" << ";" << ";" << ";" << ";" << ";" << ";" << ";" << '*';
+	//f << ";" << ";" << ";" << ";" << ";" << ";" << ";" << ";" << ";" << '*';
 	pos = f.tellp();
 	f.seekp(0);
 	f.close();
@@ -115,6 +115,9 @@ void SaveInFile(string filename, string diversion_name, vector<double> v, string
 			f.close();
 			SaveWavesToFile(v, filename, vector_name, pos);
 			FalseDataDelete(filename, pos);
+			fstream f(filename);
+			f.seekp(pos);
+			f << '*' << ";";
 			return;
 		}
 
@@ -135,14 +138,14 @@ void FalseDataDelete(std::string filename, int pos)
 			int r = f.tellp();
 			f.seekp(r - 1);
 			f << " ";
-			f.seekp(r + 1);
+			f.seekp(r);
 			return;
 		}
-		else if (b != ';') {
+		else /*if (b != ';')*/ {
 			int r = f.tellp();
 			f.seekp(r - 1);
 			f << " ";
-			f.seekp(r + 1);
+			f.seekp(r);
 		}
 	}
 	f.close();
