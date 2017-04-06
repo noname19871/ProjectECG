@@ -19,28 +19,35 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 {
 
 	std::vector<double> res(size);
-	auto ss = p->Name;
-	if (!(p->Name->Contains("IntervalsPanel")))
+	if (p->Name->Contains("ST_Table"))
+	{	
+		String^ tmp = p->Controls[0]->Text;
+		if (p->Controls[0]->Text->Contains("."))
+			 tmp = p->Controls[0]->Text->Replace(".", ",");
+		res[0] = System::Convert::ToDouble(p->Controls[0]->Text == "" ? "0" : tmp);
+		return res;
+	}
+	if (!(p->Name->Contains("Intervals")))
 	{
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < size /*5*/; i++)
 		{
 			String^ tmp = p->Controls[i]->Text == "" ? "0" : p->Controls[i]->Text;
 			if (p->Controls[i]->Text->Contains("."))
 				tmp = p->Controls[i]->Text->Replace(".", ",");
 			res[i] = System::Convert::ToDouble(tmp);
+			int b = res[i];
 		}
 	}
 	else
 	{
-		String^ tmp = p->Controls[1]->Text;
+		String^ tmp = p->Controls[0]->Text;
+		if (p->Controls[0]->Text->Contains("."))
+			 tmp = p->Controls[0]->Text->Replace(".", ",");
+		res[0] = System::Convert::ToDouble(p->Controls[0]->Text == "" ? "0" : tmp);
+		tmp = p->Controls[1]->Text;
 		if (p->Controls[1]->Text->Contains("."))
-			tmp = p->Controls[1]->Text->Replace(".", ",");
-		res[0] = System::Convert::ToDouble(p->Controls[1]->Text == "" ? "0" : tmp);
-		tmp = p->Controls[3]->Text;
-		if (p->Controls[3]->Text->Contains("."))
-			 tmp = p->Controls[3]->Text->Replace(".", ",");
-		res[1] = System::Convert::ToDouble(p->Controls[3]->Text == "" ? "0" : tmp);
-			//	res[2] = System::Convert::ToDouble(p->Controls[4]->Text);
+			 tmp = p->Controls[1]->Text->Replace(".", ",");
+		res[1] = System::Convert::ToDouble(p->Controls[1]->Text == "" ? "0" : tmp);
 	}
 
 	return res;
@@ -49,7 +56,7 @@ std::vector<double> ParseDatasIntoDoubleVector(TableLayoutPanel^ p, int size)
 //It resets textboxes in TableLayoutPanel^ p to "";
 void ResetTextboxesInDataTable(System::Windows::Forms::TableLayoutPanel^ p)
  {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 6; i++)
 		if (p->Controls[i]->Text != "") p->Controls[i]->Text = "";
  }
 
@@ -58,21 +65,21 @@ void PrepareFile(string filename)
 {
 	ofstream f(filename); 
 	vector<string> diversions{ "1 St.", "2 St.", "3 St.", "aVL", "aVF", "aVR", "V1", "V2", "V3", "V4", "V5", "V6" };
-	f << "Intervals" << ";" << 1.50 << ";" << 1.50 << ";" << "Speed" << ";" << 50.00 << ";" << endl;
+	f << "Intervals                                  " << ";" << 1.50 << ";" << 1.50 << ";" << "Speed" << ";" << 50.00 << ";" << '*' << endl;
 	for (int i = 0; i < 12; i++)
 	{
-		f << diversions[i] << ";" << "P" << ";" << "Q" << ";" << "R" << ";" << "S" << ";" << "T" << ";" << endl;
-		f << "Heights" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
-		f << "Lengths" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
-		f << "Poses" << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << endl;
-		f << "ST height" << ";" << 0.0 << ";" << endl;
+		f << diversions[i] << ";" << "P" << ";" << "Q" << ";" << "R" << ";" << "S" << ";" << "T" << ";" << "Sec P" << ";" << endl;
+		f << "Heights                                                         " << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << '*' << endl;
+		f << "Lengths                                                         " << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << '*' << endl;
+		f << "Poses                                                           " << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << 0.0 << ";" << '*' << endl;
+		f << "ST height                        " << ";" << 0.0 << ";" << '*' << endl;
 		f << endl;
 	}
 	f.close();
 }
 
 //It saves values from vector to csv file 
-void SaveWavesToFile(vector<double> v, string filename, string vector_name, int pos)
+void SaveWavesToFile(vector<double> v, string filename, string vector_name, int & pos)
 {
 	fstream f(filename);
 	f.seekp(pos);
@@ -80,7 +87,7 @@ void SaveWavesToFile(vector<double> v, string filename, string vector_name, int 
 	f << ";";
 	for (int i = 0; i < v.size(); i++)
 		f << v[i] << ";";
-	f << endl;
+	pos = f.tellp();
 	f.seekp(0);
 	f.close();
 }
@@ -96,7 +103,7 @@ void SaveInFile(string filename, string diversion_name, vector<double> v, string
 		pos = f.tellp();
 		if (tmp.find(diversion_name) != string::npos)
 			 {
-			if (vector_name == "Length")
+			if (vector_name == "Lengths")
 				 {
 				getline(f, tmp);
 				pos = f.tellp();
@@ -107,12 +114,64 @@ void SaveInFile(string filename, string diversion_name, vector<double> v, string
 				getline(f, tmp);
 				pos = f.tellp();
 				}
+			else if (vector_name == "ST height") {
+				getline(f, tmp);
+				getline(f, tmp);
+				getline(f, tmp);   //St interval saving branch
+				pos = f.tellp();
+				
+			}
 			f.close();
 			SaveWavesToFile(v, filename, vector_name, pos);
+			FalseDataDelete(filename, pos);
+			fstream f(filename);
+			f.seekp(pos);
+			f << '*' << ";";
 			return;
 			}
 		
 			}
+	f.close();
+	}
+
+//Deletes false datas created because of shifting
+void FalseDataDelete(std::string filename, int pos)
+{
+	fstream f(filename);
+	f.seekp(pos);
+	char b;
+	while (true)
+	{
+		f >> b;
+		if (b == '*') {
+			int r = f.tellp();
+			f.seekp(r - 1);
+			f << " ";
+			f.seekp(r);
+			return;
+			
+		}
+		else /*if (b != ';')*/ {
+			int r = f.tellp();
+			f.seekp(r - 1);
+			f << " ";
+			f.seekp(r);
+			
+		}
+		}
+	f.close();
+}
+
+void SaveInFileIntervalAndSpeed(std::string filename, vector<double> v)
+{
+	fstream f(filename);
+	f << "Intervals" << ";" << v[0] << ";" << v[1] << ";" << "Speed" << ";" << v[2];
+	int pos = f.tellp();
+	f.close();
+	FalseDataDelete(filename, pos);
+	f.open(filename);
+	f.seekp(pos);
+	f << ";" << '*' << ";";
 	f.close();
 }
 
