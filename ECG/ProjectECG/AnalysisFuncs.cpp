@@ -6,10 +6,25 @@
 using namespace std;
 
 
-//It checks patient`s hearth for arrhythmia
-bool WavesData::Check_arrhythmia()
+void WavesData::fill_is_empty()
 {
-	return (heights()[0] == 0.0) && (RR_intervals()[0] != RR_intervals()[1]);
+	for (int i = 0; i < 5; i++)
+		_is_waves_empty.push_back((heights()[i] == 0) || (lengths()[i] == 0) || (poses()[i] == 0));
+}
+
+//It checks patient`s hearth for arrhythmia
+System::String^ WavesData::Check_arrhythmia()
+{
+	System::String^ s = "";
+	if ((heights()[0] == 0.0) && (RR_intervals()[0] != RR_intervals()[1]))
+		s =  "мерцательная аритмия";
+	else if (heights()[0] > 0)
+		s =  "синусовый";
+	else if (heights()[0] < 0)
+		s = "предсердный";
+	else s = "желудочковый";
+
+	return s;
 }
 
 //return patient`s hearth rate

@@ -130,98 +130,779 @@ void DrawGrid(System::Drawing::Graphics^ g, int width, int height)
 }
 
 //It draws control volt (first Rectangle) for ECG graphic
-void DrawControlVolt(System::Drawing::Graphics^ g, int height, double p_pose)
+void DrawControlVolt(System::Drawing::Graphics^ g, double height, const WavesData & w)
 {
 	System::Drawing::Pen^ myPen =
-		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
+		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 2);
 
 	g->DrawLine(myPen, System::Drawing::Point(0,  height / 2),      System::Drawing::Point(20,          height / 2));
 	g->DrawLine(myPen, System::Drawing::Point(20, height / 2),      System::Drawing::Point(20,          height / 2 - 40));
 	g->DrawLine(myPen, System::Drawing::Point(20, height / 2 - 40), System::Drawing::Point(40,          height / 2 - 40));
 	g->DrawLine(myPen, System::Drawing::Point(40, height / 2 - 40), System::Drawing::Point(40,          height / 2));
-	g->DrawLine(myPen, System::Drawing::Point(40, height / 2),      System::Drawing::Point(40 + 20 * p_pose, height / 2));
+
+	if (!w.is_waves_empty()[0])
+		g->DrawLine(myPen, System::Drawing::Point(40, height / 2),      System::Drawing::Point(40 + 20 * w.poses()[0], height / 2));
+	else
+		g->DrawLine(myPen, System::Drawing::Point(40, height / 2), System::Drawing::Point(40 + 20 * w.poses()[w.next_wave(0)], height / 2));
 	delete myPen;
 }
 
 //It draws P wave (first arc) for ECG graphic
-void DrawP(System::Drawing::Graphics^ g, int height, double p_length, double p_height, double p_pose, double q_pose)
+void DrawP(System::Drawing::Graphics^ g, double height, double shift, double next_interval, const WavesData & w)
 {
 	System::Drawing::Pen^ myPen =
-		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
-	if (p_height != 0)
-	{
-		g->DrawArc(myPen, System::Drawing::Rectangle(40 + 20 * p_pose, height / 2 - 20 * p_height, 20 * p_length, 40 * p_height), 180, 180);
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (p_pose + p_length), height / 2), System::Drawing::Point(40 + 20 * q_pose, height / 2));
-	}
+		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 2);
+
+	if (w.is_waves_empty()[0])
+		return;
+
+	int next = 0;
+	if (w.next_wave(0) != 0)
+		next = w.next_wave(0);
+
+	if (w.heights()[0] < 0)
+		g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * w.poses()[0], height / 2 - 20 * abs(w.heights()[0]), 20 * w.lengths()[0], 40 * abs(w.heights()[0])), 0, 180);
 	else
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * p_pose, height / 2), System::Drawing::Point(40 + 20 * q_pose, height / 2));
+		g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * w.poses()[0], height / 2 - 20 * abs(w.heights()[0]), 20 * w.lengths()[0], 40 * abs(w.heights()[0])), 180, 180);
+
+	if(next != 0)
+		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[0] + w.lengths()[0]), height / 2), System::Drawing::Point(shift + 20 * w.poses()[next], height / 2));
+	else
+		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[0] + w.lengths()[0]), height / 2), System::Drawing::Point(next_interval + 20 * w.poses()[next], height / 2));
 
 	delete myPen;
-}
-
-void DrawST(System::Drawing::Graphics^ g, int height, double s_end, double s_height, double t_pose, double st_height)
-{
-	System::Drawing::Pen^ myPen =
-		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
-	g->DrawArc(myPen, System::Drawing::Rectangle(40 + 20 * s_end,height / 2 - 20 * (s_height + 1), 20 * (t_pose - s_end), 40 * st_height), 180, 180);
-	//g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (p_pose + p_length), height / 2), System::Drawing::Point(40 + 20 * q_pose, height / 2));
 }
 
 //It draws QRS complex (3 waves between P and T) for ECG graphic
-void DrawQRS(System::Drawing::Graphics^ g, double height,
-	double q_length, double q_height, double q_pose,
-	double r_length, double r_height, double r_pose,
-	double s_length, double s_height, double s_pose,
-	double st_height, double t_pose)
+void DrawQRS(System::Drawing::Graphics^ g, double height, double shift, double next_interval, const WavesData & w)
 {
 	System::Drawing::Pen^ myPen =
-		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
+		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 2);
 
-	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * q_pose,                                    height / 2),                 System::Drawing::Point(40 + 20 * (q_pose + q_length),                       height / 2 - 20 * q_height));
+	//If all waves are empty - we do nothing
+	if (w.is_waves_empty()[1] && w.is_waves_empty()[2] && w.is_waves_empty()[3])
+		return;
 
-	if (r_height != 0)
+	//only S wave in QRS
+	if (w.is_waves_empty()[1] && w.is_waves_empty()[2])
 	{
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length), height / 2 - 20 * q_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2), height / 2 - 20 * r_height));
+		//Draw S wave
+		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[3], height / 2), System::Drawing::Point(shift + 20 * (w.poses()[3] + w.lengths()[3] / 2), height / 2 - 20 * w.heights()[3]));
+		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[3] + w.lengths()[3] / 2), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (w.poses()[3] + w.lengths()[3]), height / 2));
+
+		//ST interval is normal
+		if (w.ST_interval() == 0)
+		{
+			//Looking for next wave in this cycle or in next cycle
+			if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[3] + w.lengths()[3] + w.lengths()[0]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(3) == 3)
+			{
+				//Next wave is S wave in next cycle (we know what Q and R are empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[3] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[3]), height / 2));
+			}
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[3] + w.lengths()[3] + w.lengths()[w.next_wave(3)]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(3)]), height / 2));
+		}	
+		else //ST interval isn`t normal
+		{
+			//Find end of ST interval
+			double st_end = w.is_waves_empty()[4] ? w.poses()[3] + w.lengths()[3] + 2 : w.poses()[4];
+
+			//Draw ST interval
+			if (w.ST_interval() < 0)
+				g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[3] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+					20 * (st_end  - (w.poses()[3] + w.lengths()[3])), 40 * abs(w.ST_interval())), 0, 180);
+			else if (w.ST_interval() > 0)
+				g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[3] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+					20 * (st_end - (w.poses()[3] + w.lengths()[3])), 40 * abs(w.ST_interval())), 180, 180);
+
+
+
+			//Looking for next wave in this cycle or in next cycle
+			if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end ), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(3) == 3)
+			{
+				//Next wave is S wave in next cycle (we know what Q and R are empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[3]), height / 2));
+			}
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + w.lengths()[w.next_wave(3)]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(3)]), height / 2));
+		}
 	}
 
-	if (st_height == 0)
+	//Only R wave int QRS
+	if (w.is_waves_empty()[1] && w.is_waves_empty()[3])
 	{
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2), height / 2 - 20 * r_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length), height / 2 - 20 * s_height));
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length), height / 2 - 20 * s_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2));
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2), System::Drawing::Point(40 + 20 * t_pose, height / 2));
+		//Draw R wave
+		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[2], height / 2), System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]));
+		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]), System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2]), height / 2));
+
+		//ST interval is normal
+		if (w.ST_interval() == 0)
+		{
+			//Looking for next wave in this cycle or in next cycle
+			if (w.next_wave(2) == 2 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[0]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(2) == 2)
+			{
+				//Next wave is R wave in next cycle (we know what Q and S are empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[2]), height / 2));
+			}
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[w.next_wave(2)]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(2)]), height / 2));
+		}
+		else  	//ST interval isn`t normal
+		{
+			//Find end of ST interval
+			double st_end = w.is_waves_empty()[4] ? w.poses()[2] + w.lengths()[2] + 2 : w.poses()[4];
+
+			if (w.ST_interval() < 0)
+				g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[2] + w.lengths()[2]), height / 2 - 20 * abs(w.ST_interval()),
+					20 * (st_end - (w.poses()[2] + w.lengths()[2])), 40 * abs(w.ST_interval())), 0, 180);
+			else if (w.ST_interval() > 0)
+				g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[2] + w.lengths()[2]), height / 2 - 20 * abs(w.ST_interval()),
+					20 * (st_end - (w.poses()[2] + w.lengths()[2])), 40 * abs(w.ST_interval())), 180, 180);
+
+			//Looking for next wave in this cycle or in next cycle
+			if (w.next_wave(2) == 2 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(2) == 2)
+			{
+				//Next wave is R wave in next cycle (we know what Q and S are empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[2]), height / 2));
+			}
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + w.lengths()[w.next_wave(2)]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(2)]), height / 2));
+		}
 	}
-	else
+	else if (w.is_waves_empty()[1] && !w.is_waves_empty()[2] && !w.is_waves_empty()[3]) //Only R and S waves int QRS
 	{
-		g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length / 2), height / 2 - 20 * r_height), System::Drawing::Point(40 + 20 * (q_pose + q_length + r_length + s_length), height / 2 - 20 * s_height));
-		DrawST(g, height, s_pose + s_length, s_height, t_pose, st_height);
+		//ST interval is normal
+		if (w.ST_interval() == 0)
+		{
+			if (w.heights()[2] == w.heights()[3])
+			{
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[2] , height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[2] + (w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + (w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2));
+			}
+			else
+			{
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[2], height / 2), 
+								   System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]), 
+								   System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3] / 2), height / 2 - 20 * w.heights()[3]));
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3] / 2), height / 2 - 20 * w.heights()[3]), 
+								   System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2));
+
+			}
+			
+			//Looking for next wave in this cycle or in next cycle
+			if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(3) == 3)
+			{
+				//Next wave is R wave in next cycle (we know what Q is empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[2]), height / 2));
+			}
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3] ), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(3)]), height / 2));
+		}
+		else //ST interval isn`t normal
+		{
+			//Find end of ST interval
+			double st_end = w.is_waves_empty()[4] ? w.poses()[2] + w.lengths()[2] + w.lengths()[3] + 2 : w.poses()[4];
+
+			if (w.heights()[2] == w.heights()[3])
+			{
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[2], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[2] + (w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + (w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[2] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[2] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				else if (w.next_wave(3) == 3)
+					//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+
+			}
+			else
+			{
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[2], height / 2), 
+								   System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2]), height / 2 - 20 * w.heights()[2]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2]), height / 2 - 20 * w.heights()[2]), 
+								   System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * w.heights()[3]));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * (w.heights()[3] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[2] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * (w.heights()[3] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[2] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+				{
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				}
+				else if (w.next_wave(3) == 3)
+				{
+					//Next wave is R wave in next cycle (we know what Q is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[2]), height / 2));
+				}
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+			}
+
+			
+
+			
+		}
+	}
+
+	if (!w.is_waves_empty()[1] && !w.is_waves_empty()[2] && w.is_waves_empty()[3]) //only Q and R waves in QRS
+	{
+		//ST interval is normal
+		if (w.ST_interval() == 0)
+		{
+			if (w.heights()[1] == w.heights()[2])
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2]) / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2]) / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2));
+			}
+			else
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] / 2), height / 2 - 20 * w.heights()[1]));
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] / 2), height / 2 - 20 * w.heights()[1]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]));
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2));
+
+			}
+
+			//Looking for next wave in this cycle or in next cycle
+			if (w.next_wave(2) == 2 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(2) == 2)
+			{
+				//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+			}
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(2)]), height / 2));
+		}
+		else //ST interval isn`t normal
+		{
+			//Find end of ST interval
+			double st_end = w.is_waves_empty()[4] ? w.poses()[1] + w.lengths()[1] + w.lengths()[2] + 2 : w.poses()[4];
+
+			if (w.heights()[1] == w.heights()[2])
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2]) / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2]) / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(2) == 2 && !w.is_waves_empty()[0])
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				else if (w.next_wave(2) == 2)
+					//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+
+			}
+			else
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]));
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2 - 20 * w.heights()[2]));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2 - 20 * (w.heights()[2] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2 - 20 * (w.heights()[2] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(2) == 2 && !w.is_waves_empty()[0])
+				{
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[2]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				}
+				else if (w.next_wave(2) == 2)
+				{
+					//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[2]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+				}
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[2]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+			}
+
+
+
+			
+		}
+	}
+	else if (!w.is_waves_empty()[1] && !w.is_waves_empty()[3] && w.is_waves_empty()[2]) //only Q and S waves in QRS
+	{
+		//ST interval is normal
+		if (w.ST_interval() == 0)
+		{
+			if (w.heights()[1] == w.heights()[3])
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[3]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[3]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2));
+			}
+			else
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] / 2), height / 2 - 20 * w.heights()[1]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] / 2), height / 2 - 20 * w.heights()[1]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3] / 2), height / 2 - 20 * w.heights()[3]));
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3] / 2), height / 2 - 20 * w.heights()[3]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2));
+
+			}
+
+			//Looking for next wave in this cycle or in next cycle
+			if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(3) == 3)
+			{
+				//Next wave is Q wave in next cycle (we know what R is empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+			}
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(3)]), height / 2));
+		}
+		else //ST interval isn`t normal
+		{
+			//Find end of ST interval
+			double st_end = w.is_waves_empty()[4] ? w.poses()[1] + w.lengths()[1] + w.lengths()[3] + 2 : w.poses()[4];
+
+			if (w.heights()[1] == w.heights()[3])
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[3]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[3]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[3])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[3])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				else if (w.next_wave(3) == 3)
+					//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+			}
+			else
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2 - 20 * w.heights()[3]));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2 - 20 * (w.heights()[3] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[3])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[3]), height / 2 - 20 * (w.heights()[3] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[3])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+				{
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				}
+				else if (w.next_wave(3) == 3)
+				{
+					//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+				}
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+			}
+
+			
+
+			
+		}
+	}
+	else if (!w.is_waves_empty()[1] && !w.is_waves_empty()[2] && !w.is_waves_empty()[3]) //Full QRS exist
+	{
+		//ST interval is normal
+		if (w.ST_interval() == 0)
+		{
+			if (w.heights()[1] == w.heights()[2] && w.heights()[2] == w.heights()[3])
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[3]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[3]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2));
+			}
+			else if (w.heights()[1] == w.heights()[2] && w.heights()[1] != w.heights()[3])
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2]) / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2]) / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3] / 2), height / 2 - 20 * w.heights()[3]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3] / 2), height / 2 - 20 * w.heights()[3]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2));
+			}
+			else if (w.heights()[2] == w.heights()[3] && w.heights()[1] != w.heights()[2])
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]));
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + (w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + (w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2));
+			}
+			else
+			{
+
+				//Draw Q wave
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+						System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]));
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]));
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2 - 20 * w.heights()[3]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2]), height / 2 - 20 * w.heights()[3]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2));
+			}
+
+			//Looking for next wave in this cycle or in next cycle
+			if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(3) == 3)
+			{
+				//Next wave is Q wave in next cycle (we know what R is empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+			}
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(3)]), height / 2));
+		}
+		else //ST interval isn`t normal
+		{
+			//Find end of ST interval
+			double st_end = w.is_waves_empty()[4] ? w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3] + 1.75 : w.poses()[4] - 0.25;
+
+			if (w.heights()[1] == w.heights()[2] && w.heights()[2] == w.heights()[3]) // Q == R == S
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[3]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[3]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				else if (w.next_wave(3) == 3)
+					//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2 ), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+			}
+			else if (w.heights()[1] == w.heights()[2] && w.heights()[1] != w.heights()[3]) // Q == R != S
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2]) / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw R & S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + (w.lengths()[1] + w.lengths()[2]) / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * w.heights()[3]));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * (w.heights()[3] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * (w.heights()[3] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+				{
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				}
+				else if (w.next_wave(3) == 3)
+				{
+					//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+				}
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+			}
+			else if (w.heights()[2] == w.heights()[3] && w.heights()[1] != w.heights()[2]) // Q != R == S
+			{
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]));
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + (w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + (w.lengths()[2] + w.lengths()[3]) / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * abs(w.ST_interval()),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				else if (w.next_wave(3) == 3)
+					//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+			}
+			else // Q != R != S
+			{
+
+				//Draw Q wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]));
+				//Draw R wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * w.heights()[1]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]));
+				//Draw S wave
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] / 2), height / 2 - 20 * w.heights()[2]),
+					System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * w.heights()[3]));
+
+				if (w.ST_interval() < 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * (w.heights()[3] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 0, 180);
+				else if (w.ST_interval() > 0)
+					g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2 - 20 * (w.heights()[3] + abs(w.ST_interval())),
+						20 * (st_end - (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3])), 40 * abs(w.ST_interval())), 180, 180);
+
+				//Looking for next wave in this cycle or in next cycle
+				if (w.next_wave(3) == 3 && !w.is_waves_empty()[0])
+				{
+					//Next wave is P wave in next cycle
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+				}
+				else if (w.next_wave(3) == 3)
+				{
+					//Next wave is Q wave in next cycle (we know what S is empty, so we should check only P wave to understand it)
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+				}
+				else
+					//Next wave is T wave in this cycle 
+					g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2 - 20 * w.heights()[3]), System::Drawing::Point(shift + 20 * (st_end + 0.25), height / 2));
+			}
+
+		}
+	}
+	else if (!w.is_waves_empty()[1]) // Only Q wave in QRS
+	{
+		//Draw Q wave
+		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * w.poses()[1], height / 2), System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] / 2), height / 2 - 20 * w.heights()[1]));
+		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] / 2), height / 2 - 20 * w.heights()[1]), System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2));
+
+		//ST interval is normal
+		if (w.ST_interval() == 0)
+		{
+			//Looking for next wave in this cycle or in next cycle
+			if(w.next_wave(1) == 1 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[0]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(1) == 1 && !w.is_waves_empty()[0])
+				//Next wave is Q wave in next cycle (we know what R and S are empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[1]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[w.next_wave(3)]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(1)]), height / 2));
+		}
+		else //ST interval isn`t normal
+		{
+			//Find end of ST interval
+			double st_end = w.is_waves_empty()[4] ? w.poses()[1] + w.lengths()[1] + 2 : w.poses()[4];
+
+			if (w.ST_interval() < 0)
+				g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * abs(w.ST_interval()),
+					20 * (st_end - (w.poses()[1] + w.lengths()[1])), 40 * abs(w.ST_interval())), 0, 180);
+			else if (w.ST_interval() > 0)
+				g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * (w.poses()[1] + w.lengths()[1]), height / 2 - 20 * abs(w.ST_interval()),
+					20 * (st_end - (w.poses()[1] + w.lengths()[1])), 40 * abs(w.ST_interval())), 180, 180);
+
+
+
+			//Looking for next wave in this cycle or in next cycle
+			if (w.next_wave(1) == 1 && !w.is_waves_empty()[0])
+				//Next wave is P wave in next cycle
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
+			else if (w.next_wave(1) == 1)
+				//Next wave is Q wave in next cycle (we know what R and S are empty, so we should check only P wave to understand it)
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * st_end, height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
+			else
+				//Next wave is T wave in this cycle 
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (st_end + w.lengths()[w.next_wave(1)]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(1)]), height / 2));
+		}
 	}
 
 	delete myPen;
 }
 
-
-
 //It draws T wave (second arc) for ECG graphic
-void DrawT(System::Drawing::Graphics^ g, int height, double t_length, double t_height, double t_pose, double p_pose)
+void DrawT(System::Drawing::Graphics^ g,  double height, double shift, double next_interval, const WavesData & w)
 {
-	if (t_height == 0)
-		return;
 	System::Drawing::Pen^ myPen =
-		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
-	g->DrawArc(myPen, System::Drawing::Rectangle(40 + 20 * t_pose, height / 2 - 20 * t_height, 20 * t_length, 40 * t_height), 180, 180);
-	g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (t_pose + t_length), height / 2), System::Drawing::Point(40 + 20 * p_pose, height / 2));
+		gcnew System::Drawing::Pen(System::Drawing::Color::Red, 2);
+
+	if (w.is_waves_empty()[4])
+		return;
+
+	int next = 0;
+	if (w.is_waves_empty()[0])
+		next = w.next_wave(0);
+
+	if (w.heights()[4] < 0)
+		g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * w.poses()[4], height / 2 - 20 * abs(w.heights()[4]), 20 * w.lengths()[4], 40 * abs(w.heights()[4])), 0, 180);
+	else
+		g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * w.poses()[4], height / 2 - 20 * abs(w.heights()[4]), 20 * w.lengths()[4], 40 * abs(w.heights()[4])), 180, 180);
+	g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[4] + w.lengths()[4]), height / 2), System::Drawing::Point(shift +  + 20 * (next_interval + w.poses()[next]), height / 2));
+
 	delete myPen;
 }
 
 //It draws ECG graphic on PictureBox
 void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const WavesData & w)
 {
-	DrawControlVolt(g, height, w.poses()[0]);
-
+	DrawControlVolt(g, height, w);
 	if (w.empty())
 	{
 		System::Drawing::Pen^ myPen =
-			gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
+			gcnew System::Drawing::Pen(System::Drawing::Color::Red, 2);
 		g->DrawLine(myPen, System::Drawing::Point(40, height / 2), System::Drawing::Point(width, height / 2));
 		delete myPen;
 		return;
@@ -230,24 +911,9 @@ void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const Wave
 	for (int i = 0; i < 14; i++)
 	{
 		int interval = (i % 2 == 0) ? w.RR_intervals()[0] : w.RR_intervals()[1];
-		DrawP(g, height, w.lengths()[0], w.heights()[0], i * interval + w.poses()[0], i * interval + w.poses()[1]);
-		DrawQRS(g, height,
-			 w.lengths()[1], w.heights()[1], i * interval + w.poses()[1],
-			 w.lengths()[2], w.heights()[2], i * interval + w.poses()[2],
-			 w.lengths()[3], w.heights()[3], i * interval + w.poses()[3],
-			 w.ST_interval(), i * interval + w.poses()[4]);
-		if(interval != 0)
-			DrawT(g, height, w.lengths()[4],  w.heights()[4], i * interval + w.poses()[4], (i + 1) * interval + w.poses()[0]);
-		else
-			DrawT(g, height, w.lengths()[4], w.heights()[4], i * interval + w.poses()[4], w.poses()[4] + w.lengths()[4] + w.poses()[0]);
-
-		if (interval == 0)
-		{
-			System::Drawing::Pen^ myPen =
-				gcnew System::Drawing::Pen(System::Drawing::Color::Red, 3);
-			g->DrawLine(myPen, System::Drawing::Point(40 + 20 * (w.poses()[4] + w.lengths()[4]), height / 2), System::Drawing::Point(width, height / 2));
-			delete myPen;
-			return;
-		}
+		int next_interval = (i % 2 == 0) ? w.RR_intervals()[1] : w.RR_intervals()[0];
+		DrawP(g, height, 40 + 20 * i * interval, next_interval, w);
+		DrawQRS(g, height, 40 + 20 * i * interval, next_interval, w);
+		DrawT(g, height, 40 + 20 * i * interval, next_interval, w);
 	}
 }

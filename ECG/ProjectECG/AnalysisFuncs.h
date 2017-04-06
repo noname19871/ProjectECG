@@ -29,6 +29,7 @@ class WavesData {
 	//ECG tape`s speed
 	double _speed;
 
+	std::vector<bool> _is_waves_empty;
 protected:
 
 	//Parse string from data file to get 6 double digits from it
@@ -41,10 +42,10 @@ public:
 
 
 	//Copy constructor
-	WavesData(WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _RR_intervals(other._RR_intervals), _speed(other._speed) {};
+	WavesData(WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _RR_intervals(other._RR_intervals), _speed(other._speed) { fill_is_empty(); };
 
 	//It initializes class`s fields by values from vectors h,l and p, which hold values of lengths, heights and poses of waves respectively
-	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p, std::vector<double> i, double s) :_heights(h), _lengths(l), _poses(p), _RR_intervals(i), _speed(s) {}
+	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p, std::vector<double> i, double s) :_heights(h), _lengths(l), _poses(p), _RR_intervals(i), _speed(s) { fill_is_empty(); }
 
 	//It initializes class`s fields by values from file 
 	WavesData(std::string filename, System::String^ s)
@@ -56,6 +57,8 @@ public:
 		std::string s3 = "";
 
 		getline(fin, s1);
+		parse_string(s1);
+
 		double tmp = 0.0;
 		std::istringstream is4(s1);
 		for (int i = 0; i < 2; i++)
@@ -95,8 +98,9 @@ public:
 		parse_string(s1);
 		std::istringstream is5(s1);
 		is5 >> _ST_interval;
-
 		fin.close();
+
+		fill_is_empty();
 	}
 
 	//Getter for heights vector
@@ -128,28 +132,37 @@ public:
 		return _ST_interval;
 	}
 
+	std::vector<bool> is_waves_empty() const {
+		return _is_waves_empty;
+	}
+
+	void fill_is_empty();
+
+	int next_wave(int x) const
+	{
+		{
+			int next = x;
+			for (int i = x; i < is_waves_empty().size(); i++)
+				if (!is_waves_empty()[i] && i != next)
+				{
+					next = i;
+					break;
+				}
+
+			return next;
+		}
+	}
+
+
 	//Return true if all vectors contain only 0
 	bool empty() const
 	{
-
-		for (int i = 0; i < heights().size(); i++)
-		{
-			if ((heights()[i] != 0.0) || (lengths()[i] != 0.0) || (poses()[i] != 0.0))
-				return 0;
-		}
-
-		for (int i = 0; i < RR_intervals().size(); i++)
-		{
-			if (RR_intervals()[i] != 0.0)
-				return 0;
-		}
-		
-		return 1;
+		return is_waves_empty()[0] && is_waves_empty()[1] && is_waves_empty()[2] && is_waves_empty()[3] && is_waves_empty()[4];
 	}
 
 
 	//It checks patient`s heart for arrhythmia
-	bool Check_arrhythmia();
+	System::String^ Check_arrhythmia();
 
 	//return patient`s hearth rate
 	double count_heart_rate();
