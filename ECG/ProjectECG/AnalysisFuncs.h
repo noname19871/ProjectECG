@@ -12,58 +12,141 @@
 class WavesData {
 	
 	//Storage for heights of waves
-	std::vector<double> heights;
+	std::vector<double> _heights;
 
 	//Storage for lengths of waves
-	std::vector<double> lengths;
+	std::vector<double> _lengths;
 
 	//Storage for starting positions of waves
-	std::vector<double> poses;
+	std::vector<double> _poses;
 
-	//Storage for lengths of intervals
-	std::vector<double> intervals;
+	//Storage for lengths of R-R intervals
+	std::vector<double> _RR_intervals;
+
+	//height of ST_interval
+	double _ST_interval;
 
 	//ECG tape`s speed
-	double speed;
+	double _speed;
 
+protected:
+
+	//Parse string from data file to get 6 double digits from it
+	void parse_string(std::string & s);
+
+	//Return number of diversion in data file
+	int define_diversion(System::String^ s);
 
 public:
 
+
 	//Copy constructor
-	WavesData(WavesData & other) :heights(other.heights), lengths(other.lengths), poses(other.poses) {};
+	WavesData(WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _RR_intervals(other._RR_intervals), _speed(other._speed) {};
 
 	//It initializes class`s fields by values from vectors h,l and p, which hold values of lengths, heights and poses of waves respectively
-	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p) :heights(h), lengths(l), poses(p) {}
+	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p, std::vector<double> i, double s) :_heights(h), _lengths(l), _poses(p), _RR_intervals(i), _speed(s) {}
 
 	//It initializes class`s fields by values from file 
-	WavesData(std::string filename)
+	WavesData(std::string filename, System::String^ s)
 	{
-		std::ifstream fin(filename);
-
-		std::string h = "";
-		std::string l = "";
-		std::string p = "";
-
-		getline(fin, h);
-		getline(fin, l);
-		getline(fin, p);
-
-		std::vector<double> res;
-
-		std::istringstream is1(h);
+		std::ifstream fin(filename, std::ios::in);
+		std::string s1 = "";
+		std::string s2 = "";
+		std::string s3 = "";
+		getline(fin, s1);
 		double tmp = 0.0;
-		while (is1 >> tmp)
-			heights.push_back(tmp);
+		std::istringstream is4(s1);
+		for (int i = 0; i < 2; i++)
+		{
+			is4 >> tmp;
+			_RR_intervals.push_back(tmp);
+		}
+		is4 >> s2;
+		is4 >> _speed;
 
-		std::istringstream is2(l);
-		while (is2 >> tmp)
-			lengths.push_back(tmp);
+		for (int i = 0; i < 6 * define_diversion(s); i++)
+			getline(fin, s1);
 
-		std::istringstream is3(p);
-		while (is3 >> tmp)
-			poses.push_back(tmp);
+		getline(fin, s1);
+		getline(fin, s1);
+		getline(fin, s2);
+		getline(fin, s3);
+
+	
+
+		parse_string(s1);
+		parse_string(s2);
+		parse_string(s3);
+
+
+		std::istringstream is1(s1);
+		std::istringstream is2(s2);
+		std::istringstream is3(s3);
+
+		double tmp2, tmp3;
+		while (is1 >> tmp && is2 >> tmp2 && is3 >> tmp3)
+		{
+			_heights.push_back(tmp);
+			_lengths.push_back(tmp2);
+			_poses.push_back(tmp3);
+		}
+		getline(fin, s1);
+		parse_string(s1);
+		std::istringstream is5(s1);
+		is5 >> _ST_interval;
+		
+		fin.close();
 
 	}
+
+	//Getter for heights vector
+	std::vector<double> heights() const {
+		return _heights;
+	}
+
+	//Getter for lengths vector
+	std::vector<double> lengths() const {
+		return _lengths;
+	}
+
+	//Getter for poses vector
+	std::vector<double> poses() const {
+		return _poses;
+	}
+
+	//Getter for intervals vector
+	std::vector<double> RR_intervals() const {
+		return _RR_intervals;
+	}
+
+	//Getter for speed
+	double speed() const {
+		return _speed;
+	}
+
+	double ST_interval() const {
+		return _ST_interval;
+	}
+
+	//Return true if all vectors contain only 0
+	bool empty() const
+	{
+
+		for (int i = 0; i < heights().size(); i++)
+		{
+			if ((heights()[i] != 0.0) || (lengths()[i] != 0.0) || (poses()[i] != 0.0))
+				return 0;
+		}
+
+		for (int i = 0; i < RR_intervals().size(); i++)
+		{
+			if (RR_intervals()[i] != 0.0)
+				return 0;
+		}
+		
+		return 1;
+	}
+
 
 	//It checks patient`s heart for arrhythmia
 	bool Check_arrhythmia();
@@ -76,7 +159,21 @@ public:
 
 	//It checks patient`s hearth rate for Tachycardia
 	bool Check_Tachycardia();
+
+	//Return hearth axis`s position
+	friend System::String^ Define_hearth_axis(const WavesData & w1, const WavesData & w2, const WavesData & w3);
+
+	//It checks patient for back myocardial
+	bool Check_back_myocardial(const WavesData & w3, const WavesData & aVF);
+
+	System::String^ Right_blockade(const WavesData & w1, const WavesData & w2, const WavesData & w3, const WavesData & v1);
+	
+	System::String^ Left_blockade(const WavesData & w1, const WavesData & w2, const WavesData & w3, const WavesData & aVR, const std::vector<WavesData> v);
+	
+	bool Hypertrophia(const WavesData & w1, const WavesData & w2, const WavesData & w3, const std::vector<WavesData> v);
 };
+
+
 
 
 
