@@ -49,8 +49,12 @@ namespace ProjectECG {
 	private: System::Windows::Forms::Button^  ReadyButton;
 	private: System::Windows::Forms::Button^  NextFormButton;
 	private: System::Windows::Forms::Button^  HelpButton;
+	private: System::Windows::Forms::TableLayoutPanel^  TableLayoutPanel;
 
-	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel;
+
+
+
+
 	private: System::Windows::Forms::TableLayoutPanel^  IntervalsPanel;
 	private: System::Windows::Forms::TableLayoutPanel^  HeightsPanel;
 	private: System::Windows::Forms::TableLayoutPanel^  LengthsPanel;
@@ -61,23 +65,33 @@ namespace ProjectECG {
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::TextBox^  textBox4;
 	private: System::Windows::Forms::TextBox^  textBox5;
-	private: System::Windows::Forms::TextBox^  textBox6;
 	private: System::Windows::Forms::TextBox^  textBox7;
 	private: System::Windows::Forms::TextBox^  textBox8;
 	private: System::Windows::Forms::TextBox^  textBox9;
 	private: System::Windows::Forms::TextBox^  textBox10;
 	private: System::Windows::Forms::TextBox^  textBox11;
-	private: System::Windows::Forms::TextBox^  textBox12;
 	private: System::Windows::Forms::TextBox^  textBox13;
 	private: System::Windows::Forms::TextBox^  textBox14;
 	private: System::Windows::Forms::TextBox^  textBox15;
 	private: System::Windows::Forms::TextBox^  textBox16;
 	private: System::Windows::Forms::TextBox^  textBox17;
-	private: System::Windows::Forms::TextBox^  textBox18;
 	private: System::Windows::Forms::TextBox^  textBox19;
 	private: System::Windows::Forms::TextBox^  textBox20;
 	private: System::Windows::Forms::ComboBox^  comboBox1;
 	private: System::Windows::Forms::ComboBox^  comboBox2;
+	private: System::Windows::Forms::Label^  ST_Label;
+	private: System::Windows::Forms::TextBox^  textBox21;
+	private: System::Windows::Forms::TableLayoutPanel^  ST_Table;
+	private: System::Windows::Forms::Label^  Sec_label;
+
+	private: System::Windows::Forms::CheckBox^  SecPCheckBox;
+
+	private: System::Windows::Forms::TextBox^  textBox6;
+	private: System::Windows::Forms::TextBox^  textBox12;
+	private: System::Windows::Forms::TextBox^  textBox18;
+
+
+
 
 
 	private:
@@ -101,38 +115,44 @@ namespace ProjectECG {
 			this->ReadyButton = (gcnew System::Windows::Forms::Button());
 			this->NextFormButton = (gcnew System::Windows::Forms::Button());
 			this->HelpButton = (gcnew System::Windows::Forms::Button());
-			this->tableLayoutPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->TableLayoutPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->Sec_label = (gcnew System::Windows::Forms::Label());
 			this->HeightsPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
 			this->LengthsPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->textBox12 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox7 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox9 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox10 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox12 = (gcnew System::Windows::Forms::TextBox());
 			this->PosesPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->textBox18 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox13 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox14 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox15 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox16 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox17 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox18 = (gcnew System::Windows::Forms::TextBox());
 			this->IntervalsPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->textBox19 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox20 = (gcnew System::Windows::Forms::TextBox());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->textBox21 = (gcnew System::Windows::Forms::TextBox());
+			this->ST_Label = (gcnew System::Windows::Forms::Label());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
-			this->tableLayoutPanel->SuspendLayout();
+			this->ST_Table = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->SecPCheckBox = (gcnew System::Windows::Forms::CheckBox());
+			this->TableLayoutPanel->SuspendLayout();
 			this->HeightsPanel->SuspendLayout();
 			this->LengthsPanel->SuspendLayout();
 			this->PosesPanel->SuspendLayout();
 			this->IntervalsPanel->SuspendLayout();
+			this->ST_Table->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// LengthOf
@@ -162,11 +182,9 @@ namespace ProjectECG {
 			this->HeightOf->Size = System::Drawing::Size(66, 20);
 			this->HeightOf->TabIndex = 22;
 			this->HeightOf->Text = L"Height";
-			this->HeightOf->Click += gcnew System::EventHandler(this, &DataForm::HeightOf_Click);
 			// 
 			// Title
 			// 
-			this->Title->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->Title->AutoSize = true;
 			this->Title->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->Title->Location = System::Drawing::Point(87, 57);
@@ -191,7 +209,7 @@ namespace ProjectECG {
 			this->Interval2->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->Interval2->AutoSize = true;
 			this->Interval2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->Interval2->Location = System::Drawing::Point(447, 15);
+			this->Interval2->Location = System::Drawing::Point(357, 15);
 			this->Interval2->Name = L"Interval2";
 			this->Interval2->Size = System::Drawing::Size(110, 20);
 			this->Interval2->TabIndex = 46;
@@ -199,7 +217,6 @@ namespace ProjectECG {
 			// 
 			// StartPos
 			// 
-			this->StartPos->Anchor = System::Windows::Forms::AnchorStyles::Left;
 			this->StartPos->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->StartPos->Location = System::Drawing::Point(87, 201);
 			this->StartPos->Name = L"StartPos";
@@ -264,10 +281,9 @@ namespace ProjectECG {
 			// 
 			// ReadyButton
 			// 
-			this->ReadyButton->Anchor = System::Windows::Forms::AnchorStyles::Right;
 			this->ReadyButton->AutoSize = true;
 			this->ReadyButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->ReadyButton->Location = System::Drawing::Point(972, 519);
+			this->ReadyButton->Location = System::Drawing::Point(777, 438);
 			this->ReadyButton->Name = L"ReadyButton";
 			this->ReadyButton->Size = System::Drawing::Size(104, 47);
 			this->ReadyButton->TabIndex = 33;
@@ -277,10 +293,9 @@ namespace ProjectECG {
 			// 
 			// NextFormButton
 			// 
-			this->NextFormButton->Anchor = System::Windows::Forms::AnchorStyles::Left;
 			this->NextFormButton->AutoSize = true;
 			this->NextFormButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->NextFormButton->Location = System::Drawing::Point(59, 519);
+			this->NextFormButton->Location = System::Drawing::Point(59, 447);
 			this->NextFormButton->Name = L"NextFormButton";
 			this->NextFormButton->Size = System::Drawing::Size(374, 47);
 			this->NextFormButton->TabIndex = 34;
@@ -290,10 +305,9 @@ namespace ProjectECG {
 			// 
 			// HelpButton
 			// 
-			this->HelpButton->Anchor = System::Windows::Forms::AnchorStyles::Left;
 			this->HelpButton->AutoSize = true;
 			this->HelpButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->HelpButton->Location = System::Drawing::Point(1210, 645);
+			this->HelpButton->Location = System::Drawing::Point(937, 438);
 			this->HelpButton->Name = L"HelpButton";
 			this->HelpButton->Size = System::Drawing::Size(163, 47);
 			this->HelpButton->TabIndex = 34;
@@ -301,39 +315,52 @@ namespace ProjectECG {
 			this->HelpButton->UseVisualStyleBackColor = true;
 			this->HelpButton->Click += gcnew System::EventHandler(this, &DataForm::HelpButton_Click);
 			// 
-			// tableLayoutPanel
+			// TableLayoutPanel
 			// 
-			this->tableLayoutPanel->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->tableLayoutPanel->AutoSize = true;
-			this->tableLayoutPanel->ColumnCount = 5;
-			this->tableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+			this->TableLayoutPanel->AutoSize = true;
+			this->TableLayoutPanel->ColumnCount = 6;
+			this->TableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
-			this->tableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+			this->TableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
-			this->tableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+			this->TableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
-			this->tableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+			this->TableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
-			this->tableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+			this->TableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
-			this->tableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-				20)));
-			this->tableLayoutPanel->Controls->Add(this->P, 0, 0);
-			this->tableLayoutPanel->Controls->Add(this->R, 2, 0);
-			this->tableLayoutPanel->Controls->Add(this->T, 4, 0);
-			this->tableLayoutPanel->Controls->Add(this->S, 3, 0);
-			this->tableLayoutPanel->Controls->Add(this->Q, 1, 0);
-			this->tableLayoutPanel->Location = System::Drawing::Point(200, 42);
-			this->tableLayoutPanel->Name = L"tableLayoutPanel";
-			this->tableLayoutPanel->RowCount = 1;
-			this->tableLayoutPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
-			this->tableLayoutPanel->Size = System::Drawing::Size(900, 50);
-			this->tableLayoutPanel->TabIndex = 32;
+			this->TableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				180)));
+			this->TableLayoutPanel->Controls->Add(this->Sec_label, 5, 0);
+			this->TableLayoutPanel->Controls->Add(this->P, 0, 0);
+			this->TableLayoutPanel->Controls->Add(this->R, 2, 0);
+			this->TableLayoutPanel->Controls->Add(this->T, 4, 0);
+			this->TableLayoutPanel->Controls->Add(this->S, 3, 0);
+			this->TableLayoutPanel->Controls->Add(this->Q, 1, 0);
+			this->TableLayoutPanel->Location = System::Drawing::Point(200, 42);
+			this->TableLayoutPanel->Name = L"TableLayoutPanel";
+			this->TableLayoutPanel->RowCount = 1;
+			this->TableLayoutPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->TableLayoutPanel->Size = System::Drawing::Size(1080, 50);
+			this->TableLayoutPanel->TabIndex = 32;
+			// 
+			// Sec_label
+			// 
+			this->Sec_label->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->Sec_label->AutoSize = true;
+			this->Sec_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->Sec_label->Location = System::Drawing::Point(962, 15);
+			this->Sec_label->Name = L"Sec_label";
+			this->Sec_label->Size = System::Drawing::Size(55, 20);
+			this->Sec_label->TabIndex = 57;
+			this->Sec_label->Text = L"Sec. P";
 			// 
 			// HeightsPanel
 			// 
 			this->HeightsPanel->AutoSize = true;
-			this->HeightsPanel->ColumnCount = 5;
+			this->HeightsPanel->ColumnCount = 6;
+			this->HeightsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				180)));
 			this->HeightsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
 			this->HeightsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
@@ -349,12 +376,22 @@ namespace ProjectECG {
 			this->HeightsPanel->Controls->Add(this->textBox3, 2, 0);
 			this->HeightsPanel->Controls->Add(this->textBox4, 3, 0);
 			this->HeightsPanel->Controls->Add(this->textBox5, 4, 0);
+			this->HeightsPanel->Controls->Add(this->textBox6, 5, 0);
 			this->HeightsPanel->Location = System::Drawing::Point(200, 98);
 			this->HeightsPanel->Name = L"HeightsPanel";
 			this->HeightsPanel->RowCount = 1;
 			this->HeightsPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
-			this->HeightsPanel->Size = System::Drawing::Size(901, 50);
+			this->HeightsPanel->Size = System::Drawing::Size(1080, 50);
 			this->HeightsPanel->TabIndex = 49;
+			// 
+			// textBox6
+			// 
+			this->textBox6->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->textBox6->Location = System::Drawing::Point(940, 12);
+			this->textBox6->Name = L"textBox6";
+			this->textBox6->Size = System::Drawing::Size(100, 26);
+			this->textBox6->TabIndex = 57;
 			// 
 			// textBox1
 			// 
@@ -401,17 +438,12 @@ namespace ProjectECG {
 			this->textBox5->Size = System::Drawing::Size(100, 26);
 			this->textBox5->TabIndex = 37;
 			// 
-			// textBox6
-			// 
-			this->textBox6->Location = System::Drawing::Point(0, 0);
-			this->textBox6->Name = L"textBox6";
-			this->textBox6->Size = System::Drawing::Size(100, 20);
-			this->textBox6->TabIndex = 0;
-			// 
 			// LengthsPanel
 			// 
 			this->LengthsPanel->AutoSize = true;
-			this->LengthsPanel->ColumnCount = 5;
+			this->LengthsPanel->ColumnCount = 6;
+			this->LengthsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				180)));
 			this->LengthsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
 			this->LengthsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
@@ -427,12 +459,22 @@ namespace ProjectECG {
 			this->LengthsPanel->Controls->Add(this->textBox9, 2, 0);
 			this->LengthsPanel->Controls->Add(this->textBox10, 3, 0);
 			this->LengthsPanel->Controls->Add(this->textBox11, 4, 0);
+			this->LengthsPanel->Controls->Add(this->textBox12, 5, 0);
 			this->LengthsPanel->Location = System::Drawing::Point(200, 186);
 			this->LengthsPanel->Name = L"LengthsPanel";
 			this->LengthsPanel->RowCount = 1;
 			this->LengthsPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
-			this->LengthsPanel->Size = System::Drawing::Size(900, 50);
+			this->LengthsPanel->Size = System::Drawing::Size(1080, 50);
 			this->LengthsPanel->TabIndex = 50;
+			// 
+			// textBox12
+			// 
+			this->textBox12->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->textBox12->Location = System::Drawing::Point(940, 12);
+			this->textBox12->Name = L"textBox12";
+			this->textBox12->Size = System::Drawing::Size(100, 26);
+			this->textBox12->TabIndex = 57;
 			// 
 			// textBox7
 			// 
@@ -479,17 +521,11 @@ namespace ProjectECG {
 			this->textBox11->Size = System::Drawing::Size(100, 26);
 			this->textBox11->TabIndex = 37;
 			// 
-			// textBox12
-			// 
-			this->textBox12->Location = System::Drawing::Point(0, 0);
-			this->textBox12->Name = L"textBox12";
-			this->textBox12->Size = System::Drawing::Size(100, 20);
-			this->textBox12->TabIndex = 0;
-			// 
 			// PosesPanel
 			// 
 			this->PosesPanel->AutoSize = true;
-			this->PosesPanel->ColumnCount = 5;
+			this->PosesPanel->ColumnCount = 6;
+			this->PosesPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 180)));
 			this->PosesPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 180)));
 			this->PosesPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 180)));
 			this->PosesPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 180)));
@@ -500,12 +536,22 @@ namespace ProjectECG {
 			this->PosesPanel->Controls->Add(this->textBox15, 2, 0);
 			this->PosesPanel->Controls->Add(this->textBox16, 3, 0);
 			this->PosesPanel->Controls->Add(this->textBox17, 4, 0);
+			this->PosesPanel->Controls->Add(this->textBox18, 5, 0);
 			this->PosesPanel->Location = System::Drawing::Point(200, 274);
 			this->PosesPanel->Name = L"PosesPanel";
 			this->PosesPanel->RowCount = 1;
 			this->PosesPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
-			this->PosesPanel->Size = System::Drawing::Size(900, 50);
+			this->PosesPanel->Size = System::Drawing::Size(1080, 50);
 			this->PosesPanel->TabIndex = 51;
+			// 
+			// textBox18
+			// 
+			this->textBox18->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox18->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->textBox18->Location = System::Drawing::Point(940, 12);
+			this->textBox18->Name = L"textBox18";
+			this->textBox18->Size = System::Drawing::Size(100, 26);
+			this->textBox18->TabIndex = 57;
 			// 
 			// textBox13
 			// 
@@ -555,16 +601,8 @@ namespace ProjectECG {
 			this->textBox17->Size = System::Drawing::Size(100, 26);
 			this->textBox17->TabIndex = 37;
 			// 
-			// textBox18
-			// 
-			this->textBox18->Location = System::Drawing::Point(0, 0);
-			this->textBox18->Name = L"textBox18";
-			this->textBox18->Size = System::Drawing::Size(100, 20);
-			this->textBox18->TabIndex = 0;
-			// 
 			// IntervalsPanel
 			// 
-			this->IntervalsPanel->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->IntervalsPanel->AutoSize = true;
 			this->IntervalsPanel->ColumnCount = 5;
 			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
@@ -572,21 +610,25 @@ namespace ProjectECG {
 			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
 			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-				360)));
-			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
 			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				180)));
-			this->IntervalsPanel->Controls->Add(this->Interval1, 0, 0);
+			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				180)));
+			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				20)));
+			this->IntervalsPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				20)));
 			this->IntervalsPanel->Controls->Add(this->textBox19, 1, 0);
-			this->IntervalsPanel->Controls->Add(this->Interval2, 2, 0);
 			this->IntervalsPanel->Controls->Add(this->textBox20, 3, 0);
+			this->IntervalsPanel->Controls->Add(this->Interval1, 0, 0);
+			this->IntervalsPanel->Controls->Add(this->Interval2, 2, 0);
 			this->IntervalsPanel->Controls->Add(this->comboBox1, 4, 0);
-			this->IntervalsPanel->Location = System::Drawing::Point(59, 362);
+			this->IntervalsPanel->Location = System::Drawing::Point(59, 359);
 			this->IntervalsPanel->Name = L"IntervalsPanel";
 			this->IntervalsPanel->RowCount = 1;
 			this->IntervalsPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
-			this->IntervalsPanel->Size = System::Drawing::Size(1042, 50);
+			this->IntervalsPanel->Size = System::Drawing::Size(862, 50);
 			this->IntervalsPanel->TabIndex = 48;
 			// 
 			// textBox19
@@ -602,7 +644,7 @@ namespace ProjectECG {
 			// 
 			this->textBox20->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->textBox20->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->textBox20->Location = System::Drawing::Point(722, 12);
+			this->textBox20->Location = System::Drawing::Point(542, 12);
 			this->textBox20->Name = L"textBox20";
 			this->textBox20->Size = System::Drawing::Size(100, 26);
 			this->textBox20->TabIndex = 45;
@@ -614,14 +656,33 @@ namespace ProjectECG {
 			this->comboBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->comboBox1->FormattingEnabled = true;
 			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"25", L"50" });
-			this->comboBox1->Location = System::Drawing::Point(902, 11);
+			this->comboBox1->Location = System::Drawing::Point(722, 11);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(100, 28);
 			this->comboBox1->TabIndex = 49;
 			// 
+			// textBox21
+			// 
+			this->textBox21->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox21->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->textBox21->Location = System::Drawing::Point(220, 12);
+			this->textBox21->Name = L"textBox21";
+			this->textBox21->Size = System::Drawing::Size(100, 26);
+			this->textBox21->TabIndex = 50;
+			// 
+			// ST_Label
+			// 
+			this->ST_Label->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->ST_Label->AutoSize = true;
+			this->ST_Label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->ST_Label->Location = System::Drawing::Point(41, 15);
+			this->ST_Label->Name = L"ST_Label";
+			this->ST_Label->Size = System::Drawing::Size(98, 20);
+			this->ST_Label->TabIndex = 51;
+			this->ST_Label->Text = L"ST Segment";
+			// 
 			// comboBox2
 			// 
-			this->comboBox2->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->comboBox2->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->comboBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->comboBox2->FormattingEnabled = true;
@@ -629,17 +690,51 @@ namespace ProjectECG {
 				L"1 St.", L"2 St.", L"3 St.", L"aVL", L"aVR", L"aVF",
 					L"V1", L"V2", L"V3", L"V4", L"V5", L"V6"
 			});
-			this->comboBox2->Location = System::Drawing::Point(569, 529);
+			this->comboBox2->Location = System::Drawing::Point(502, 457);
 			this->comboBox2->Name = L"comboBox2";
 			this->comboBox2->Size = System::Drawing::Size(100, 28);
 			this->comboBox2->TabIndex = 53;
+			// 
+			// ST_Table
+			// 
+			this->ST_Table->AutoSize = true;
+			this->ST_Table->ColumnCount = 2;
+			this->ST_Table->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 180)));
+			this->ST_Table->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 180)));
+			this->ST_Table->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->ST_Table->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->ST_Table->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->ST_Table->Controls->Add(this->textBox21, 1, 0);
+			this->ST_Table->Controls->Add(this->ST_Label, 0, 0);
+			this->ST_Table->Location = System::Drawing::Point(920, 359);
+			this->ST_Table->Name = L"ST_Table";
+			this->ST_Table->RowCount = 1;
+			this->ST_Table->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->ST_Table->Size = System::Drawing::Size(360, 50);
+			this->ST_Table->TabIndex = 55;
+			// 
+			// SecPCheckBox
+			// 
+			this->SecPCheckBox->AutoSize = true;
+			this->SecPCheckBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->SecPCheckBox->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->SecPCheckBox->Location = System::Drawing::Point(601, 12);
+			this->SecPCheckBox->Name = L"SecPCheckBox";
+			this->SecPCheckBox->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->SecPCheckBox->Size = System::Drawing::Size(97, 24);
+			this->SecPCheckBox->TabIndex = 56;
+			this->SecPCheckBox->Text = L"Second P";
+			this->SecPCheckBox->UseVisualStyleBackColor = true;
+			this->SecPCheckBox->CheckedChanged += gcnew System::EventHandler(this, &DataForm::SecPCheckBox_CheckedChanged);
 			// 
 			// DataForm
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->AutoSize = true;
 			this->CausesValidation = false;
-			this->ClientSize = System::Drawing::Size(1492, 704);
+			this->ClientSize = System::Drawing::Size(1321, 565);
+			this->Controls->Add(this->SecPCheckBox);
+			this->Controls->Add(this->ST_Table);
 			this->Controls->Add(this->NextFormButton);
 			this->Controls->Add(this->HelpButton);
 			this->Controls->Add(this->StartPos);
@@ -652,15 +747,15 @@ namespace ProjectECG {
 			this->Controls->Add(this->Title);
 			this->Controls->Add(this->comboBox2);
 			this->Controls->Add(this->HeightOf);
-			this->Controls->Add(this->tableLayoutPanel);
+			this->Controls->Add(this->TableLayoutPanel);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
 			this->MaximizeBox = false;
 			this->Name = L"DataForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"DataForm";
 			this->Load += gcnew System::EventHandler(this, &DataForm::DataForm_Load);
-			this->tableLayoutPanel->ResumeLayout(false);
-			this->tableLayoutPanel->PerformLayout();
+			this->TableLayoutPanel->ResumeLayout(false);
+			this->TableLayoutPanel->PerformLayout();
 			this->HeightsPanel->ResumeLayout(false);
 			this->HeightsPanel->PerformLayout();
 			this->LengthsPanel->ResumeLayout(false);
@@ -669,6 +764,8 @@ namespace ProjectECG {
 			this->PosesPanel->PerformLayout();
 			this->IntervalsPanel->ResumeLayout(false);
 			this->IntervalsPanel->PerformLayout();
+			this->ST_Table->ResumeLayout(false);
+			this->ST_Table->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -677,6 +774,10 @@ namespace ProjectECG {
 	private: System::Void DataForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		this->comboBox1->SelectedItem = L"50";
 		this->comboBox2->SelectedItem = L"2 St."; //Should be here, because it bugs and disappers after first compile
+		this->Sec_label->Visible = false;
+		this->textBox12->Visible = false;
+		this->textBox6->Visible = false;
+		this->textBox18->Visible = false;
 		PrepareFile("data.csv");
 	}
 
@@ -694,17 +795,26 @@ namespace ProjectECG {
 		else if (this->Title->Text->Contains("V4")) diversName = "V4";
 		else if (this->Title->Text->Contains("V5")) diversName = "V5";
 		else  diversName = "V6" ;
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Heights");
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Lengths");
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 5), "Poses");
-		//ofstream f("data.csv");
-		//auto vv = ParseDatasIntoDoubleVector(this->PosesPanel, 3);
 
+		if (this->SecPCheckBox->Checked) {
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 6), "Heights");
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 6), "Lengths");
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 6), "Poses");
+		}
+		else {
 
-		//f << "Intervals" << ";" <<vv[0] << ";" << vv[1] << ";" << "Speed" << ";" << vv[2] << ";" << endl;
-		//f.close();
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Heights");
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Lengths");
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 5), "Poses");
+		}
 
-
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->ST_Table, 1), "ST height");
+		if (this->ST_Table->Controls[0]->Text != "") this->ST_Table->Controls[0]->Text = "";//textBox Reset for St Table
+		
+		
+		auto v = ParseDatasIntoDoubleVector(this->IntervalsPanel, 2);
+		v.push_back(System::Convert::ToDouble(this->comboBox1->SelectedItem));
+		SaveInFileIntervalAndSpeed("data.csv",v);
 		this->Close();
 	}
 
@@ -727,17 +837,29 @@ namespace ProjectECG {
 		else if (this->Title->Text->Contains("V4")) diversName = "V4";
 		else if (this->Title->Text->Contains("V5")) diversName = "V5";
 		else  diversName = "V6";
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Heights");
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Lengths");
-		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 5), "Poses");
+		if (this->SecPCheckBox->Checked) {
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 6), "Heights");
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 6), "Lengths");
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 6), "Poses");
+		}
+		else {
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->HeightsPanel, 5), "Heights");
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->LengthsPanel, 5), "Lengths");
+			SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->PosesPanel, 5), "Poses");
+		}
+		this->SecPCheckBox->Checked = false;
+
+
+		SaveInFile("data.csv", diversName, ParseDatasIntoDoubleVector(this->ST_Table, 1), "ST height");
+		if (this->ST_Table->Controls[0]->Text != "") this->ST_Table->Controls[0]->Text = "";
 
 		this->IntervalsPanel->Visible = false;
 		this->Title->Text = this->comboBox2->Text;
 		if (this->comboBox2->Text->Contains("2 St."))
 			 {
 			this->IntervalsPanel->Visible = true;
+			this->IntervalsPanel->Controls[0]->Text = "";
 			this->IntervalsPanel->Controls[1]->Text = "";
-			this->IntervalsPanel->Controls[3]->Text = "";
 			}
 		ResetTextboxesInDataTable(this->HeightsPanel);
 		ResetTextboxesInDataTable(this->LengthsPanel);
@@ -764,7 +886,20 @@ namespace ProjectECG {
 		this->textBox15->Text = this->textBox16->Text;
 		this->textBox14->Text = this->textBox16->Text;
 	}
-private: System::Void HeightOf_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void SecPCheckBox_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	if (this->SecPCheckBox->Checked)
+	{
+		this->textBox12->Visible = true;
+		this->textBox6->Visible = true;
+		this->textBox18->Visible = true;
+		this->Sec_label->Visible = true;
+	}
+	else {
+		this->textBox12->Visible = false;
+		this->textBox6->Visible = false;
+		this->textBox18->Visible = false;
+		this->Sec_label->Visible = false;
+	}
 }
 };
   }

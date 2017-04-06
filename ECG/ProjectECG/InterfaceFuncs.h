@@ -21,6 +21,8 @@ void SaveInFile(std::string filename, std::string diversion_name, std::vector<do
 
 void PrepareFile(std::string filename);
 
+void SaveInFileIntervalAndSpeed(std::string filename, std::vector<double> v);
+
 //It saves values from vector to csv file 
 void SaveWavesToFile(std::vector<double> v, std::string filename, std::string vector_name, int &pos);
 

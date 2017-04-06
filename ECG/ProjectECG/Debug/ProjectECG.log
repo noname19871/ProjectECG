@@ -1,2 +1,4 @@
-﻿  ProjectECG.vcxproj -> E:\Рабочий стол\Zachem\ProjectECG\ECG\Debug\ProjectECG.exe
-  ProjectECG.vcxproj -> E:\Рабочий стол\Zachem\ProjectECG\ECG\Debug\ProjectECG.pdb (Full PDB)
+﻿  MyForm.cpp
+c:\users\andrew\desktop\projectecg\projectecg\ecg\projectecg\AnalysisFuncs.h(135): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\andrew\desktop\projectecg\projectecg\ecg\projectecg\AnalysisFuncs.h(141): warning C4018: <: несоответствие типов со знаком и без знака
+  ProjectECG.vcxproj -> C:\Users\Andrew\Desktop\ProjectECG\ProjectECG\ECG\Debug\ProjectECG.exe
