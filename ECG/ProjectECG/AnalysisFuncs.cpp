@@ -66,6 +66,7 @@ bool WavesData::Check_back_myocardial(const WavesData & w3, const WavesData & aV
 	return 1;
 }
 
+//It checks patient for right bundle branch block
 System::String^ WavesData::Right_blockade(const WavesData & w1, const WavesData & w2, const WavesData & w3, const WavesData & v1)
 {
 	if (Define_hearth_axis(w1, w2, w3) == "Электрическая ось отклонена вправо" && v1.heights()[6] != 0)
@@ -79,6 +80,7 @@ System::String^ WavesData::Right_blockade(const WavesData & w1, const WavesData 
 	return "";
 }
 
+//It checks patient for left bundle branch block
 System::String^ WavesData::Left_blockade(const WavesData & w1, const WavesData & w2, const WavesData & w3, const WavesData & aVR, const std::vector<WavesData> v)
 {
 	if (Define_hearth_axis(w1, w2, w3) == "Электрическая ось отклонена влево")
@@ -107,7 +109,8 @@ System::String^ WavesData::Left_blockade(const WavesData & w1, const WavesData &
 	}
 }
 
-bool Hypertrophia(const WavesData & w1, const WavesData & w2, const WavesData & w3, const std::vector<WavesData> v)
+//It checks patient for hypertrophia
+bool WavesData::Hypertrophia(const WavesData & w1, const WavesData & w2, const WavesData & w3, const std::vector<WavesData> v)
 {
 	if (Define_hearth_axis(w1, w2, w3) == "Электрическая ось отклонена влево")
 	{

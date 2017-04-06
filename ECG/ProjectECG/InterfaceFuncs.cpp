@@ -227,7 +227,7 @@ void DrawP(System::Drawing::Graphics^ g, double height, double shift, double nex
 	if(next != 0)
 		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[0] + w.lengths()[0]), height / 2), System::Drawing::Point(shift + 20 * w.poses()[next], height / 2));
 	else
-		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[0] + w.lengths()[0]), height / 2), System::Drawing::Point(next_interval + 20 * w.poses()[next], height / 2));
+		g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[0] + w.lengths()[0]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[next]), height / 2));
 
 	delete myPen;
 }
@@ -740,7 +740,7 @@ void DrawQRS(System::Drawing::Graphics^ g, double height, double shift, double n
 				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[0]), height / 2));
 			else if (w.next_wave(3) == 3)
 			{
-				//Next wave is Q wave in next cycle (we know what R is empty, so we should check only P wave to understand it)
+				//Next wave is Q wave in next cycle
 				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[1] + w.lengths()[1] + w.lengths()[2] + w.lengths()[3]), height / 2), System::Drawing::Point(shift + 20 * (next_interval + w.poses()[1]), height / 2));
 			}
 			else
@@ -949,7 +949,7 @@ void DrawT(System::Drawing::Graphics^ g,  double height, double shift, double ne
 		g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * w.poses()[4], height / 2 - 20 * abs(w.heights()[4]), 20 * w.lengths()[4], 40 * abs(w.heights()[4])), 0, 180);
 	else
 		g->DrawArc(myPen, System::Drawing::Rectangle(shift + 20 * w.poses()[4], height / 2 - 20 * abs(w.heights()[4]), 20 * w.lengths()[4], 40 * abs(w.heights()[4])), 180, 180);
-	g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[4] + w.lengths()[4]), height / 2), System::Drawing::Point(shift +  + 20 * (next_interval + w.poses()[next]), height / 2));
+	g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[4] + w.lengths()[4]), height / 2), System::Drawing::Point(shift  + 20 * (next_interval + w.poses()[next]), height / 2));
 
 	delete myPen;
 }
@@ -967,12 +967,16 @@ void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const Wave
 		return;
 	}
 
+	int interval = 0;
+	int next_interval = w.RR_intervals()[0];
 	for (int i = 0; i < 14; i++)
 	{
-		int interval = (i % 2 == 0) ? w.RR_intervals()[0] : w.RR_intervals()[1];
-		int next_interval = (i % 2 == 0) ? w.RR_intervals()[1] : w.RR_intervals()[0];
-		DrawP(g, height, 40 + 20 * i * interval, next_interval, w);
-		DrawQRS(g, height, 40 + 20 * i * interval, next_interval, w);
-		DrawT(g, height, 40 + 20 * i * interval, next_interval, w);
+		DrawP(g, height, 40 + 20 * interval, next_interval, w);
+		DrawQRS(g, height, 40 + 20  * interval, next_interval, w);
+		DrawT(g, height, 40 + 20 * interval, next_interval, w);
+		interval += next_interval;
+		next_interval = w.RR_intervals()[(i + 1) % 2];
 	}
+	
+
 }

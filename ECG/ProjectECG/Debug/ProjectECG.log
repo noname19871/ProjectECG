@@ -1,7 +1,3 @@
-﻿  AnalysisFuncs.cpp
+﻿  MyForm.cpp
 f:\desktop\projectecg\ecg\projectecg\AnalysisFuncs.h(145): warning C4018: <: несоответствие типов со знаком и без знака
-AnalysisFuncs.cpp(99): warning C4018: <: несоответствие типов со знаком и без знака
-AnalysisFuncs.cpp(115): warning C4018: <: несоответствие типов со знаком и без знака
-f:\desktop\projectecg\ecg\projectecg\analysisfuncs.cpp(166): warning C4715: WavesData::define_diversion: значение возвращается не при всех путях выполнения
-f:\desktop\projectecg\ecg\projectecg\analysisfuncs.cpp(108): warning C4715: WavesData::Left_blockade: значение возвращается не при всех путях выполнения
   ProjectECG.vcxproj -> F:\Desktop\ProjectECG\ECG\Debug\ProjectECG.exe

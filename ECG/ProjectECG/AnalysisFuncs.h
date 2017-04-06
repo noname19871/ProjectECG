@@ -128,16 +128,20 @@ public:
 		return _speed;
 	}
 
+	//Getter for ST_interval
 	double ST_interval() const {
 		return _ST_interval;
 	}
 
+	//Getter for _is_waves_empty vector
 	std::vector<bool> is_waves_empty() const {
 		return _is_waves_empty;
 	}
 
+	//It fills _is_waves_empty vector
 	void fill_is_empty();
 
+	//It searchs next_wave for current x wave
 	int next_wave(int x) const
 	{
 		{
@@ -179,10 +183,13 @@ public:
 	//It checks patient for back myocardial
 	bool Check_back_myocardial(const WavesData & w3, const WavesData & aVF);
 
+	//It checks patient for right bundle branch block
 	System::String^ Right_blockade(const WavesData & w1, const WavesData & w2, const WavesData & w3, const WavesData & v1); 
 
+	//It checks patient for left bundle branch block
 	System::String^ Left_blockade(const WavesData & w1, const WavesData & w2, const WavesData & w3, const WavesData & aVR, const std::vector<WavesData> v);
 
+	//It checks patient for hypertrophia
 	bool Hypertrophia(const WavesData & w1, const WavesData & w2, const WavesData & w3, const std::vector<WavesData> v);
 };
 

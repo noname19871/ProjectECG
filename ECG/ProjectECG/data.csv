@@ -1,72 +1,72 @@
-Intervals;14;14;Speed;50;
-1 St.;P;Q;R;S;T
-Heights;1.5;1.5;1.5;1.5;1.5
-Lengths;1;1.3;2.5;1.4;3
-Poses;1;2;2;2;7.5
-ST height;0;;;;
-;;;;;
-2 St.;P;Q;R;S;T
-Heights;-0.3;-0.5;2;-0.7;1
-Lengths;1;0.5;0.5;0.6;2
-Poses;2;5;5;5;8
-ST height;-1;;;;
-;;;;;
-3 St.;P;Q;R;S;T
-Heights;0;0;0;0;0
-Lengths;0;0;0;0;0
-Poses;0;0;0;0;0
-ST height;0;;;;
-;;;;;
-aVL;P;Q;R;S;T
-Heights;0;0;0;0;0
-Lengths;0;0;0;0;0
-Poses;0;0;0;0;0
-ST height;0;;;;
-;;;;;
-aVF;P;Q;R;S;T
-Heights;0;0;0;0;0
-Lengths;0;0;0;0;0
-Poses;0;0;0;0;0
-ST height;0;;;;
-;;;;;
-aVR;P;Q;R;S;T
-Heights;0;0;0;0;0
-Lengths;0;0;0;0;0
-Poses;0;0;0;0;0
-ST height;0;;;;
-;;;;;
-V1;P;Q;R;S;T
-Heights;0;0;0;0;0
-Lengths;0;0;0;0;0
-Poses;0;0;0;0;0
-ST height;0;;;;
-;;;;;
-V2;P;Q;R;S;T
-Heights;1;2;2.1;3.4;1.3
-Lengths;1.3;1.2;1.2;1.5;2.3
-Poses;0.5;1.3;1.3;1.3;5.6
-ST height;4.5;;;;
-;;;;;
-V3;P;Q;R;S;T
-Heights;0;0;0;0;0
-Lengths;0;0;0;0;0
-Poses;0;0;0;0;0
-ST height;0;;;;
-;;;;;
-V4;P;Q;R;S;T
-Heights;0;0;0;0;0
-Lengths;0;0;0;0;0
-Poses;0;0;0;0;0
-ST height;0;;;;
-;;;;;
-V5;P;Q;R;S;T
-Heights;0;0;0;0;0
-Lengths;0;0;0;0;0
-Poses;0;0;0;0;0
-ST height;0;;;;
-;;;;;
-V6;P;Q;R;S;T
-Heights;0;0;0;0;0
-Lengths;0;0;0;0;0
-Poses;0;0;0;0;0
-ST height;0;;;;
+Intervals;9;14;Speed;50;*;                                    ;
+1 St.;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+2 St.;P;Q;R;S;T;Sec P;
+Heights;1;-1;2;-1;2;*;                                                          
+Lengths;1;1;1;1;2;*;                                                          
+Poses;2;5;5;5;8;*;                                                            
+ST height;0;*;                       ;;;;
+;;;;;;;
+3 St.;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+aVL;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+aVF;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+aVR;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+V1;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+V2;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+V3;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+V4;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+V5;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;
+;;;;;;;
+V6;P;Q;R;S;T;Sec P;
+Heights                                                         ;0;0;0;0;0;0;*
+Lengths                                                         ;0;0;0;0;0;0;*
+Poses                                                           ;0;0;0;0;0;0;*
+ST height                        ;0;*;;;;;

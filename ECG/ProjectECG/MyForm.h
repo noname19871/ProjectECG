@@ -43,19 +43,23 @@ namespace ProjectECG {
 
 	private: System::Windows::Forms::Button^  DataButton;
 	private: System::Windows::Forms::Button^  AnalyzeButton;
-	private: System::Windows::Forms::Button^ HelpButton;
-
+	private: System::Windows::Forms::Button^  HelpButton;
+	private: System::Windows::Forms::Button^  DrawButton;
+	private: System::Windows::Forms::Button^  SaveButton;
+	
+	private: System::Windows::Forms::PictureBox^  pictureBox1;
 
 
 	private: System::Windows::Forms::TextBox^  ConclusionText;
 
 	private: System::Windows::Forms::Label^  Conclusion;
 	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::PictureBox^  pictureBox1;
-	private: System::Windows::Forms::Button^  DrawButton;
+
+
 	private: System::Windows::Forms::ComboBox^  comboBox1;
 	private: System::Windows::Forms::ComboBox^  comboBox2;
 	private: System::Windows::Forms::ComboBox^  comboBox3;
+
 	private:
 		System::ComponentModel::IContainer^  components;
 
@@ -77,6 +81,7 @@ namespace ProjectECG {
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
 			this->comboBox3 = (gcnew System::Windows::Forms::ComboBox());
+			this->SaveButton = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -85,10 +90,10 @@ namespace ProjectECG {
 			this->DataButton->AutoSize = true;
 			this->DataButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->DataButton->Location = System::Drawing::Point(8, 133);
+			this->DataButton->Location = System::Drawing::Point(12, 138);
 			this->DataButton->Margin = System::Windows::Forms::Padding(2);
 			this->DataButton->Name = L"DataButton";
-			this->DataButton->Size = System::Drawing::Size(288, 43);
+			this->DataButton->Size = System::Drawing::Size(209, 62);
 			this->DataButton->TabIndex = 21;
 			this->DataButton->Text = L"Enter data";
 			this->DataButton->UseVisualStyleBackColor = true;
@@ -99,10 +104,10 @@ namespace ProjectECG {
 			this->AnalyzeButton->AutoSize = true;
 			this->AnalyzeButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->AnalyzeButton->Location = System::Drawing::Point(8, 180);
+			this->AnalyzeButton->Location = System::Drawing::Point(12, 204);
 			this->AnalyzeButton->Margin = System::Windows::Forms::Padding(2);
 			this->AnalyzeButton->Name = L"AnalyzeButton";
-			this->AnalyzeButton->Size = System::Drawing::Size(288, 43);
+			this->AnalyzeButton->Size = System::Drawing::Size(209, 62);
 			this->AnalyzeButton->TabIndex = 22;
 			this->AnalyzeButton->Text = L"Analyse";
 			this->AnalyzeButton->UseVisualStyleBackColor = true;
@@ -113,12 +118,12 @@ namespace ProjectECG {
 			this->HelpButton->AutoSize = true;
 			this->HelpButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->HelpButton->Location = System::Drawing::Point(300, 228);
+			this->HelpButton->Location = System::Drawing::Point(223, 204);
 			this->HelpButton->Margin = System::Windows::Forms::Padding(1);
 			this->HelpButton->Name = L"HelpButton";
-			this->HelpButton->Size = System::Drawing::Size(288, 40);
+			this->HelpButton->Size = System::Drawing::Size(208, 62);
 			this->HelpButton->TabIndex = 22;
-			this->HelpButton->Text = L"Справка";
+			this->HelpButton->Text = L"Help";
 			this->HelpButton->UseVisualStyleBackColor = true;
 			this->HelpButton->Click += gcnew System::EventHandler(this, &MyForm::HelpButton_Click);
 			// 
@@ -155,7 +160,7 @@ namespace ProjectECG {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(32, 13);
 			this->label1->TabIndex = 25;
-			this->label1->Text = L"V 2.0";
+			this->label1->Text = L"V 3.0";
 			// 
 			// pictureBox1
 			// 
@@ -170,9 +175,9 @@ namespace ProjectECG {
 			// 
 			this->DrawButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->DrawButton->Location = System::Drawing::Point(8, 228);
+			this->DrawButton->Location = System::Drawing::Point(617, 204);
 			this->DrawButton->Name = L"DrawButton";
-			this->DrawButton->Size = System::Drawing::Size(288, 40);
+			this->DrawButton->Size = System::Drawing::Size(208, 62);
 			this->DrawButton->TabIndex = 27;
 			this->DrawButton->Text = L"Create ECG graphic";
 			this->DrawButton->UseVisualStyleBackColor = true;
@@ -189,7 +194,7 @@ namespace ProjectECG {
 				L"1 St.", L"2 St.", L"3 St.", L"aVL", L"aVF", L"aVR",
 					L"V1", L"V2", L"V3", L"V4", L"V5", L"V6"
 			});
-			this->comboBox1->Location = System::Drawing::Point(830, 175);
+			this->comboBox1->Location = System::Drawing::Point(830, 171);
 			this->comboBox1->Margin = System::Windows::Forms::Padding(2);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(122, 29);
@@ -205,7 +210,7 @@ namespace ProjectECG {
 				L"1 St.", L"2 St.", L"3 St.", L"aVL", L"aVF", L"aVR",
 					L"V1", L"V2", L"V3", L"V4", L"V5", L"V6"
 			});
-			this->comboBox2->Location = System::Drawing::Point(830, 208);
+			this->comboBox2->Location = System::Drawing::Point(830, 204);
 			this->comboBox2->Margin = System::Windows::Forms::Padding(2);
 			this->comboBox2->Name = L"comboBox2";
 			this->comboBox2->Size = System::Drawing::Size(122, 29);
@@ -221,17 +226,31 @@ namespace ProjectECG {
 				L"1 St.", L"2 St.", L"3 St.", L"aVL", L"aVF", L"aVR",
 					L"V1", L"V2", L"V3", L"V4", L"V5", L"V6"
 			});
-			this->comboBox3->Location = System::Drawing::Point(830, 241);
+			this->comboBox3->Location = System::Drawing::Point(830, 237);
 			this->comboBox3->Margin = System::Windows::Forms::Padding(2);
 			this->comboBox3->Name = L"comboBox3";
 			this->comboBox3->Size = System::Drawing::Size(122, 29);
 			this->comboBox3->TabIndex = 30;
 			// 
+			// SaveButton
+			// 
+			this->SaveButton->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->SaveButton->Location = System::Drawing::Point(617, 138);
+			this->SaveButton->Name = L"SaveButton";
+			this->SaveButton->Size = System::Drawing::Size(208, 62);
+			this->SaveButton->TabIndex = 31;
+			this->SaveButton->Text = L"Save to file";
+			this->SaveButton->UseVisualStyleBackColor = true;
+			this->SaveButton->Click += gcnew System::EventHandler(this, &MyForm::SaveButton_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::AliceBlue;
 			this->ClientSize = System::Drawing::Size(1259, 686);
+			this->Controls->Add(this->SaveButton);
 			this->Controls->Add(this->comboBox3);
 			this->Controls->Add(this->comboBox2);
 			this->Controls->Add(this->comboBox1);
@@ -248,7 +267,7 @@ namespace ProjectECG {
 			this->MaximizeBox = false;
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
-			this->Text = L"MyForm";
+			this->Text = L"ProjectECG";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
@@ -257,15 +276,15 @@ namespace ProjectECG {
 		}
 #pragma endregion
 
-	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		this->comboBox1->SelectedItem = L"1 St.";
 		this->comboBox2->SelectedItem = L"2 St.";
 		this->comboBox3->SelectedItem = L"3 St.";
-
-		//PrepareFile("data.csv");
+		pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
+		PrepareFile("data.csv");
 	}
 
-	private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
 				ofstream f("data.csv", ios::out);
 				f << "2 St." << ";";
 				f.close();
@@ -277,10 +296,10 @@ namespace ProjectECG {
 					 form2->Close();	
 			 }
 
-	private: System::Void tableLayoutPanel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+private: System::Void tableLayoutPanel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 	}
 
-	private: System::Void AnalyzeButton_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void AnalyzeButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		//Инициализация класса информации о зубцах значениями из DataForm
 		WavesData w1("data.csv", "1 St.");
 		WavesData w2("data.csv", "2 St.");
@@ -295,10 +314,11 @@ namespace ProjectECG {
 		WavesData v5("data.csv", "V5");
 		WavesData v6("data.csv", "V6");
 
+		ofstream f("диагноз.txt");
+		this->ConclusionText->Clear();
 		this->ConclusionText->Text = "Ваша ЧСС = " + w1.count_heart_rate() + ".";
-		this->ConclusionText->Text += " Ритм: " + w1.Check_arrhythmia() +" .";
+		this->ConclusionText->AppendText(w1.Check_arrhythmia());
 	}
-
 
 private: System::Void DrawButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
@@ -315,17 +335,17 @@ private: System::Void DrawButton_Click(System::Object^  sender, System::EventArg
 	DrawGraphic(g, pictureBox1->Width, pictureBox1->Height / 3 + 30, w1);
 	DrawGraphic(g, pictureBox1->Width, pictureBox1->Height + 3 , w2);
 	DrawGraphic(g, pictureBox1->Width, 2 *  pictureBox1->Height - 157, w3);
-
-	this->pictureBox1->Image->Save("waves.png");
 }
 
 private: System::Void HelpButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	HelpForm^ form = gcnew HelpForm();
-	form->Information->Text = System::IO::File::ReadAllText(L"helpmyform.txt", System::Text::Encoding::Default);
+	form->Information->Text = System::IO::File::ReadAllText(L"helpmyform.txt", System::Text::Encoding::Unicode);
 	form->ShowDialog();
 }
 
-
+private: System::Void SaveButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->pictureBox1->Image->Save(this->comboBox1->SelectedItem->ToString() + this->comboBox2->SelectedItem->ToString() + this->comboBox3->SelectedItem->ToString() + ".png");
+}
 };
 };
 	
