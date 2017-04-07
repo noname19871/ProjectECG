@@ -42,7 +42,7 @@ public:
 
 
 	//Copy constructor
-	WavesData(WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _RR_intervals(other._RR_intervals), _speed(other._speed) { fill_is_empty(); };
+	WavesData(const WavesData & other) :_heights(other._heights), _lengths(other._lengths), _poses(other._poses), _RR_intervals(other._RR_intervals), _ST_interval(other._ST_interval), _speed(other._speed) { fill_is_empty(); };
 
 	//It initializes class`s fields by values from vectors h,l and p, which hold values of lengths, heights and poses of waves respectively
 	WavesData(std::vector<double> h, std::vector<double> l, std::vector<double> p, std::vector<double> i, double s) :_heights(h), _lengths(l), _poses(p), _RR_intervals(i), _speed(s) { fill_is_empty(); }
@@ -166,7 +166,7 @@ public:
 
 
 	//It checks patient`s heart for arrhythmia
-	System::String^ Check_arrhythmia();
+	bool Check_arrhythmia();
 
 	//return patient`s hearth rate
 	double count_heart_rate();
@@ -192,6 +192,9 @@ public:
 	//It checks patient for hypertrophia
 	bool Hypertrophia(const WavesData & w1, const WavesData & w2, const WavesData & w3, const std::vector<WavesData> v);
 };
+
+//TODO
+void make_diagnosys(std::vector<WavesData> & waves);
 
 
 

@@ -316,7 +316,7 @@ void DrawQRS(System::Drawing::Graphics^ g, double height, double shift, double n
 			}
 			else
 				//Next wave is T wave in this cycle 
-				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2] + w.lengths()[w.next_wave(2)]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(2)]), height / 2));
+				g->DrawLine(myPen, System::Drawing::Point(shift + 20 * (w.poses()[2] + w.lengths()[2]), height / 2), System::Drawing::Point(shift + 20 * (w.poses()[w.next_wave(2)]), height / 2));
 		}
 		else  	//ST interval isn`t normal
 		{
@@ -969,7 +969,7 @@ void DrawGraphic(System::Drawing::Graphics^ g, int width, int height, const Wave
 
 	int interval = 0;
 	int next_interval = w.RR_intervals()[0];
-	for (int i = 0; i < 14; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		DrawP(g, height, 40 + 20 * interval, next_interval, w);
 		DrawQRS(g, height, 40 + 20  * interval, next_interval, w);

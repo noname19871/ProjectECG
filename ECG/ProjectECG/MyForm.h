@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <iostream>
+#include <string>
 #include "InterfaceFuncs.h"
 #include "AnalysisFuncs.h"
 #include "DataForm.h"
@@ -281,7 +282,7 @@ private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e
 		this->comboBox2->SelectedItem = L"2 St.";
 		this->comboBox3->SelectedItem = L"3 St.";
 		pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
-		PrepareFile("data.csv");
+		/*PrepareFile("data.csv");*/
 	}
 
 private: System::Void DataButton_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -314,10 +315,25 @@ private: System::Void AnalyzeButton_Click(System::Object^  sender, System::Event
 		WavesData v5("data.csv", "V5");
 		WavesData v6("data.csv", "V6");
 
-		ofstream f("диагноз.txt");
-		this->ConclusionText->Clear();
-		this->ConclusionText->Text = "Ваша ЧСС = " + w1.count_heart_rate() + ".";
-		this->ConclusionText->AppendText(w1.Check_arrhythmia());
+		
+		std::vector<WavesData> waves{ w1,w2,w3,aVL,aVF,aVR,v1,v2,v3,v4,v5,v6 };
+
+		this->ConclusionText->Text = "Ваша ЧСС: " + w2.count_heart_rate() + ".";
+		if (waves[1].Check_arrhythmia())
+		{
+			this->ConclusionText->Text += "У вас аритмия. Рекомендуем обратиться к врачу.";
+		}
+		else
+		{
+			this->ConclusionText->Text += "Ритм синусовый";
+		}
+
+		//TODO
+		//make_diagnosys(waves);
+		////this->ConclusionText->Clear();
+		////this->ConclusionText->Text = "Ваша ЧСС = " + w1.count_heart_rate() + ".";
+		//this->ConclusionText->Text += System::IO::File::ReadAllText(L"diagnosys.txt", System::Text::Encoding::Unicode);
+		////this->ConclusionText->AppendText(w1.Check_arrhythmia());
 	}
 
 private: System::Void DrawButton_Click(System::Object^  sender, System::EventArgs^  e) {

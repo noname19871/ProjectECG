@@ -1,4 +1,4 @@
-Intervals;9;14;Speed;50;*;                                    ;
+Intervals;3.5;2.5;Speed;25;*;                                 ;
 1 St.;P;Q;R;S;T;Sec P;
 Heights                                                         ;0;0;0;0;0;0;*
 Lengths                                                         ;0;0;0;0;0;0;*
@@ -6,9 +6,9 @@ Poses                                                           ;0;0;0;0;0;0;*
 ST height                        ;0;*;;;;;
 ;;;;;;;
 2 St.;P;Q;R;S;T;Sec P;
-Heights;1;-1;2;-1;2;*;                                                          
-Lengths;1;1;1;1;2;*;                                                          
-Poses;2;5;5;5;8;*;                                                            
+Heights;0;0;1;0;0.2;*;                                                        
+Lengths;0;0;0.3;0;1;*;                                                        
+Poses;0;1.7;1.7;1.7;2.7;*;                                                    
 ST height;0;*;                       ;;;;
 ;;;;;;;
 3 St.;P;Q;R;S;T;Sec P;

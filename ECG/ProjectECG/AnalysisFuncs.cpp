@@ -13,18 +13,9 @@ void WavesData::fill_is_empty()
 }
 
 //It checks patient`s hearth for arrhythmia
-System::String^ WavesData::Check_arrhythmia()
+bool WavesData::Check_arrhythmia()
 {
-	System::String^ s = "";
-	if ((heights()[0] == 0.0) && (RR_intervals()[0] != RR_intervals()[1]))
-		s =  "мерцательная аритмия";
-	else if (heights()[0] > 0)
-		s =  "синусовый";
-	else if (heights()[0] < 0)
-		s = "предсердный";
-	else s = "желудочковый";
-
-	return s;
+	return ((heights()[0] == 0.0) && (RR_intervals()[0] != RR_intervals()[1]));
 }
 
 //return patient`s hearth rate
@@ -166,4 +157,11 @@ int WavesData::define_diversion(System::String^ s)
 		}
 	}
 	};
+}
+
+void make_diagnosys(std::vector<WavesData> & waves)
+{
+	System::String^ diagnosys = "13412412fqfqaайайцуйпйп";
+	diagnosys += waves[1].Check_arrhythmia() ? "У вас аритмия. Рекомендуем обратиться к врачу" : "Ритм синусовый";
+	System::IO::File::WriteAllText("diagnosys.txt", diagnosys,System::Text::Encoding::UTF8);
 }

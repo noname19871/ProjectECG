@@ -1,3 +1,3 @@
 ﻿  MyForm.cpp
-f:\desktop\projectecg\ecg\projectecg\AnalysisFuncs.h(145): warning C4018: <: несоответствие типов со знаком и без знака
+f:\desktop\projectecg\ecg\projectecg\AnalysisFuncs.h(149): warning C4018: <: несоответствие типов со знаком и без знака
   ProjectECG.vcxproj -> F:\Desktop\ProjectECG\ECG\Debug\ProjectECG.exe
